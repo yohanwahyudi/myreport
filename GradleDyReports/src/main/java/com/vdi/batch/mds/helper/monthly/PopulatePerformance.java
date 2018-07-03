@@ -1,4 +1,4 @@
-package com.vdi.batch.mds.helper.weekly;
+package com.vdi.batch.mds.helper.monthly;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -18,20 +18,21 @@ import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.model.performance.PerformanceTeam;
 
-@Configuration("populatePerformanceWeekly")
+@Configuration("populatePerformanceMonthly")
 public class PopulatePerformance {
-
+	
 	@Autowired
-	@Qualifier("weeklyPerfAllDAO")
+	@Qualifier("monthlyPerfAllDAO")
 	private PerfAllDAOService allDAO;
 
 	@Autowired
-	@Qualifier("weeklyPerfTeamDAO")
+	@Qualifier("monthlyPerfTeamDAO")
 	private PerfTeamDAOService teamDAO;
 
 	@Autowired
-	@Qualifier("weeklyPerfAgentDAO")
+	@Qualifier("monthlyPerfAgentDAO")
 	private PerfAgentDAOService agentDAO;
+
 	
 	public void populatePerformance() {
 		allDAO.insertPerformance(getPerformanceOverall());
@@ -91,7 +92,7 @@ public class PopulatePerformance {
 			perfTeam.setTotalTicket(ticketCount);
 			perfTeam.setTotalAchieved(achievedCount);
 			perfTeam.setTotalMissed(missedCount);
-			perfTeam.setPeriod("weekly");
+			perfTeam.setPeriod("monthly");
 			perfTeam.setAchievement(achievement);
 
 			newPerfList.add(perfTeam);
@@ -146,7 +147,7 @@ public class PopulatePerformance {
 			int totalAchieved = ((BigInteger) object[4]).intValue();
 			int totalMissed = ((BigInteger) object[5]).intValue();
 			int totalTicket = ((BigInteger) object[6]).intValue();
-			String period = "weekly";
+			String period = "monthly";
 			float achievement = (getAchievementTicket(new BigDecimal(totalAchieved), new BigDecimal(totalTicket)))
 					.floatValue();
 
@@ -206,5 +207,5 @@ public class PopulatePerformance {
 
 		return achievement;
 	}
-
+	
 }

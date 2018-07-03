@@ -12,9 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.vdi.batch.mds.repository.dao.WeeklyPerfAgentDAOService;
-import com.vdi.batch.mds.repository.dao.WeeklyPerfAllDAOService;
-import com.vdi.batch.mds.repository.dao.WeeklyPerfTeamDAOService;
+import com.vdi.batch.mds.repository.dao.PerfAgentDAOService;
+import com.vdi.batch.mds.repository.dao.PerfAllDAOService;
+import com.vdi.batch.mds.repository.dao.PerfTeamDAOService;
 import com.vdi.configuration.AppConfig;
 import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
@@ -29,7 +29,7 @@ public class PerfTest {
 		
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		
-		WeeklyPerfAllDAOService all = ctx.getBean("weeklyPerfAllDAO", WeeklyPerfAllDAOService.class);	
+		PerfAllDAOService all = ctx.getBean("weeklyPerfAllDAO", PerfAllDAOService.class);	
 		PerformanceOverall overall = new PerformanceOverall();
 		overall.setTotalTicket(all.getTicketCount());
 		overall.setTotalMissed(all.getMissedTicketCount());
@@ -46,11 +46,11 @@ public class PerfTest {
 //		logger.debug(overall.getTotalMissed());
 //		logger.debug(overall.getPeriod());
 		
-		PerformanceOverall temp1 = all.getPerformanceThisWeek();
+		PerformanceOverall temp1 = all.getPerformance();
 		//insert if no rows, update if weekly exist
 		if(temp1==null) {
 			logger.debug("null");
-			all.insertWeeklyPerformance(overall);
+			all.insertPerformance(overall);
 		}else {
 			temp1.setAchievement(overall.getAchievement());
 			temp1.setTotalAchieved(overall.getTotalAchieved());
@@ -63,7 +63,7 @@ public class PerfTest {
 		}
 		
 		
-		WeeklyPerfTeamDAOService team = ctx.getBean("weeklyPerfTeamDAO", WeeklyPerfTeamDAOService.class);		
+		PerfTeamDAOService team = ctx.getBean("weeklyPerfTeamDAO", PerfTeamDAOService.class);		
 		List<Object[]> obj = new ArrayList<Object[]>();		
 		obj = team.getTeamTicketByDivision();		
 		Map<String, PerformanceTeam> map = new HashMap<String, PerformanceTeam>();
@@ -95,10 +95,10 @@ public class PerfTest {
 		}
 		
 		//get updated team
-		List<PerformanceTeam> listTeam = team.getPerformanceThisWeek();
+		List<PerformanceTeam> listTeam = team.getPerformance();
 		if(listTeam.size()<1) {
 			logger.debug("weekly db empty, insert new records");
-			team.insertWeeklyPerformance(newPerfList);
+			team.insertPerformance(newPerfList);
 			
 		} else {
 			logger.debug("weekly db exist, update records");
@@ -123,10 +123,10 @@ public class PerfTest {
 				newUpdatedList.add(existing);
 			}
 			
-			team.updatePerformanceThisWeek(newUpdatedList);			
+			team.updatePerformance(newUpdatedList);			
 		}
 		
-		WeeklyPerfAgentDAOService agentCtx = ctx.getBean("weeklyPerfAgentDAO", WeeklyPerfAgentDAOService.class);
+		PerfAgentDAOService agentCtx = ctx.getBean("weeklyPerfAgentDAO", PerfAgentDAOService.class);
 		List<Object[]> agentList = new ArrayList<Object[]>(); 
 		agentList = agentCtx.getAgentTicket();		
 		Map<String,PerformanceAgent> mapAgent = new HashMap<String,PerformanceAgent>();
@@ -155,10 +155,10 @@ public class PerfTest {
 //			logger.debug(entry.getKey()+" "+temp.getDivision()+" "+temp.getTotalAssigned()+" "+ temp.getTotalPending() +" "+temp.getTotalAchieved()+" "+temp.getTotalMissed()+" "+temp.getTotalTicket());
 		}
 		
-		List<PerformanceAgent> agentExisting = agentCtx.getPerformanceThisWeek();
+		List<PerformanceAgent> agentExisting = agentCtx.getPerformance();
 		if(agentExisting.size() < 1) {
 			logger.debug("weekly agent db empty, insert new records");
-			agentCtx.insertWeeklyPerformance(newAgentList);
+			agentCtx.insertPerformance(newAgentList);
 		} else {
 			logger.debug("weekly agent db exist, update records");
 			
@@ -182,7 +182,7 @@ public class PerfTest {
 				newUpdatedAgentList.add(existing);
 			}
 			
-			agentCtx.updatePerformanceThisWeek(newUpdatedAgentList);	
+			agentCtx.updatePerformance(newUpdatedAgentList);	
 			
 		}
 

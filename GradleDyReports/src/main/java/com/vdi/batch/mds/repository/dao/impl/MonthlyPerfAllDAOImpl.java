@@ -5,16 +5,16 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vdi.batch.mds.repository.WeeklyPerfAllRepository;
+import com.vdi.batch.mds.repository.MonthlyPerfAllRepository;
 import com.vdi.batch.mds.repository.dao.PerfAllDAOService;
 import com.vdi.model.performance.PerformanceOverall;
 
 @Transactional
-@Service("weeklyPerfAllDAO")
-public class WeeklyPerfAllDAOImpl implements PerfAllDAOService{
+@Service("monthlyPerfAllDAO")
+public class MonthlyPerfAllDAOImpl implements PerfAllDAOService{
 	
 	@Autowired
-	WeeklyPerfAllRepository repo;
+	MonthlyPerfAllRepository repo;
 
 	@Override
 	public int getTicketCount() {
@@ -33,7 +33,7 @@ public class WeeklyPerfAllDAOImpl implements PerfAllDAOService{
 
 	@Override
 	public void insertPerformance(PerformanceOverall overall) {
-		overall.setPeriod("weekly");
+		overall.setPeriod("monthly");
 		repo.save(overall);
 		
 	}
@@ -47,6 +47,5 @@ public class WeeklyPerfAllDAOImpl implements PerfAllDAOService{
 	public void updatePerformance(PerformanceOverall perf) {
 		repo.save(perf);
 	}
-
 
 }

@@ -7,16 +7,16 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vdi.batch.mds.repository.WeeklyPerfTeamRepository;
+import com.vdi.batch.mds.repository.MonthlyPerfTeamRepository;
 import com.vdi.batch.mds.repository.dao.PerfTeamDAOService;
 import com.vdi.model.performance.PerformanceTeam;
 
 @Transactional
-@Service("weeklyPerfTeamDAO")
-public class WeeklyPerfTeamDAOImpl implements PerfTeamDAOService {
+@Service("monthlyPerfTeamDAO")
+public class MonthlyPerfTeamDAOImpl implements PerfTeamDAOService{
 	
 	@Autowired
-	private WeeklyPerfTeamRepository repo;
+	MonthlyPerfTeamRepository repo;
 
 	@Override
 	public List<Object[]> getTeamTicketByDivision() {
@@ -37,5 +37,7 @@ public class WeeklyPerfTeamDAOImpl implements PerfTeamDAOService {
 	public void updatePerformance(List<PerformanceTeam> teams) {
 		repo.saveAll(teams);		
 	}
+	
+	
 
 }

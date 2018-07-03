@@ -7,17 +7,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vdi.batch.mds.repository.WeeklyPerfAgentRepository;
+import com.vdi.batch.mds.repository.MonthlyPerfAgentRepository;
 import com.vdi.batch.mds.repository.dao.PerfAgentDAOService;
 import com.vdi.model.performance.PerformanceAgent;
 
 @Transactional
-@Service("weeklyPerfAgentDAO")
-public class WeeklyPerfAgentDAOImpl implements PerfAgentDAOService{
+@Service("monthlyPerfAgentDAO")
+public class MonthlyPerfAgentDAOImpl implements PerfAgentDAOService{
 	
 	@Autowired
-	private WeeklyPerfAgentRepository repo;
-
+	MonthlyPerfAgentRepository repo;
+	
 	@Override
 	public List<Object[]> getAgentTicket() {
 		return repo.getAgentTicket();
@@ -39,6 +39,4 @@ public class WeeklyPerfAgentDAOImpl implements PerfAgentDAOService{
 		repo.saveAll(agents);		
 	}
 
-	
-	
 }

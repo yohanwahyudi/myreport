@@ -15,9 +15,10 @@ public class PerfTest2 {
 		
 		
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-		PopulatePerformance populatePerf = ctx.getBean(PopulatePerformance.class);
+		PopulatePerformance populatePerf = ctx.getBean("populatePerformanceWeekly",PopulatePerformance.class);
 		logger.debug("begin");
 		populatePerf.populatePerformance();
+		logger.debug("finished");
 		
 	}
 
