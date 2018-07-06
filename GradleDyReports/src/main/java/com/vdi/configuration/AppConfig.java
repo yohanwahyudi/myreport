@@ -62,6 +62,7 @@ public final class AppConfig {
 	private final String mdsDailyReportPath;
 	private final String mdsFileSource;
 	private final String mdsHttpUrl;
+	private final String mdsHttpSdUrl;
 	private final String mdsCsvAgentDelimiters;
 	private final String mdsCsvAgentFile;
 	
@@ -75,6 +76,7 @@ public final class AppConfig {
 		this.httpMaxPerRoute = env.getRequiredProperty(PropertyNames.HTTP_MAXPERROUTE, Integer.class);
 		
 		this.mdsHttpUrl = env.getRequiredProperty(PropertyNames.MDS_HTTP_URL,String.class);
+		this.mdsHttpSdUrl = env.getRequiredProperty(PropertyNames.MDS_HTTP_SD_URL,String.class);
 		this.mailHost = env.getRequiredProperty(PropertyNames.MAIL_HOST,String.class);
 		this.mailPort = env.getRequiredProperty(PropertyNames.MAIL_PORT, Integer.class);
 		this.mailFrom = env.getRequiredProperty(PropertyNames.MAIL_FROM,String.class);
@@ -259,6 +261,10 @@ public final class AppConfig {
 
 	public String[] getMailSlaMgr() {
 		return mailSlaMgr;
+	}
+
+	public String getMdsHttpSdUrl() {
+		return mdsHttpSdUrl;
 	}
 
 }

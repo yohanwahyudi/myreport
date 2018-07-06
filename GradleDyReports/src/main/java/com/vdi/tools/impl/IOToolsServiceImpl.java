@@ -131,6 +131,24 @@ public class IOToolsServiceImpl implements IOToolsService{
 		}
 	}
 	
+	public void writeBuffered(String str, int bufSize, String fileName) throws IOException {
+		File file = new File(fileName);
+		try {
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter bufWriter = new BufferedWriter(fw, bufSize);
+			
+			logger.debug("Writing buffered (buffer size: " + bufSize + ")... ");
+			
+			write(str,bufWriter);
+			
+			logger.debug("write finished");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 	private void writeBufferedIncident(List<Incident> records, int bufSize, String fileName) throws IOException {
 		File file = new File(fileName);
 		BufferedWriter bufferedWriter = null;
@@ -163,6 +181,19 @@ public class IOToolsServiceImpl implements IOToolsService{
 		writer.close();
 		long end = System.currentTimeMillis();
 		logger.debug((end - start) / 1000f + " seconds");
+	}
+	
+	private void write(String str, Writer writter) throws IOException {
+		try {
+			writter.write(str);
+		} catch(IOException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			writter.flush();
+			writter.close();
+		}
+		
 	}
 	
 	//HTTP Tools
@@ -229,6 +260,8 @@ public class IOToolsServiceImpl implements IOToolsService{
 				sBuilder.append(line);
 			}
 
+		} catch (ConnectException e) {
+			e.printStackTrace();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

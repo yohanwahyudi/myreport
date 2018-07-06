@@ -22,6 +22,7 @@ public final class PropertyNames {
 	public static final String MDS_JSOUP_FILE = "mds.jsoup.file";
 	public static final String MDS_EMAIL_DAILY_TO = "mds.daily.email.to";
 	public static final String MDS_HTTP_URL = "mds.http.url";
+	public static final String MDS_HTTP_SD_URL = "mds.http.sd.url";
 	public static final String MDS_EMAIL_DAILY_SUBJECT = "mds.daily.email.subject";
 	public static final String MDS_DAILY_REPORT_PATH = "mds.daily.report.path";
 

@@ -9,7 +9,7 @@ public interface ItopMDSDataLoaderService {
 	public List<List<String>> loadTrToListVisionetByUrl();
 	public List<List<String>> loadTrToListVisionetByFile();
 	
-	public List<Staging> getStagingAllByURL(); 
-	public List<Staging> getStagingAllByFile();
+	public List getStagingAllByURL(); 
+	public List getStagingAllByFile();
 
 }
