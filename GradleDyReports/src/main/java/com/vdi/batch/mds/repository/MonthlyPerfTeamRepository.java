@@ -17,16 +17,16 @@ public interface MonthlyPerfTeamRepository extends CrudRepository<PerformanceTea
 			"       Ifnull(three.missed_ticket, 0) as missed_ticket " + 
 			"FROM   (SELECT agent.division, " + 
 			"               Count(ref) AS total_ticket " + 
-			"        FROM   test.incident incident " + 
-			"               INNER JOIN test.agent agent " + 
+			"        FROM   incident incident " + 
+			"               INNER JOIN agent agent " + 
 			"                       ON incident.agent_fullname = agent.NAME " + 
 			"        WHERE  status IN ( 'closed', 'resolved' ) " + 
 			"               AND month(start_date)=month(curdate())-1 AND year(start_date)=year(curdate()) " + 
 			"        GROUP  BY division) one " + 
 			"       LEFT JOIN (SELECT agent.division, " + 
 			"                         Count(ref) AS achieved_ticket " + 
-			"                  FROM   test.incident incident " + 
-			"                         INNER JOIN test.agent agent " + 
+			"                  FROM   incident incident " + 
+			"                         INNER JOIN agent agent " + 
 			"                                 ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status IN ( 'closed', 'resolved' ) " + 
 			"                         AND ttr_passed = 'no' " + 
@@ -35,8 +35,8 @@ public interface MonthlyPerfTeamRepository extends CrudRepository<PerformanceTea
 			"              ON one.division = two.division " + 
 			"       LEFT JOIN (SELECT agent.division, " + 
 			"                         Count(ref) AS missed_ticket " + 
-			"                  FROM   test.incident incident " + 
-			"                         INNER JOIN test.agent agent " + 
+			"                  FROM   incident incident " + 
+			"                         INNER JOIN agent agent " + 
 			"                                 ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status IN ( 'closed', 'resolved' ) " + 
 			"                         AND ttr_passed = 'yes' " + 
@@ -45,7 +45,7 @@ public interface MonthlyPerfTeamRepository extends CrudRepository<PerformanceTea
 			"              ON one.division = three.division; ",nativeQuery=true)
 	public List<Object[]> getTeamTicketByDivision();
 	
-	@Query(value="select * from test.perf_team WHERE  month(created_dt)=month(curdate()) and year(created_dt)=year(curdate()) AND period='monthly';", nativeQuery=true)
+	@Query(value="select * from perf_team WHERE  month(created_dt)=month(curdate()) and year(created_dt)=year(curdate()) AND period='monthly' AND category='sa';", nativeQuery=true)
 	public List<PerformanceTeam> getPerformanceThisWeek();
 	
 }

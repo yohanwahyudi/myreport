@@ -6,5 +6,5 @@ import com.vdi.model.staging.StagingServiceDesk;
 
 public interface StagingServiceDeskDAOService extends BaseDAOService{
 
-	
+	public List<Object[]> getUnregisteredAgent();
 }

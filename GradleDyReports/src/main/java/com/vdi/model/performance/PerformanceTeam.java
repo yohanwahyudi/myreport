@@ -27,6 +27,7 @@ public class PerformanceTeam {
 	private int totalMissed;
 	private float achievement;
 	private String period;
+	private String category;
 
 	@Column(name = "created_dt")
 	@CreationTimestamp
@@ -109,6 +110,22 @@ public class PerformanceTeam {
 
 	public void setPeriod(String period) {
 		this.period = period;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 	

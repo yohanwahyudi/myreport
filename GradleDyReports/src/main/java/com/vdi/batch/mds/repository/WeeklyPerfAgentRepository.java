@@ -21,8 +21,8 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"FROM   (SELECT agent.division, " + 
 			"               incident.agent_fullname, " + 
 			"               Count(incident.ref) AS total_ticket " + 
-			"        FROM   test.incident incident " + 
-			"               JOIN test.agent " + 
+			"        FROM   incident incident " + 
+			"               JOIN agent " + 
 			"                 ON incident.agent_fullname = agent.NAME " + 
 			"        WHERE  Yearweek(start_date, 3) = Yearweek(Curdate(), 3) AND status IN ( 'closed', 'resolved' ) " + 
 			"        GROUP  BY incident.agent_fullname " + 
@@ -31,8 +31,8 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"       LEFT JOIN (SELECT agent.division, " + 
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS achieved_ticket " + 
-			"                  FROM   test.incident incident " + 
-			"                         JOIN test.agent " + 
+			"                  FROM   incident incident " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status IN ( 'closed', 'resolved' ) " + 
 			"                         AND ttr_passed = 'no' " + 
@@ -44,7 +44,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"       LEFT JOIN (SELECT agent.division, " + 
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS missed_ticket " + 
-			"                  FROM   test.incident incident " + 
+			"                  FROM   incident incident " + 
 			"                         JOIN test.agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status IN ( 'closed', 'resolved' ) " + 
@@ -57,7 +57,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"       LEFT JOIN (SELECT agent.division, " + 
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS pending_ticket " + 
-			"                  FROM   test.incident incident " + 
+			"                  FROM   incident incident " + 
 			"                         JOIN test.agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status = 'pending' " + 
@@ -69,7 +69,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"       LEFT JOIN (SELECT agent.division, " + 
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS assigned_ticket " + 
-			"                  FROM   test.incident incident " + 
+			"                  FROM   incident incident " + 
 			"                         JOIN test.agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status = 'assigned' " + 
@@ -80,7 +80,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"              ON one.agent_fullname = five.agent_fullname; ", nativeQuery=true)
 	public List<Object[]> getAgentTicket();
 	
-	@Query(value="SELECT * FROM test.perf_agent WHERE Yearweek(created_dt, 3) = Yearweek(Curdate(), 3) AND period='weekly';", nativeQuery=true)
+	@Query(value="SELECT * FROM perf_agent WHERE Yearweek(created_dt, 3) = Yearweek(Curdate(), 3) AND period='weekly' AND category='sa';", nativeQuery=true)
 	public List<PerformanceAgent> getPerformanceThisWeek();
 
 }

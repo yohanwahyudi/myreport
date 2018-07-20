@@ -46,6 +46,7 @@ public class PopulateIncident {
 
 	private List<Object[]> unregisteredAgentList;
 
+	@SuppressWarnings("unchecked")
 	public void addToStaging() {
 		stagingList = new ArrayList<Staging>();
 		stagingList = loadIncidentFromURL.getStagingAllByURL();

@@ -1,4 +1,4 @@
-package com.vdi.batch.mds.helper.monthly;
+package com.vdi.batch.mds.helper.weekly;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -7,36 +7,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 
 import com.vdi.batch.mds.repository.dao.PerfAgentDAOService;
 import com.vdi.batch.mds.repository.dao.PerfAllDAOService;
-import com.vdi.batch.mds.repository.dao.PerfTeamDAOService;
 import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
-import com.vdi.model.performance.PerformanceTeam;
 
-@Configuration("populatePerformanceMonthly")
-public class PopulatePerformance {
-	
+@Configuration("populateSDPerformanceWeekly")
+public class PopulateSDPerformance {
+
 	@Autowired
-	@Qualifier("monthlyPerfAllDAO")
+	@Qualifier("weeklySDPerfAllDAO")
 	private PerfAllDAOService allDAO;
 
 	@Autowired
-	@Qualifier("monthlyPerfTeamDAO")
-	private PerfTeamDAOService teamDAO;
-
-	@Autowired
-	@Qualifier("monthlyPerfAgentDAO")
+	@Qualifier("weeklySDPerfAgentDAO")
 	private PerfAgentDAOService agentDAO;
-
+	
+	private final Logger logger = LogManager.getLogger(PopulateSDPerformance.class);
 	
 	public void populatePerformance() {
 		allDAO.insertPerformance(getPerformanceOverall());
-		teamDAO.insertPerformance(getPerformanceTeamList());
 		agentDAO.insertPerformance(getPerformanceAgentList());
 	}
 
@@ -56,84 +52,19 @@ public class PopulatePerformance {
 			poUseThis.setTotalAchieved(achievedCount);
 			poUseThis.setTotalMissed(missedCount);
 			poUseThis.setAchievement(achievement);
-			poUseThis.setPeriod("monthly");
-			poUseThis.setCategory("sa");
+			poUseThis.setPeriod("weekly");
+			poUseThis.setCategory("sd");
 		} else {
 			poExisting.setTotalTicket(ticketCount);
 			poExisting.setTotalAchieved(achievedCount);
 			poExisting.setTotalMissed(missedCount);
 			poExisting.setAchievement(achievement);
-
+			
 			poUseThis = poExisting;
 		}
 		
 		return poUseThis;
 
-	}
-
-	public List<PerformanceTeam> getPerformanceTeamList() {
-
-		// get new ticket
-		List<Object[]> newObjList = new ArrayList<Object[]>();
-		newObjList = teamDAO.getTeamTicketByDivision();
-
-		Map<String, PerformanceTeam> newPerfMap = new HashMap<String, PerformanceTeam>();
-		List<PerformanceTeam> newPerfList = new ArrayList<PerformanceTeam>();
-
-		for (Object[] object : newObjList) {
-
-			int ticketCount = ((BigInteger) object[1]).intValue();
-			int achievedCount = ((BigInteger) object[2]).intValue();
-			int missedCount = ((BigInteger) object[3]).intValue();
-			float achievement = (getAchievementTicket(new BigDecimal(achievedCount), new BigDecimal(ticketCount)))
-					.floatValue();
-			String teamName = (String) object[0];
-
-			PerformanceTeam perfTeam = new PerformanceTeam();
-			perfTeam.setTeamName(teamName);
-			perfTeam.setTotalTicket(ticketCount);
-			perfTeam.setTotalAchieved(achievedCount);
-			perfTeam.setTotalMissed(missedCount);
-			perfTeam.setPeriod("monthly");
-			perfTeam.setCategory("sa");
-			perfTeam.setAchievement(achievement);
-
-			newPerfList.add(perfTeam);
-			newPerfMap.put(teamName, perfTeam);
-
-		}
-
-		// compare with existing ticket
-		List<PerformanceTeam> existingList = teamDAO.getPerformance();
-		List<PerformanceTeam> useThisList = new ArrayList<PerformanceTeam>();
-		if (existingList.size() < 1) {
-			useThisList = newPerfList;
-
-		} else {
-			Map<String, PerformanceTeam> existingMap = new HashMap<String, PerformanceTeam>();
-			for (PerformanceTeam pf : existingList) {
-				existingMap.put(pf.getTeamName(), pf);
-			}
-
-			for (Map.Entry<String, PerformanceTeam> entry : newPerfMap.entrySet()) {
-				PerformanceTeam existing = existingMap.get(entry.getKey());
-				PerformanceTeam updated = newPerfMap.get(entry.getKey());
-
-				if(existing!=null) {
-					existing.setAchievement(updated.getAchievement());
-					existing.setTeamName(updated.getTeamName());
-					existing.setTotalAchieved(updated.getTotalAchieved());
-					existing.setTotalMissed(updated.getTotalMissed());
-					existing.setTotalTicket(updated.getTotalTicket());
-				} else {
-					existing = updated;
-				}
-
-				useThisList.add(existing);
-			}
-		}
-
-		return useThisList;
 	}
 
 	public List<PerformanceAgent> getPerformanceAgentList() {
@@ -147,27 +78,25 @@ public class PopulatePerformance {
 
 		for (Object[] object : newObjList) {
 
+			logger.debug(object[0]+" "+object[0].getClass());
+			logger.debug(object[1]);
+			
 			String division = (String) object[0];
 			String agentName = (String) object[1];
-			int totalAssigned = ((BigInteger) object[2]).intValue();
-			int totalPending = ((BigInteger) object[3]).intValue();
-			int totalAchieved = ((BigInteger) object[4]).intValue();
-			int totalMissed = ((BigInteger) object[5]).intValue();
-			int totalTicket = ((BigInteger) object[6]).intValue();
-			String period = "monthly";
+			int totalAchieved = ((BigInteger) object[2]).intValue();
+			int totalMissed = ((BigInteger) object[3]).intValue();
+			int totalTicket = ((BigInteger) object[4]).intValue();
 			float achievement = (getAchievementTicket(new BigDecimal(totalAchieved), new BigDecimal(totalTicket)))
 					.floatValue();
 
 			PerformanceAgent perfAgent = new PerformanceAgent();
 			perfAgent.setDivision(division);
 			perfAgent.setAgentName(agentName);
-			perfAgent.setTotalAssigned(totalAssigned);
-			perfAgent.setTotalPending(totalPending);
 			perfAgent.setTotalAchieved(totalAchieved);
 			perfAgent.setTotalMissed(totalMissed);
 			perfAgent.setTotalTicket(totalTicket);
-			perfAgent.setPeriod(period);
-			perfAgent.setCategory("sa");
+			perfAgent.setPeriod("weekly");
+			perfAgent.setCategory("sd");
 			perfAgent.setAchievement(achievement);
 
 			newPerfList.add(perfAgent);
@@ -202,6 +131,7 @@ public class PopulatePerformance {
 				} else {
 					existing = updated;
 				}
+
 				useThisList.add(existing);
 			}
 		}
@@ -218,5 +148,5 @@ public class PopulatePerformance {
 
 		return achievement;
 	}
-	
+
 }

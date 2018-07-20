@@ -54,5 +54,10 @@ public class StagingServiceDeskDAOImpl implements StagingServiceDeskDAOService{
 		
 	}
 
+	@Override
+	public List<Object[]> getUnregisteredAgent() {
+		return repo.getUnregisteredAgent();
+	}
+
 	
 }
