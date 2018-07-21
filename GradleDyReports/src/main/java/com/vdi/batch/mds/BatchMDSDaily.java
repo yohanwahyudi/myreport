@@ -18,9 +18,9 @@ import org.springframework.stereotype.Component;
 
 import com.vdi.batch.mds.service.JsoupParseService;
 import com.vdi.batch.mds.service.MailService;
-import com.vdi.batch.mds.service.ReportGeneratorService;
 import com.vdi.configuration.AppContext;
 import com.vdi.model.Incident;
+import com.vdi.reports.dyreports.templates.service.ReportGeneratorService;
 
 @Component
 @ComponentScan({ "com.vdi.batch.mds.service", "com.vdi.configuration" })

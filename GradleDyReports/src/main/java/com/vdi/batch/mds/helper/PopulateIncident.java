@@ -61,11 +61,8 @@ public class PopulateIncident {
 
 		unregisteredAgentList = new ArrayList<Object[]>();
 		unregisteredAgentList = stagingDAO.getUnregisteredAgent();
-
-		if (unregisteredAgentList.size() < 1) {
-			stagingDAO.insertToIncidentTable();
-		} else {
-
+		
+		if(unregisteredAgentList.size() > 0) {
 			StringBuffer sb = new StringBuffer();
 
 			for (Object[] obj : unregisteredAgentList) {
@@ -79,6 +76,26 @@ public class PopulateIncident {
 
 			throw new Exception("Agent not Registered " + content);
 		}
+
+		stagingDAO.insertToIncidentTable();
+		
+//		if (unregisteredAgentList.size() < 1) {
+//			stagingDAO.insertToIncidentTable();
+//		} else {
+//
+//			StringBuffer sb = new StringBuffer();
+//
+//			for (Object[] obj : unregisteredAgentList) {
+//				sb.append(obj[0]).append(" - ").append(obj[1]).append("\n");
+//			}
+//			String content = sb.toString();
+//
+//			sendMail("Agent not Registered " + content);
+//			
+//			logger.debug("Agent not registered "+content);
+//
+//			throw new Exception("Agent not Registered " + content);
+//		}
 
 	}
 

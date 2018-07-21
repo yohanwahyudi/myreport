@@ -32,6 +32,7 @@ public class PerformanceAgent {
 	private float achievement;
 	private String period;
 	private String category;
+	private short month;
 
 	@Column(name = "created_dt")
 	@CreationTimestamp
@@ -162,6 +163,14 @@ public class PerformanceAgent {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public short getMonth() {
+		return month;
+	}
+
+	public void setMonth(short month) {
+		this.month = month;
 	}
 
 	

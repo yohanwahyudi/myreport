@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 
-import org.apache.velocity.app.VelocityEngine;
+//import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
@@ -28,8 +28,8 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	JavaMailSender mailSender;
 
-	@Autowired
-	VelocityEngine velocityEngine;
+//	@Autowired
+//	VelocityEngine velocityEngine;
 
 	@Autowired
 	Configuration freemarkerConfiguration;

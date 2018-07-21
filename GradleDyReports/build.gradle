@@ -42,10 +42,17 @@ dependencies {
     compile('com.zaxxer:HikariCP:2.2.5')
     compile('org.apache.commons:commons-dbcp2:2.2.0')
     
+    //dynamicJasper
+    compile('ar.com.fdvs:DynamicJasper:5.1.1')
+    compile('net.sf.jasperreports:jasperreports-fonts:6.0.0')
+    //compile('net.sf.jasperreports:jasperreports:6.6.0')
+    compile('commons-beanutils:commons-beanutils:1.9.3')
+    compile('commons-digester:commons-digester:2.1')
+    
     //dynamicreports
-    compile('net.sourceforge.dynamicreports:dynamicreports-core:5.1.0')
-    compile('net.sourceforge.dynamicreports:dynamicreports-adhoc:5.1.0')
-	compile('net.sourceforge.dynamicreports:dynamicreports-googlecharts:5.1.0')
+    //compile('net.sourceforge.dynamicreports:dynamicreports-core:5.1.0')
+    //compile('net.sourceforge.dynamicreports:dynamicreports-adhoc:5.1.0')
+	//compile('net.sourceforge.dynamicreports:dynamicreports-googlecharts:5.1.0')
 	compile('com.lowagie:itext:2.1.7')
 	//compile('ar.com.fdvs:DynamicJasper:5.1.0')
 	
@@ -90,4 +97,5 @@ dependencies {
 	//compile('org.springframework.batch:spring-batch-infrastructure:4.0.0.RELEASE')
 	
 	compile('javax.servlet:javax.servlet-api:4.0.0')
+	
 }

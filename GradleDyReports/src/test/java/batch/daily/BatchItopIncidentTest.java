@@ -14,11 +14,11 @@ import org.springframework.context.support.AbstractApplicationContext;
 import com.vdi.batch.mds.service.ItopMDSDataLoaderService;
 import com.vdi.batch.mds.service.JsoupParseService;
 import com.vdi.batch.mds.service.MailService;
-import com.vdi.batch.mds.service.ReportGeneratorService;
 import com.vdi.configuration.AppConfig;
 import com.vdi.configuration.AppContext;
 import com.vdi.model.Incident;
 import com.vdi.model.staging.Staging;
+import com.vdi.reports.dyreports.templates.service.ReportGeneratorService;
 
 public class BatchItopIncidentTest {
 	

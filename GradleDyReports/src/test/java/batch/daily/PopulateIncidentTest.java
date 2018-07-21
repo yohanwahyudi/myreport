@@ -8,6 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.vdi.batch.mds.helper.PopulateIncident;
+import com.vdi.batch.mds.helper.PopulateServiceDesk;
 import com.vdi.configuration.AppConfig;
 
 public class PopulateIncidentTest {
@@ -19,9 +20,11 @@ public class PopulateIncidentTest {
 		AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		
 		PopulateIncident populate = ctx.getBean(PopulateIncident.class);
+//		PopulateServiceDesk populateSd = ctx.getBean(PopulateServiceDesk.class);
 		
 //		try {
 			populate.populate();
+//			populateSd.populate();
 //		} catch (Exception e) {
 //			throw e;
 //		}

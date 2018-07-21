@@ -48,4 +48,28 @@ public class MonthlySDPerfAllDAOImpl implements PerfAllDAOService{
 		repo.save(perf);
 	}
 
+	@Override
+	public int getTicketCount(int week, int month) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getAchievedTicketCount(int week, int month) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getMissedTicketCount(int week, int month) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public PerformanceOverall getPerformance(int week, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

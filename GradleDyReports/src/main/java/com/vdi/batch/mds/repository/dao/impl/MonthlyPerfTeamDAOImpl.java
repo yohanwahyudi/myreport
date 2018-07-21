@@ -37,6 +37,18 @@ public class MonthlyPerfTeamDAOImpl implements PerfTeamDAOService{
 	public void updatePerformance(List<PerformanceTeam> teams) {
 		repo.saveAll(teams);		
 	}
+
+	@Override
+	public List<Object[]> getTeamTicketByDivision(int week, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PerformanceTeam> getPerformance(int week, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

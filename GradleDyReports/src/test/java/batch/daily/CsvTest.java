@@ -18,19 +18,20 @@ public class CsvTest {
 	public static void main(String args[]) {
 		
 		String file = System.getProperty("user.dir")+File.separator+"test.csv";
-		String delimiters = ",";
+		String delimiters = ";";
 		
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		
 		ParseCSVService parse = ctx.getBean("parseCSVService", ParseCSVService.class);
 		
-		System.out.println(file);
-		System.out.println(parse.readHeader());
-		System.out.println(parse.readRows());
 		
 		PopulateSupportAgent populate = ctx.getBean(PopulateSupportAgent.class);		
 		try {
 			populate.populate();
+			
+			System.out.println(file);
+			System.out.println(parse.readHeader());
+			System.out.println(parse.readRows());
 			
 //			System.out.println(populate.getAgentForInsert());
 			

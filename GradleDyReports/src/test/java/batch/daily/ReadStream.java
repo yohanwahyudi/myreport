@@ -2,17 +2,27 @@ package batch.daily;
 
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.vdi.batch.mds.repository.dao.PerfAgentDAOService;
+import com.vdi.batch.mds.repository.dao.PerfAllDAOService;
 import com.vdi.batch.mds.repository.dao.StagingServiceDeskDAOService;
+import com.vdi.batch.mds.repository.dao.TempValueService;
 import com.vdi.batch.mds.service.ItopMDSDataLoaderService;
 import com.vdi.configuration.AppConfig;
+import com.vdi.model.TempValue;
+import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.staging.StagingServiceDesk;
 import com.vdi.tools.IOToolsService;
+import com.vdi.tools.TimeStatic;
 
 public class ReadStream {
 	
@@ -21,22 +31,47 @@ public class ReadStream {
 	
 	public static void main(String args[]) throws IOException {
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-		IOToolsService io = ctx.getBean("ioTools",IOToolsService.class);
 		
-//		String readLine = io.readUrl("http://172.17.6.21/itop/web/api/Query1_8b09fc98eb98edcff9700ee747064cd6.php");
-//		System.out.println("sa: "+readLine.length());
+		TempValueService tempValue = ctx.getBean("tempValueDAO", TempValueService.class);
+//		
+//		TempValue tv = new TempValue("LAST_MONTH","6");
+//		
+//		tempValue.save(tv);
 		
-//		String read = io.readUrl("http://172.17.6.21/itop/web/api/Query2_796e92b9df3e0fc7b9ee0c37a462cec8.php");
-//		System.out.println("sd: "+read.length());
+//		TempValue temp = tempValue.getTempValueByName("LAST_MONTH");
 		
-		ItopMDSDataLoaderService loader = ctx.getBean("serviceDeskDataLoaderService",ItopMDSDataLoaderService.class);
-		List<StagingServiceDesk> stagingList = loader.getStagingAllByURL();
+		System.out.println(tempValue.getTempValueByName("LAST_MONTH").getValue());
+		
+		PerfAllDAOService perfAllSdWeekly = ctx.getBean("weeklySDPerfAllDAO", PerfAllDAOService.class);
+		
+		int week = TimeStatic.currentWeekYear-1;
+		int month = TimeStatic.currentMonth;
+		
+		System.out.println("all "+perfAllSdWeekly.getTicketCount(week, month));
+		System.out.println("achieved: "+perfAllSdWeekly.getAchievedTicketCount(week, month));
+		System.out.println("missed: "+perfAllSdWeekly.getMissedTicketCount(week, month));
+		
+		PerfAgentDAOService perfAgentSdWeekly = ctx.getBean("weeklySDPerfAgentDAO", PerfAgentDAOService.class);
+		
+		List<Object[]> newObjList = new ArrayList<Object[]>();
+		newObjList = perfAgentSdWeekly.getAgentTicket(week, month);
+
+		for (Object[] object : newObjList) {
+
+			logger.debug(object[0]+" "+object[0].getClass());
+			logger.debug(object[1]);
+			
+			String division = (String) object[0];
+			String agentName = (String) object[1];
+			int totalAchieved = ((BigInteger) object[2]).intValue();
+			int totalMissed = ((BigInteger) object[3]).intValue();
+			int totalTicket = ((BigInteger) object[4]).intValue();
+			
+			System.out.println("agent: "+agentName);
+			System.out.println("totalTicket: "+totalTicket);
+		}
 		
 		
-		StagingServiceDeskDAOService stagingService = ctx.getBean("stagingServiceDeskDAO",StagingServiceDeskDAOService.class);
-		stagingService.addAll(stagingList);
-		
-		logger.debug(""+stagingList.size());
 	}
 	
 	

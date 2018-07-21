@@ -39,4 +39,16 @@ public class MonthlySDPerfAgentDAOImpl implements PerfAgentDAOService{
 		repo.saveAll(agents);		
 	}
 
+	@Override
+	public List<Object[]> getAgentTicket(int week, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PerformanceAgent> getPerformance(int week, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

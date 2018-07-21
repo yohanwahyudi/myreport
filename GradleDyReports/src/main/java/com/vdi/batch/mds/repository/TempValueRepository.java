@@ -15,6 +15,6 @@ public interface TempValueRepository extends CrudRepository<TempValue, Integer>{
 	public TempValue getTempValue();
 	
 	@Query(value="UPDATE temp_value SET value = :value WHERE name = :name", nativeQuery=true)
-	public void updateTempValue(String value, String name);
+	public void updateTempValue(@Param("value") String value, @Param("name") String name);
 
 }
