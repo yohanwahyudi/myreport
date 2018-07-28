@@ -7,10 +7,12 @@ import com.vdi.tools.TimeStatic;
 
 import ar.com.fdvs.dj.domain.AutoText;
 import ar.com.fdvs.dj.domain.DynamicReport;
+import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
 import ar.com.fdvs.dj.domain.constants.Page;
+import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
 
 @Configuration
 public class TemplateBuilders {
@@ -41,6 +43,59 @@ public class TemplateBuilders {
 		this.saAssignedSub = createSAAssignedSub(style);
 		this.saIncidentSub = createSAIncidentSub(style);
 
+	}
+	
+	public DynamicReportBuilder createMaster(TemplateStyles style) {
+		
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		Integer margin = 20;
+		drb
+			.setTitleStyle(style.getDejavuSansTitleStyle())
+			.setTitle("November " + "2018" +" sales report")					//defines the title of the report
+			.setSubtitle("The items in this report correspond "
+					+"to the main products: DVDs, Books, Foods and Magazines")
+			.setDetailHeight(15).setLeftMargin(margin)
+			.setRightMargin(margin).setTopMargin(margin).setBottomMargin(margin)
+			.setPrintBackgroundOnOddRows(true)
+//			.setGrandTotalLegend("Grand Total")
+//			.setGrandTotalLegendStyle(headerVariables)
+			.setOddRowBackgroundStyle(style.getOddRowStyle())
+			.addAutoText(AutoText.AUTOTEXT_PAGE_X_SLASH_Y, AutoText.POSITION_FOOTER, AutoText.ALIGNMENT_RIGHT);
+		
+		return drb;
+	}
+	
+	public DynamicReport createAllSub(TemplateStyles style) {
+		
+		AbstractColumn columnTotalTicket = ColumnBuilder.getNew()
+				.setColumnProperty("totalTicket", String.class.getName()).setTitle(
+						"Ticket Total").setWidth(new Integer(45))
+				.setStyle(style.getDetailStyle()).setHeaderStyle(style.getDejavuSansTitleStyle()).build();
+		
+		AbstractColumn columnAchievedTicket = ColumnBuilder.getNew()
+				.setColumnProperty("totalAchieved", String.class.getName()).setTitle(
+						"Achieved").setWidth(new Integer(45))
+				.setStyle(style.getDetailStyle()).setHeaderStyle(style.getDejavuSansTitleStyle()).build();
+		
+		AbstractColumn columnMissedTicket = ColumnBuilder.getNew()
+				.setColumnProperty("totalMissed", String.class.getName()).setTitle(
+						"Missed").setWidth(new Integer(45))
+				.setStyle(style.getDetailStyle()).setHeaderStyle(style.getDejavuSansTitleStyle()).build();
+		
+		AbstractColumn columnAchievement = ColumnBuilder.getNew()
+				.setColumnProperty("achievement", String.class.getName()).setTitle(
+						"Achievement").setWidth(new Integer(45))
+				.setStyle(style.getDetailStyle()).setHeaderStyle(style.getDejavuSansTitleStyle()).build();
+		
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.addColumn(columnTotalTicket);
+		drb.addColumn(columnAchievedTicket);
+		drb.addColumn(columnMissedTicket);
+		drb.addColumn(columnAchievement);
+		drb.setUseFullPageWidth(true);
+		
+		return drb.build();
+		
 	}
 
 	

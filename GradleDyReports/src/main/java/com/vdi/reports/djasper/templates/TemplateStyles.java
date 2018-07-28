@@ -20,9 +20,9 @@ public class TemplateStyles {
 	private Style standardSubTitleStyle;
 	private Style dejavuSansTitleStyle;
 
+	private Style standardHeaderStyle;
 	private Style arialHeaderStyle;
 	private Style arialHeaderVariableStyle;
-	private Style standardHeaderStyle;
 	
 	private Style standardDetailTextStyle;
 	private Style standardDetailRedTextStyle;
@@ -33,6 +33,11 @@ public class TemplateStyles {
 	private Style stdLeftPerfTextStyle;
 	private Style stdRedPerfTextStyle;
 	private Style stdGreenPerfTextStyle;
+	private Style detailStyle;
+	
+	private Style groupVariableStyle;
+	
+	private Style importSTyle;
 	
 	private Style standardOddBgStyle;
 	private Style oddRowStyle;
@@ -47,6 +52,9 @@ public class TemplateStyles {
 		this.dejavuSansTitleStyle = createDejavuSansTitleStyle(fonts);
 
 		this.standardHeaderStyle = createStandardHeaderStyle(fonts);
+		this.arialHeaderStyle = createArialHeaderStyle(fonts);
+		this.arialHeaderVariableStyle = createArialHeaderVariableStyle(fonts);
+		
 		this.standardDetailTextStyle = createStandardDetailTextStyle(fonts);
 		this.standardDetailRedTextStyle = createStandardDetailRedTextStyle(fonts);
 		this.standardDetailGreenTextStyle = createStandardDetailGreenTextStyle(fonts);
@@ -56,8 +64,14 @@ public class TemplateStyles {
 		this.stdDetailPerfTextStyle = createStdPerfTextStyle(fonts);
 		this.stdRedPerfTextStyle = createStdRedPerfTextStyle(fonts);
 		this.stdGreenPerfTextStyle = createStdGreenPerfTextStyle(fonts);
+		this.detailStyle = createDetailStyle(fonts);
+		
+		this.groupVariableStyle = createGroupVariableStyle(fonts);
+		
+		this.importSTyle = createImportStyle(fonts);
 		
 		this.standardOddBgStyle = createStandardOddBgStyle(fonts);
+		this.oddRowStyle = createOddRowStyle(fonts);
 	}
 	
 
@@ -109,6 +123,32 @@ public class TemplateStyles {
 		sb.setVerticalAlign(VerticalAlign.MIDDLE);
 		sb.setTransparency(Transparency.OPAQUE);
 		return sb.build();
+	}
+	
+	public Style createArialHeaderStyle(TemplateFonts fonts) {
+		
+		Style headerStyle = new Style("headerStyle");
+		headerStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
+		headerStyle.setBorderBottom(Border.PEN_1_POINT());
+		headerStyle.setBackgroundColor(Color.gray);
+		headerStyle.setTextColor(Color.white);
+		headerStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+		headerStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+		headerStyle.setTransparency(Transparency.OPAQUE);
+		
+		return headerStyle;
+	}
+	
+	public Style createArialHeaderVariableStyle(TemplateFonts fonts) {
+		
+		Style headerVariables = new Style("headerVariables");
+		headerVariables.setFont(Font.ARIAL_BIG_BOLD);
+		headerVariables.setBorderBottom(Border.THIN());
+		headerVariables.setHorizontalAlign(HorizontalAlign.RIGHT);
+		headerVariables.setVerticalAlign(VerticalAlign.TOP);
+		headerVariables.setStretchWithOverflow(true);
+		
+		return headerVariables;
 	}
 	
 	public Style createStandardDetailLeftTextStyle(TemplateFonts fonts) {
@@ -201,7 +241,33 @@ public class TemplateStyles {
 		sb.setVerticalAlign(VerticalAlign.MIDDLE);
 		return sb.build();
 	}
+	
+	public Style createDetailStyle(TemplateFonts fonts) {
+		Style detailStyle = new Style("detailStyle");
+		
+		return detailStyle;
+	}
+	
+	public Style createGroupVariableStyle(TemplateFonts fonts) {
+		
+		Style groupVariables = new Style("groupVariables");
+		groupVariables.setFont(Font.ARIAL_MEDIUM_BOLD);
+		groupVariables.setTextColor(Color.BLUE);
+		groupVariables.setBorderBottom(Border.THIN());
+		groupVariables.setHorizontalAlign(HorizontalAlign.RIGHT);
+		groupVariables.setVerticalAlign(VerticalAlign.BOTTOM);
+		
+		return groupVariables;
+	}
 
+	public Style createImportStyle(TemplateFonts fonts) {
+		
+		Style importeStyle = new Style();
+		importeStyle.setHorizontalAlign(HorizontalAlign.RIGHT);
+		
+		return importeStyle;
+	}
+	
 	public Style createStandardOddBgStyle(TemplateFonts fonts) {
 		Font font = fonts.createStandard8BoldFont().getFont();
 
@@ -281,6 +347,30 @@ public class TemplateStyles {
 
 	public Style getDejavuSansTitleStyle() {
 		return dejavuSansTitleStyle;
+	}
+
+	public Style getOddRowStyle() {
+		return oddRowStyle;
+	}
+
+	public Style getArialHeaderStyle() {
+		return arialHeaderStyle;
+	}
+
+	public Style getArialHeaderVariableStyle() {
+		return arialHeaderVariableStyle;
+	}
+
+	public Style getGroupVariableStyle() {
+		return groupVariableStyle;
+	}
+
+	public Style getImportSTyle() {
+		return importSTyle;
+	}
+
+	public Style getDetailStyle() {
+		return detailStyle;
 	}
 
 }
