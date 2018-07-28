@@ -68,5 +68,15 @@ public interface IncidentRepository extends CrudRepository<Incident, Long>{
 			"and ttr_passed='no' "+
 			";", nativeQuery=true)
 	public List<Incident> getAchievedIncidentByWeek(@Param("month") int month, @Param("week") int week);
+	
+	@Query(value="select " + 
+			"	* " + 
+			"from incident " + 
+			"where year(start_date)=year(curdate()) "+   
+			"and month(start_date)= :month "+
+			"and agent_fullname like 'EXT%' "+
+			"order by status desc"+
+			";", nativeQuery=true)
+	public List<Incident> getAllIncidentByMonth(@Param("month") int month);
 
 }

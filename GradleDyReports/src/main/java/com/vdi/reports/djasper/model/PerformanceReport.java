@@ -16,6 +16,7 @@ public class PerformanceReport {
 	private float achievement; 
 	
 	private List<PerformanceOverall> performanceAllList;
+	private List<SummaryReport> summaryReport;
 	private List<PerformanceTeam> performanceTeamList;
 	private List<PerformanceAgent> performanceAgentList;
 	
@@ -132,6 +133,14 @@ public class PerformanceReport {
 
 	public int getTotalMissed() {
 		return totalMissed;
+	}
+
+	public List<SummaryReport> getSummaryReport() {
+		return summaryReport;
+	}
+
+	public void setSummaryReport(List<SummaryReport> summaryReport) {
+		this.summaryReport = summaryReport;
 	}
 
 	public void setTotalMissed(int totalMissed) {
