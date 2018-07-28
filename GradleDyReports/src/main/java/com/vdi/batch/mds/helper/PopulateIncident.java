@@ -59,6 +59,8 @@ public class PopulateIncident {
 	public void addToMaster() throws Throwable {
 		stagingDAO.updateIncidentTable();
 
+		stagingDAO.insertToIncidentTable();
+		
 		unregisteredAgentList = new ArrayList<Object[]>();
 		unregisteredAgentList = stagingDAO.getUnregisteredAgent();
 		
@@ -77,7 +79,7 @@ public class PopulateIncident {
 			throw new Exception("Agent not Registered " + content);
 		}
 
-		stagingDAO.insertToIncidentTable();
+		
 		
 //		if (unregisteredAgentList.size() < 1) {
 //			stagingDAO.insertToIncidentTable();

@@ -3,7 +3,6 @@ package com.vdi.batch.mds.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.vdi.model.performance.PerformanceOverall;
 
@@ -19,6 +18,7 @@ public interface WeeklyPerfAllRepository extends CrudRepository<PerformanceOvera
 			"where year(start_date)=year(curdate()) "+   
 			"and month(start_date)= :month "+
 			"and week(start_date,3)= :week "+
+			"and agent_fullname like 'EXT%' "+
 			"and status in ('closed','resolved') "+
 			";", nativeQuery=true)
 	public int getTicketCount(@Param("week") int week, @Param("month") int month);
@@ -33,6 +33,7 @@ public interface WeeklyPerfAllRepository extends CrudRepository<PerformanceOvera
 			"where year(start_date)=year(curdate()) "+   
 			"and month(start_date)= :month "+
 			"and week(start_date,3)= :week "+
+			"and agent_fullname like 'EXT%' "+
 			"and status in ('closed','resolved') "+
 			"and ttr_passed='no' "+
 			";", nativeQuery=true)
@@ -48,6 +49,7 @@ public interface WeeklyPerfAllRepository extends CrudRepository<PerformanceOvera
 			"where year(start_date)=year(curdate()) "+   
 			"and month(start_date)= :month "+
 			"and week(start_date,3)= :week "+
+			"and agent_fullname like 'EXT%' "+
 			"and status in ('closed','resolved') "+
 			"and ttr_passed='yes' "+
 			";", nativeQuery=true)

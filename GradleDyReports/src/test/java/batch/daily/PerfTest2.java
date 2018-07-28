@@ -25,7 +25,7 @@ public class PerfTest2 {
 		logger.debug("begin");
 		populatePerf.populatePerformance();
 //		saMonthly.populatePerformance();
-//		sdWeekly.populatePerformance();
+		sdWeekly.populatePerformance();
 		
 //		sdMonthly.populatePerformance();
 		

@@ -1,0 +1,218 @@
+package com.vdi.reports.djasper.templates;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
+import com.vdi.tools.TimeStatic;
+
+import ar.com.fdvs.dj.domain.AutoText;
+import ar.com.fdvs.dj.domain.DynamicReport;
+import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
+import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
+import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
+import ar.com.fdvs.dj.domain.constants.Page;
+
+@Configuration
+public class TemplateBuilders {
+
+	private DynamicReportBuilder sAMaster;
+	private DynamicReport sAAllSub;
+
+	private DynamicReport saTeamSub;
+	private DynamicReport saAgentSub;
+	private DynamicReport saMissedtSub;
+	private DynamicReport saPendingSub;
+	private DynamicReport saAssignedSub;
+	private DynamicReport saIncidentSub;
+
+	public TemplateBuilders() {
+	}
+
+	@Autowired
+	public TemplateBuilders(TemplateStyles style) throws ColumnBuilderException, ClassNotFoundException {
+
+		this.sAMaster = createSAMaster(style);
+		this.sAAllSub = createSAAllSub(style);
+
+		this.saTeamSub = createSATeamSub(style);
+		this.saAgentSub = createSAAgentSub(style);
+		this.saMissedtSub = createSAMissedSub(style);
+		this.saPendingSub = createSAPendingSub(style);
+		this.saAssignedSub = createSAAssignedSub(style);
+		this.saIncidentSub = createSAIncidentSub(style);
+
+	}
+
+	
+	public DynamicReportBuilder createSAMaster(TemplateStyles style) throws ColumnBuilderException, ClassNotFoundException {
+		
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitleStyle(style.getStandardTitleStyle())
+			.setTitle("VDI SUPPORT AGENT PERFORMANCE BASED ON iTop ")
+			.setSubtitleStyle(style.getStandardSubTitleStyle())
+			.setSubtitle("WEEK "+ TimeStatic.currentWeekMonth + " "+ TimeStatic.currentYear)
+			.setLeftMargin(30).setRightMargin(30).setTopMargin(30).setBottomMargin(30).setPageSizeAndOrientation(Page.Page_A4_Landscape())
+			.setUseFullPageWidth(true)//.setWhenNoDataAllSectionNoDetail()
+			.addAutoText(AutoText.AUTOTEXT_PAGE_X_OF_Y, AutoText.POSITION_FOOTER, AutoText.ALIGMENT_LEFT);
+
+		return drb;
+	}
+	
+	public DynamicReport createSAAllSub(TemplateStyles style) throws ColumnBuilderException, ClassNotFoundException {
+
+		FastReportBuilder frb = new FastReportBuilder();
+		DynamicReport drSub = frb.addColumn("Ticket Total", "totalTicket", Integer.class, 45, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Ticket Achieved", "totalAchieved", Integer.class, 45, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Ticket Missed", "totalMissed", Integer.class, 45, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Achievement", "achievement", Float.class, 45, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getStandardOddBgStyle())
+				.setUseFullPageWidth(true).setWhenNoDataAllSectionNoDetail().build();
+
+		return drSub;
+	}
+
+	public DynamicReport createSATeamSub(TemplateStyles style) {
+
+		FastReportBuilder frb = new FastReportBuilder();
+
+		DynamicReport drSub = frb.addColumn("Team", "teamName", String.class, 80, style.getStdLeftPerfTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Ticket Total", "totalTicket", Integer.class, 45, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Ticket Achieved", "totalAchieved", Integer.class, 45, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Ticket Missed", "totalMissed", Integer.class, 45, style.getStandardDetailRedTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Achievement", "achievement", Float.class, 45, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getStandardOddBgStyle()).setUseFullPageWidth(true)
+				.build();
+
+		return drSub;
+	}
+
+	public DynamicReport createSAAgentSub(TemplateStyles style) {
+
+		FastReportBuilder rb = new FastReportBuilder();
+
+		DynamicReport drSub = rb.addColumn("Division", "division", String.class, 45, style.getStdLeftPerfTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Agent", "agentName", String.class, 150, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Assigned", "totalAssigned", Integer.class, 50, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Pending", "totalPending", Integer.class, 50, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Achieved", "totalAchieved", Integer.class, 50, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Missed", "totalMissed", Integer.class, 50, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Ticket Total", "totalTicket", Integer.class, 40, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Achievement", "achievement", Float.class, 50, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+//				.addColumn("Remarks", "remarks", String.class, 50, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.addGroups(1)
+//				.setTitleStyle(style.getStandardTitleStyle()).setTitle("VDI Support Agent Performance")
+				.setTitle("VDI SUPPORT AGENT PERFORMANCE")
+				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getStandardOddBgStyle()).setUseFullPageWidth(true)
+				.build();
+
+		return drSub;
+	}
+
+	public DynamicReport createSAMissedSub(TemplateStyles style) {
+
+		FastReportBuilder rb = new FastReportBuilder();
+
+		DynamicReport drSub = rb.addColumn("Ticket Number", "ref", String.class, 45, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle() )
+				.addColumn("Title", "title", String.class, 150, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Agent", "agent_fullname", String.class, 150, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Start Date", "start_date", String.class, 50, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Closed Date", "close_date", String.class, 50, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Status", "status", String.class, 50, style.getStandardDetailTextStyle(), style.getStandardHeaderStyle())
+				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getStandardOddBgStyle()).setUseFullPageWidth(true)
+				.setTitle("MISSED TICKET")
+				.build();
+
+		return drSub;
+
+	}
+
+	public DynamicReport createSAPendingSub(TemplateStyles style) {
+
+		FastReportBuilder rb = new FastReportBuilder();
+
+		DynamicReport drSub = rb.addColumn("Ticket Number", "ref", String.class, 45, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Title", "title", String.class, 150, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Agent", "agent_fullname", String.class, 150, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Start Date", "start_date", String.class, 50, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Pending Reason", "pending_reason", String.class, 50, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getStandardOddBgStyle()).setUseFullPageWidth(true)
+				.setTitle("PENDING TICKET")
+				.build();
+
+		return drSub;
+
+	}
+
+	public DynamicReport createSAAssignedSub(TemplateStyles style) {
+
+		FastReportBuilder rb = new FastReportBuilder();
+
+		DynamicReport drSub = rb.addColumn("Ticket Number", "ref", String.class, 45, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Title", "title", String.class, 150, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Agent", "agent_fullname", String.class, 150, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Start Date", "start_date", String.class, 50, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getStandardOddBgStyle()).setUseFullPageWidth(true)
+				.setTitle("ASSIGNED TICKET")
+				.build();
+
+		return drSub;
+
+	}
+	
+	public DynamicReport createSAIncidentSub(TemplateStyles style) {
+		
+		FastReportBuilder rb = new FastReportBuilder();
+
+		DynamicReport drSub = rb.addColumn("Ticket Number", "ref", String.class, 45, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Title", "title", String.class, 100, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Status", "status", String.class, 30, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Agent", "agent_fullname", String.class, 100, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Start Date", "start_date", String.class, 30, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Start Time", "start_time", String.class, 30, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Resolution Date", "resolution_date", String.class, 30, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Priority", "priority", String.class, 30, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.addColumn("Organization", "person_org_name", String.class, 80, style.getStandardDetailLeftTextStyle(), style.getStandardHeaderStyle())
+				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getStandardOddBgStyle()).setUseFullPageWidth(true)
+				.setTitle("INCIDENT LIST")
+				.build();
+
+		return drSub;
+	}
+
+
+
+
+	public DynamicReportBuilder getSAMaster() {
+		return sAMaster;
+	}
+
+	public DynamicReport getSATeamSub() {
+		return saTeamSub;
+	}
+
+	public DynamicReport getSAAgentSub() {
+		return saAgentSub;
+	}
+
+	public DynamicReport getSAMissedtSub() {
+		return saMissedtSub;
+	}
+
+	public DynamicReport getSAPendingSub() {
+		return saPendingSub;
+	}
+
+	public DynamicReport getSAAssignedSub() {
+		return saAssignedSub;
+	}
+
+	public DynamicReport getSAAllSub() {
+		return sAAllSub;
+	}
+	
+	public DynamicReport getSAIncidentSub() {
+		return saIncidentSub;
+	}
+
+
+}

@@ -86,7 +86,7 @@ public class PopulateSDPerformance {
 		achievement = (getAchievementTicket(new BigDecimal(achievedCount), new BigDecimal(ticketCount))).floatValue();
 
 		PerformanceOverall poUseThis = new PerformanceOverall();
-		PerformanceOverall poExisting = allDAO.getPerformance(week, month);
+		PerformanceOverall poExisting = allDAO.getPerformance(week+1, month);
 		if (poExisting == null) {
 			poUseThis.setTotalTicket(ticketCount);
 			poUseThis.setTotalAchieved(achievedCount);
@@ -154,7 +154,7 @@ public class PopulateSDPerformance {
 		}
 
 		// compare with existing ticket
-		List<PerformanceAgent> existingList = agentDAO.getPerformance(week, month);
+		List<PerformanceAgent> existingList = agentDAO.getPerformance(week+1, month);
 		List<PerformanceAgent> useThisList = new ArrayList<PerformanceAgent>();
 		if (existingList.size() < 1) {
 			useThisList = newPerfList;

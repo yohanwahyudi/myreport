@@ -10,6 +10,11 @@ import com.vdi.model.performance.PerformanceTeam;
 
 public class PerformanceReport {
 	
+	private int totalTicket;
+	private int totalAchieved;
+	private int totalMissed;
+	private float achievement; 
+	
 	private List<PerformanceOverall> performanceAllList;
 	private List<PerformanceTeam> performanceTeamList;
 	private List<PerformanceAgent> performanceAgentList;
@@ -21,11 +26,35 @@ public class PerformanceReport {
 	
 	private List<ServiceDesk> serviceDeskIncidentList;
 
+	public PerformanceReport() {
+		
+	}
+	
+//	public PerformanceReport(List<PerformanceOverall> performanceAllList, List<PerformanceTeam> performanceTeamList, 
+//			List<PerformanceAgent> performanceAgentList) {
+//		this.performanceAllList = performanceAllList;
+//		this.performanceTeamList = performanceTeamList;
+//		this.performanceAgentList = performanceAgentList;
+//	}
+//	
+//	public PerformanceReport(List<PerformanceOverall> performanceAllList, List<PerformanceTeam> performanceTeamList, 
+//			List<PerformanceAgent> performanceAgentList, List<Incident> supportAgentPendingList, List<Incident> supportAgentAssignList,
+//			List<Incident> supportAgentMissedList, List<Incident> supportAgentIncidentList) {
+//		this.performanceAllList = performanceAllList;
+//		this.performanceTeamList = performanceTeamList;
+//		this.performanceAgentList = performanceAgentList;
+//		this.supportAgentPendingList = supportAgentPendingList;
+//		this.supportAgentAssignList = supportAgentAssignList;
+//		this.supportAgentMissedList = supportAgentMissedList;
+//		this.supportAgentIncidentList = supportAgentIncidentList;
+//	}
+//	
 	public List<PerformanceOverall> getPerformanceAllList() {
 		return performanceAllList;
 	}
 
 	public void setPerformanceAllList(List<PerformanceOverall> performanceAllList) {
+		
 		this.performanceAllList = performanceAllList;
 	}
 
@@ -83,6 +112,38 @@ public class PerformanceReport {
 
 	public void setServiceDeskIncidentList(List<ServiceDesk> serviceDeskIncidentList) {
 		this.serviceDeskIncidentList = serviceDeskIncidentList;
+	}
+
+	public int getTotalTicket() {
+		return totalTicket;
+	}
+
+	public void setTotalTicket(int totalTicket) {
+		this.totalTicket = totalTicket;
+	}
+
+	public int getTotalAchieved() {
+		return totalAchieved;
+	}
+
+	public void setTotalAchieved(int totalAchieved) {
+		this.totalAchieved = totalAchieved;
+	}
+
+	public int getTotalMissed() {
+		return totalMissed;
+	}
+
+	public void setTotalMissed(int totalMissed) {
+		this.totalMissed = totalMissed;
+	}
+
+	public float getAchievement() {
+		return achievement;
+	}
+
+	public void setAchievement(float achievement) {
+		this.achievement = achievement;
 	}
 	
 	

@@ -91,7 +91,7 @@ public class PopulatePerformance {
 		logger.debug("all "+"missedCount: "+missedCount);
 
 		PerformanceOverall poUseThis = new PerformanceOverall();
-		PerformanceOverall poExisting = allDAO.getPerformance(week, month);
+		PerformanceOverall poExisting = allDAO.getPerformance(week+1, month);
 		if (poExisting == null) {
 			poUseThis.setTotalTicket(ticketCount);
 			poUseThis.setTotalAchieved(achievedCount);
@@ -156,7 +156,7 @@ public class PopulatePerformance {
 		}
 
 		// compare with existing ticket
-		List<PerformanceTeam> existingList = teamDAO.getPerformance(week, month);
+		List<PerformanceTeam> existingList = teamDAO.getPerformance(week+1, month);
 		List<PerformanceTeam> useThisList = new ArrayList<PerformanceTeam>();
 		if (existingList.size() < 1) {
 			useThisList = newPerfList;
@@ -234,7 +234,7 @@ public class PopulatePerformance {
 		}
 
 		// compare with existing ticket
-		List<PerformanceAgent> existingList = agentDAO.getPerformance(week, month);
+		List<PerformanceAgent> existingList = agentDAO.getPerformance(week+1, month);
 		List<PerformanceAgent> useThisList = new ArrayList<PerformanceAgent>();
 		if (existingList.size() < 1) {
 			useThisList = newPerfList;
