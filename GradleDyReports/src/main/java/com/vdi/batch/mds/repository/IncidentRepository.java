@@ -52,7 +52,7 @@ public interface IncidentRepository extends CrudRepository<Incident, Long>{
 			"and month(start_date)= :month "+
 			"and week(start_date,3)= :week "+
 			"and agent_fullname like 'EXT%' "+
-			"and status in ('closed','resolved') "+
+//			"and status in ('closed','resolved') "+
 			"and ttr_passed='yes' "+
 			";", nativeQuery=true)
 	public List<Incident> getMissedIncidentByWeek(@Param("month") int month, @Param("week") int week);
@@ -78,5 +78,45 @@ public interface IncidentRepository extends CrudRepository<Incident, Long>{
 			"order by status desc"+
 			";", nativeQuery=true)
 	public List<Incident> getAllIncidentByMonth(@Param("month") int month);
+	
+	@Query(value="select " + 
+			"	* " + 
+			"from incident " + 
+			"where year(start_date)=year(curdate()) "+   
+			"and month(start_date)= :month "+
+			"and agent_fullname like 'EXT%' "+
+			"and status in ('assigned') "+
+			";", nativeQuery=true)
+	public List<Incident> getAssignedIncidentByMonth(@Param("month") int month);
+	
+	@Query(value="select " + 
+			"	* " + 
+			"from incident " + 
+			"where year(start_date)=year(curdate()) "+   
+			"and month(start_date)= :month "+
+			"and agent_fullname like 'EXT%' "+
+			"and ttr_passed='yes' "+
+			";", nativeQuery=true)
+	public List<Incident> getMissedIncidentByMonth(@Param("month") int month);
+	
+	@Query(value="select " + 
+			"	* " + 
+			"from incident " + 
+			"where year(start_date)=year(curdate()) "+   
+			"and month(start_date)= :month "+
+			"and agent_fullname like 'EXT%' "+
+			"and ttr_passed='no' "+
+			";", nativeQuery=true)
+	public List<Incident> getAchievedIncidentByMonth(@Param("month") int month);
+	
+	@Query(value="select " + 
+			"	* " + 
+			"from incident " + 
+			"where year(start_date)=year(curdate()) "+   
+			"and month(start_date)= :month "+
+			"and agent_fullname like 'EXT%' "+
+			"and status in ('pending') "+
+			";", nativeQuery=true)
+	public List<Incident> getPendingIncidentByMonth(@Param("month") int month);
 
 }

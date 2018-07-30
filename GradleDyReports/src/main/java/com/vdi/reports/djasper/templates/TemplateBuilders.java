@@ -1,5 +1,7 @@
 package com.vdi.reports.djasper.templates;
 
+import java.awt.Color;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,12 +9,20 @@ import com.vdi.tools.TimeStatic;
 
 import ar.com.fdvs.dj.domain.AutoText;
 import ar.com.fdvs.dj.domain.DynamicReport;
+import ar.com.fdvs.dj.domain.Style;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
+import ar.com.fdvs.dj.domain.builders.GroupBuilder;
+import ar.com.fdvs.dj.domain.constants.Border;
+import ar.com.fdvs.dj.domain.constants.Font;
+import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
 import ar.com.fdvs.dj.domain.constants.Page;
+import ar.com.fdvs.dj.domain.constants.VerticalAlign;
+import ar.com.fdvs.dj.domain.entities.DJGroup;
 import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
+import ar.com.fdvs.dj.domain.entities.columns.PropertyColumn;
 
 @Configuration
 public class TemplateBuilders {
@@ -20,8 +30,11 @@ public class TemplateBuilders {
 	private DynamicReportBuilder sAMaster;
 	private DynamicReportBuilder master;
 
+	//for support agent report
 	private DynamicReport allSub;
 	private DynamicReport allSub2;
+	private DynamicReport teamSub;
+	private DynamicReport agentSub;
 
 	private DynamicReport sAAllSub;
 	private DynamicReport saTeamSub;
@@ -42,6 +55,8 @@ public class TemplateBuilders {
 
 		this.allSub = createAllSub(style);
 		this.allSub2 = createAllSub2(style);
+		this.teamSub = createTeamSub(style);
+		this.agentSub = createAgentSub(style);
 
 		this.sAAllSub = createSAAllSub(style);
 		this.saTeamSub = createSATeamSub(style);
@@ -57,19 +72,16 @@ public class TemplateBuilders {
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		Integer margin = 20;
-		drb.setTitleStyle(style.getDejavuSansTitleStyle()).setTitle("November " + "2018" + " sales report") // defines
-																											// the title
-																											// of the
-																											// report
-				.setSubtitle("The items in this report correspond "
-						+ "to the main products: DVDs, Books, Foods and Magazines")
-				.setDetailHeight(15).setLeftMargin(margin).setRightMargin(margin).setTopMargin(margin)
+		drb.setTitleStyle(style.getDejavuSansTitleStyle())
+				.setTitle("VDI SUPPORT AGENT PERFORMANCE BASED ON iTop JULY 2018").setTitleHeight(60)
+				.setSubtitle("July 2018").setSubtitleHeight(15)
+//				.setDetailHeight(15)
+				.setLeftMargin(margin).setRightMargin(margin).setTopMargin(20)
 				.setBottomMargin(margin).setPrintBackgroundOnOddRows(true)
 				// .setGrandTotalLegend("Grand Total")
 				// .setGrandTotalLegendStyle(headerVariables)
 				.setOddRowBackgroundStyle(style.getOddRowStyle())
-				.addAutoText(AutoText.AUTOTEXT_PAGE_X_SLASH_Y, AutoText.POSITION_FOOTER, AutoText.ALIGNMENT_RIGHT);
-
+				.addAutoText(AutoText.AUTOTEXT_PAGE_X_OF_Y, AutoText.POSITION_FOOTER, AutoText.ALIGNMENT_RIGHT);
 		return drb;
 	}
 
@@ -122,7 +134,90 @@ public class TemplateBuilders {
 //		drb.setUseFullPageWidth(true);
 
 		return drb.build();
+	}
+	
+	public DynamicReport createTeamSub(TemplateStyles style) {
 
+		AbstractColumn columnTeamName = ColumnBuilder.getNew().setColumnProperty("teamName", String.class.getName())
+				.setTitle("Team").setWidth(new Integer(80)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle())
+				.build();
+		AbstractColumn columnTotalTicket = ColumnBuilder.getNew().setColumnProperty("totalTicket", Integer.class.getName())
+				.setTitle("Total Ticket").setWidth(new Integer(52)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalAchieved = ColumnBuilder.getNew().setColumnProperty("totalAchieved", Integer.class.getName())
+				.setTitle("Achieved Ticket").setWidth(new Integer(52)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalMissed = ColumnBuilder.getNew().setColumnProperty("totalMissed", Integer.class.getName())
+				.setTitle("Missed Ticket").setWidth(new Integer(52)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnAchievement = ColumnBuilder.getNew().setColumnProperty("achievement", Float.class.getName())
+				.setTitle("Achievement").setWidth(new Integer(80)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.addColumn(columnTeamName);		
+		drb.addColumn(columnTotalAchieved);
+		drb.addColumn(columnTotalMissed);
+		drb.addColumn(columnTotalTicket);
+		drb.addColumn(columnAchievement);
+//		drb.setUseFullPageWidth(true);
+		
+		return drb.build();		
+	}
+
+	public DynamicReport createAgentSub(TemplateStyles style) {
+		
+		AbstractColumn columnTeamName = ColumnBuilder.getNew().setColumnProperty("division", String.class.getName())
+				.setTitle("Team").setWidth(new Integer(80)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle())
+				.build();
+		AbstractColumn columnAgent = ColumnBuilder.getNew().setColumnProperty("agentName", String.class.getName())
+				.setTitle("Agent").setWidth(new Integer(150)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalAssigned = ColumnBuilder.getNew().setColumnProperty("totalAssigned", Integer.class.getName())
+				.setTitle("Assigned").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalPending = ColumnBuilder.getNew().setColumnProperty("totalPending", Integer.class.getName())
+				.setTitle("Pending").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalAchieved = ColumnBuilder.getNew().setColumnProperty("totalAchieved", Integer.class.getName())
+				.setTitle("Achieved").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalMissed = ColumnBuilder.getNew().setColumnProperty("totalMissed", Integer.class.getName())
+				.setTitle("Missed").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotal = ColumnBuilder.getNew().setColumnProperty("totalTicket", Integer.class.getName())
+				.setTitle("Total").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnAchievement = ColumnBuilder.getNew().setColumnProperty("achievement", Float.class.getName())
+				.setTitle("Achievement").setWidth(new Integer(80)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+
+		Style groupVariables = new Style("groupVariables");
+		groupVariables.setFont(Font.ARIAL_MEDIUM_BOLD);
+		groupVariables.setTextColor(Color.BLUE);
+		groupVariables.setBorderBottom(Border.THIN());
+		groupVariables.setHorizontalAlign(HorizontalAlign.RIGHT);
+		groupVariables.setVerticalAlign(VerticalAlign.BOTTOM);
+		
+		GroupBuilder gb1 = new GroupBuilder();
+		DJGroup g1 = gb1.setCriteriaColumn((PropertyColumn) columnTeamName).build();
+		
+		
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.addColumn(columnTeamName);	
+		drb.addColumn(columnAgent);
+		drb.addColumn(columnTotalAssigned);	
+		drb.addColumn(columnTotalPending);	
+		drb.addColumn(columnTotalAchieved);
+		drb.addColumn(columnTotalMissed);
+		drb.addColumn(columnTotal);
+		drb.addColumn(columnAchievement);
+		drb.addGroup(g1);		
+		
+		return drb.build();
+		
 	}
 
 	public DynamicReportBuilder createSAMaster(TemplateStyles style)
@@ -347,6 +442,14 @@ public class TemplateBuilders {
 
 	public DynamicReport getAllSub2() {
 		return allSub2;
+	}
+
+	public DynamicReport getTeamSub() {
+		return teamSub;
+	}
+
+	public DynamicReport getAgentSub() {
+		return agentSub;
 	}
 
 }
