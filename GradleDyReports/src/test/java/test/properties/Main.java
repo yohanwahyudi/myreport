@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.vdi.configuration.AppConfig;
+
 //@ComponentScan("test.properties")
 public class Main {
 	
@@ -30,6 +32,15 @@ public class Main {
 //		String b = ctx1.getBean("readUrl",String.class);
 //		
 //		logger.debug(a.length());
+		
+//		AnnotationConfigApplicationContext ctxnew = new AnnotationConfigApplicationContext(AppConfig.class);
+//		AppConfig config = ctxnew.getBean("appConfig", AppConfig.class);
+//		
+//		for(String a:config.getOrganization()) {
+//		
+//			System.out.println(a);
+//		}
+		
 	}
 
 }

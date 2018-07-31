@@ -1,10 +1,12 @@
 package com.vdi.tools;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
+import java.util.Date;
 import java.util.Locale;
 
 public class TimeStatic {
@@ -13,12 +15,16 @@ public class TimeStatic {
 	public static final int currentWeekMonth;
 	public static final int currentMonth;
 	public static final int currentYear;
+	
+	public static final String currentMonthStr;
 
 	static {
 		currentWeekYear = getCurrentWeekYear();
 		currentWeekMonth = getCurrentWeekMonth();
 		currentMonth = getCurrentMonth();
 		currentYear = getCurrentYear();
+		
+		currentMonthStr = getCurrentMonthString();
 	}
 
 	private static int getCurrentWeekYear() {
@@ -44,6 +50,16 @@ public class TimeStatic {
 		LocalDate date = LocalDate.now();
 		
 		return date.getMonthValue();
+	}
+	
+	private static String getCurrentMonthString() {
+
+		LocalDate localDate = LocalDate.now();
+		Date utilDate = Date.from(localDate.atStartOfDay(ZoneId.of("GMT+7")).toInstant());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
+		
+		return sdf.format(utilDate);
 	}
 	
 	private static int getCurrentYear() {

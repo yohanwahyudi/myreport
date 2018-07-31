@@ -25,13 +25,14 @@ public class TemplateBuildersReport {
 	private DynamicReportBuilder master;
 
 	//for support agent report
-	private DynamicReport allSub;
-	private DynamicReport allSub2;
+	private DynamicReport summarySub;
+	private DynamicReport summarySub2;
 	private DynamicReport teamSub;
 	private DynamicReport agentSub;
 	private DynamicReport missedSub;
 	private DynamicReport pendingSub;
 	private DynamicReport assignedSub;
+	private DynamicReport incidentListSub;
 
 	public TemplateBuildersReport() {
 	}
@@ -41,13 +42,14 @@ public class TemplateBuildersReport {
 
 		this.master = createMaster(style);
 
-		this.allSub = createAllSub(style);
-		this.allSub2 = createAllSub2(style);
+		this.summarySub = createSummarySub(style);
+		this.summarySub2 = createSummarySub2(style);
 		this.teamSub = createTeamSub(style);
 		this.agentSub = createAgentSub(style);
 		this.missedSub = createMissedSub(style);
 		this.pendingSub = createPendingSub(style);
 		this.assignedSub = createAssignedSub(style);
+		this.incidentListSub = createIncidentListSub(style);
 
 	}
 
@@ -55,9 +57,9 @@ public class TemplateBuildersReport {
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		Integer margin = 20;
-		drb.setTitleStyle(style.getDejavuSansTitleStyle())
-				.setTitle("VDI SUPPORT AGENT PERFORMANCE BASED ON iTop JULY 2018").setTitleHeight(60)
-				.setSubtitle("July 2018").setSubtitleHeight(15)
+		drb.setTitleStyle(style.getArialTitleAgentStyle())
+				.setTitle("VDI SUPPORT AGENT PERFORMANCE BASED ON iTop").setTitleHeight(60)
+				.setSubtitle("July 2018").setSubtitleStyle(style.getArialTitleAgentStyle()).setSubtitleHeight(15)
 //				.setDetailHeight(15)
 				.setLeftMargin(margin).setRightMargin(margin).setTopMargin(20).setBottomMargin(margin)
 //				.setPrintBackgroundOnOddRows(true).setOddRowBackgroundStyle(style.getOddRowStyle())
@@ -65,7 +67,7 @@ public class TemplateBuildersReport {
 		return drb;
 	}
 
-	private DynamicReport createAllSub(TemplateStylesReport style) {
+	private DynamicReport createSummarySub(TemplateStylesReport style) {
 
 		AbstractColumn columnTotalTicket = ColumnBuilder.getNew()
 				.setColumnProperty("totalTicket", Integer.class.getName()).setTitle("Ticket Total")
@@ -97,7 +99,7 @@ public class TemplateBuildersReport {
 
 	}
 
-	private DynamicReport createAllSub2(TemplateStylesReport style) {
+	private DynamicReport createSummarySub2(TemplateStylesReport style) {
 
 		AbstractColumn columnName = ColumnBuilder.getNew().setColumnProperty("name", String.class.getName())
 				.setTitle("Achievement").setWidth(new Integer(100)).setStyle(style.getArialDetailSummaryStyle())
@@ -149,7 +151,7 @@ public class TemplateBuildersReport {
 	private DynamicReport createAgentSub(TemplateStylesReport style) {
 		
 		AbstractColumn columnTeamName = ColumnBuilder.getNew().setColumnProperty("division", String.class.getName())
-				.setTitle("Team").setWidth(new Integer(80)).setStyle(style.getArialLeftAgentStyle())
+				.setTitle("Team").setWidth(new Integer(70)).setStyle(style.getArialLeftAgentStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle())
 				.build();
 		AbstractColumn columnAgent = ColumnBuilder.getNew().setColumnProperty("agentName", String.class.getName())
@@ -171,7 +173,7 @@ public class TemplateBuildersReport {
 				.setTitle("Total").setWidth(new Integer(50)).setStyle(style.getArialDetailAgentStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 		AbstractColumn columnAchievement = ColumnBuilder.getNew().setColumnProperty("achievement", Float.class.getName())
-				.setTitle("Achievement").setWidth(new Integer(80)).setStyle(style.getArialDetailAgentStyle())
+				.setTitle("Achievement").setWidth(new Integer(70)).setStyle(style.getArialDetailAgentStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		Style groupVariables = new Style("groupVariables");
@@ -206,7 +208,7 @@ public class TemplateBuildersReport {
 	private DynamicReport createMissedSub(TemplateStylesReport style) {
 		
 		AbstractColumn columnRef = ColumnBuilder.getNew().setColumnProperty("ref", String.class.getName())
-				.setTitle("Ticket No").setWidth(new Integer(45)).setStyle(style.getArialDetailAgentStyle())
+				.setTitle("Ref").setWidth(new Integer(45)).setStyle(style.getArialDetailAgentStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle())
 				.build();
 		AbstractColumn columnTitle = ColumnBuilder.getNew().setColumnProperty("title", String.class.getName())
@@ -234,6 +236,7 @@ public class TemplateBuildersReport {
 		drb.addColumn(columnStartDt);	
 		drb.addColumn(columnCloseDt);
 		drb.addColumn(columnStatus);
+		drb.setUseFullPageWidth(true);
 		
 		return drb.build();
 		
@@ -241,7 +244,7 @@ public class TemplateBuildersReport {
 	
 	private DynamicReport createPendingSub(TemplateStylesReport style) {
 		AbstractColumn columnRef = ColumnBuilder.getNew().setColumnProperty("ref", String.class.getName())
-				.setTitle("Ticket No").setWidth(new Integer(45)).setStyle(style.getArialDetailAgentStyle())
+				.setTitle("Ref").setWidth(new Integer(45)).setStyle(style.getArialDetailAgentStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle())
 				.build();
 		AbstractColumn columnTitle = ColumnBuilder.getNew().setColumnProperty("title", String.class.getName())
@@ -265,6 +268,7 @@ public class TemplateBuildersReport {
 		drb.addColumn(columnAgent);	
 		drb.addColumn(columnStartDt);	
 		drb.addColumn(columnPendingReason);
+		drb.setUseFullPageWidth(true);
 		
 		return drb.build();
 	}
@@ -272,7 +276,7 @@ public class TemplateBuildersReport {
 	private DynamicReport createAssignedSub(TemplateStylesReport style) {
 		
 		AbstractColumn columnRef = ColumnBuilder.getNew().setColumnProperty("ref", String.class.getName())
-				.setTitle("Ticket No").setWidth(new Integer(45)).setStyle(style.getArialDetailAgentStyle())
+				.setTitle("Ref").setWidth(new Integer(45)).setStyle(style.getArialDetailAgentStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle())
 				.build();
 		AbstractColumn columnTitle = ColumnBuilder.getNew().setColumnProperty("title", String.class.getName())
@@ -292,8 +296,56 @@ public class TemplateBuildersReport {
 		drb.addColumn(columnTitle);
 		drb.addColumn(columnAgent);	
 		drb.addColumn(columnStartDt);	
+		drb.setUseFullPageWidth(true);
 		
 		return drb.build();
+	}
+	
+	private DynamicReport createIncidentListSub(TemplateStylesReport style) {
+		
+		AbstractColumn columnRef = ColumnBuilder.getNew().setColumnProperty("ref", String.class.getName())
+				.setTitle("Ref").setWidth(new Integer(35)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle())
+				.build();
+		AbstractColumn columnTitle= ColumnBuilder.getNew().setColumnProperty("title", String.class.getName())
+				.setTitle("Title").setWidth(new Integer(200)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle())
+				.build();
+		AbstractColumn columnStatus= ColumnBuilder.getNew().setColumnProperty("status", String.class.getName())
+				.setTitle("Status").setWidth(new Integer(30)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle())
+				.build();
+		AbstractColumn columnAgent= ColumnBuilder.getNew().setColumnProperty("agent_fullname", String.class.getName())
+				.setTitle("Agent").setWidth(new Integer(150)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle())
+				.build();
+		AbstractColumn columnPriority= ColumnBuilder.getNew().setColumnProperty("priority", String.class.getName())
+				.setTitle("Priority").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle())
+				.build();
+		AbstractColumn columnStartDt= ColumnBuilder.getNew().setColumnProperty("start_date", String.class.getName())
+				.setTitle("Start Date").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle())
+				.build();
+		AbstractColumn columnResolutionDt= ColumnBuilder.getNew().setColumnProperty("resolution_date", String.class.getName())
+				.setTitle("Resolution Date").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle())
+				.build();
+				
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitle("INCIDENT TICKET");
+		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(30);
+		drb.addColumn(columnRef);	
+		drb.addColumn(columnTitle);
+		drb.addColumn(columnStatus);
+		drb.addColumn(columnAgent);	
+		drb.addColumn(columnPriority);	
+		drb.addColumn(columnStartDt);
+		drb.addColumn(columnResolutionDt);	
+		drb.setUseFullPageWidth(true);
+		
+		return drb.build();
+				
 	}
 
 	
@@ -301,12 +353,12 @@ public class TemplateBuildersReport {
 		return master;
 	}
 
-	public DynamicReport getAllSub() {
-		return allSub;
+	public DynamicReport getSummarySub() {
+		return summarySub;
 	}
 
-	public DynamicReport getAllSub2() {
-		return allSub2;
+	public DynamicReport getSummarySub2() {
+		return summarySub2;
 	}
 
 	public DynamicReport getTeamSub() {
@@ -327,6 +379,10 @@ public class TemplateBuildersReport {
 
 	public DynamicReport getAssignedSub() {
 		return assignedSub;
+	}
+
+	public DynamicReport getIncidentListSub() {
+		return incidentListSub;
 	}
 
 }

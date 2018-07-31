@@ -16,14 +16,14 @@ public class PerfTest2 {
 		
 		
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-		PopulatePerformance populatePerf = ctx.getBean("populatePerformanceWeekly",PopulatePerformance.class);
+		PopulatePerformance populatePerfWeekly = ctx.getBean("populatePerformanceWeekly",PopulatePerformance.class);
 //		com.vdi.batch.mds.helper.monthly.PopulatePerformance saMonthly = ctx.getBean("populatePerformanceMonthly",com.vdi.batch.mds.helper.monthly.PopulatePerformance.class);
 //		
 		PopulateSDPerformance sdWeekly = ctx.getBean("populateSDPerformanceWeekly",PopulateSDPerformance.class);
-		com.vdi.batch.mds.helper.monthly.PopulateSDPerformance sdMonthly = ctx.getBean("populateSDPerformanceMonthly",com.vdi.batch.mds.helper.monthly.PopulateSDPerformance.class);
+//		com.vdi.batch.mds.helper.monthly.PopulateSDPerformance sdMonthly = ctx.getBean("populateSDPerformanceMonthly",com.vdi.batch.mds.helper.monthly.PopulateSDPerformance.class);
 		
 		logger.debug("begin");
-		populatePerf.populatePerformance();
+//		populatePerfWeekly.populatePerformance();
 //		saMonthly.populatePerformance();
 		sdWeekly.populatePerformance();
 		

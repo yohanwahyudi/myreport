@@ -20,9 +20,7 @@ import com.vdi.model.performance.PerformanceTeam;
 import com.vdi.reports.djasper.model.PerformanceReport;
 import com.vdi.reports.djasper.model.SummaryReport;
 import com.vdi.reports.djasper.service.ReportService;
-import com.vdi.reports.djasper.templates.TemplateBuilders;
 import com.vdi.reports.djasper.templates.TemplateBuildersReport;
-import com.vdi.reports.djasper.templates.TemplateStyles;
 import com.vdi.tools.TimeStatic;
 
 import ar.com.fdvs.dj.core.DJConstants;
@@ -59,31 +57,25 @@ public class MonthlySaIncidentReport implements ReportService {
 	@Autowired
 	private TemplateBuildersReport templateBuilders;
 
-	@Autowired
-	private TemplateStyles templateStyles;
-
 	protected final static Map<String, Object> params = new HashMap<String, Object>();
 
 	private List<PerformanceReport> reportList;
 
-	private List<PerformanceOverall> performanceAllList;
 	private List<SummaryReport> summaryList;
 	
 	private List<PerformanceTeam> performanceTeamList;
 	private List<PerformanceAgent> performanceAgentList;
 	private List<Incident> supportAgentPendingList;
-	private List<Incident> supportAgentAssignList;
+	private List<Incident> supportAgentAssignedList;
 	private List<Incident> supportAgentMissedList;
 	private List<Incident> supportAgentIncidentList;
 
 	private PerformanceReport report;
 	private int currentMonth;
-	private int currentWeek;
 	private int prevMonth;
 
 	public MonthlySaIncidentReport() {
 		this.currentMonth = TimeStatic.currentMonth;
-		this.currentWeek = TimeStatic.currentWeekYear;
 		this.prevMonth = currentMonth - 1;
 	}
 
@@ -97,13 +89,19 @@ public class MonthlySaIncidentReport implements ReportService {
 		params.put("summaryReport", reportList.get(0).getSummaryReport());
 		params.put("teamReport", reportList.get(0).getPerformanceTeamList());
 		params.put("agentReport", reportList.get(0).getPerformanceAgentList());
-		
-		// add subreport
+		params.put("missedReport", reportList.get(0).getSupportAgentMissedList());
+		params.put("pendingReport", reportList.get(0).getSupportAgentPendingList());
+		params.put("assignedReport", reportList.get(0).getSupportAgentAssignList());
+		params.put("incidentListReport", reportList.get(0).getSupportAgentIncidentList());
 		
 		// all subreport
-		DynamicReport subReportAll = templateBuilders.getAllSub2();
+		DynamicReport subReportAll = templateBuilders.getSummarySub2();
 		DynamicReport subReportTeam = templateBuilders.getTeamSub();
 		DynamicReport subReportAgent = templateBuilders.getAgentSub();
+		DynamicReport subReportMissed = templateBuilders.getMissedSub();
+		DynamicReport subReportPending = templateBuilders.getPendingSub();
+		DynamicReport subReportAssigned = templateBuilders.getAssignedSub();
+		DynamicReport subReportIncident = templateBuilders.getIncidentListSub();
 		
 		master.addConcatenatedReport(subReportAll, new ClassicLayoutManager(), "summaryReport",
 				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false);
@@ -111,6 +109,14 @@ public class MonthlySaIncidentReport implements ReportService {
 				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false);
 		master.addConcatenatedReport(subReportAgent, new ClassicLayoutManager(), "agentReport",
 				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);		
+		master.addConcatenatedReport(subReportMissed, new ClassicLayoutManager(), "missedReport",
+				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);	
+		master.addConcatenatedReport(subReportPending, new ClassicLayoutManager(), "pendingReport",
+				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false);	
+		master.addConcatenatedReport(subReportAssigned, new ClassicLayoutManager(), "assignedReport",
+				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false);	
+		master.addConcatenatedReport(subReportIncident, new ClassicLayoutManager(), "incidentListReport",
+				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);	
 		
 		return master.build();
 	}
@@ -134,7 +140,7 @@ public class MonthlySaIncidentReport implements ReportService {
 	}
 
 	public void setPerformanceReport() {
-
+		
 		report = new PerformanceReport();
 		
 		//performance
@@ -153,14 +159,22 @@ public class MonthlySaIncidentReport implements ReportService {
 		performanceAgentList = agent.getPerformance();
 		
 		//incident
-		
+		supportAgentMissedList = incident.getMissedIncidentByMonth(prevMonth);
+		supportAgentPendingList = incident.getPendingIncidentByMonth(prevMonth);
+		supportAgentAssignedList = incident.getAssignedIncidentByMonth(prevMonth);
+		supportAgentIncidentList = incident.getAllIncidentByMonth(prevMonth);
 		
 		//setreport
 		report.setSummaryReport(summaryList);
 		report.setPerformanceTeamList(performanceTeamList);
 		report.setPerformanceAgentList(performanceAgentList);
 		
-		System.out.println("agent: "+performanceAgentList);
+		report.setSupportAgentMissedList(supportAgentMissedList);
+		report.setSupportAgentPendingList(supportAgentPendingList);
+		report.setSupportAgentAssignList(supportAgentAssignedList);
+		report.setSupportAgentIncidentList(supportAgentIncidentList);
+		
+		System.out.println("agent: "+supportAgentIncidentList.size());
 
 		List<PerformanceReport> list = new ArrayList<PerformanceReport>();
 		list.add(report);

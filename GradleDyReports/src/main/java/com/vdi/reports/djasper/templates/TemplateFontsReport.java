@@ -82,7 +82,7 @@ public class TemplateFontsReport {
 		Font font = new Font();
 		font.setFontName(Font._FONT_ARIAL);
 		font.setBold(false);
-		font.setPdfFontName(Font._FONT_ARIAL);
+		font.setPdfFontName("/fonts/arial.ttf");
 		font.setPdfFontEncoding(Font.PDF_ENCODING_Identity_H_Unicode_with_horizontal_writing);
 		font.setPdfFontEmbedded(true);
 
@@ -95,7 +95,7 @@ public class TemplateFontsReport {
 		Font font = new Font();
 		font.setFontName(Font._FONT_ARIAL);
 		font.setBold(true);
-		font.setPdfFontName(Font._FONT_ARIAL);
+		font.setPdfFontName("/fonts/arialbd.ttf");
 		font.setPdfFontEncoding(Font.PDF_ENCODING_Identity_H_Unicode_with_horizontal_writing);
 		font.setPdfFontEmbedded(true);
 
@@ -109,7 +109,7 @@ public class TemplateFontsReport {
 		font.setFontName(Font._FONT_ARIAL);
 		font.setBold(false);
 		font.setItalic(true);
-		font.setPdfFontName(Font._FONT_ARIAL);
+		font.setPdfFontName("/fonts/ariali.ttf");
 		font.setPdfFontEncoding(Font.PDF_ENCODING_Identity_H_Unicode_with_horizontal_writing);
 		font.setPdfFontEmbedded(true);
 

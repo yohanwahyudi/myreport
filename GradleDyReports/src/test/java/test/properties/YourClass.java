@@ -17,9 +17,11 @@ public class YourClass {
 	@Value("${mds.daily.prefix}")
 	private String dailyPrefix;
 	
+	@Value("#{'${mds.jsoup.organization}'.split(';')}")
 	private String[] organization;
-	@Autowired
-	private MyClass myClass;
+	
+//	@Autowired
+//	private MyClass myClass;
 	
 	@Autowired
 	public YourClass(Environment env) {
@@ -29,7 +31,7 @@ public class YourClass {
 	public void printMyClass() {
 		System.out.println(dailyPrefix);
 		
-		System.out.println(myClass.getOrganizationCol());
+//		System.out.println(myClass.getOrganizationCol());
 		
 		for(String a:organization) {
 			System.out.println("a "+a);

@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.vdi.batch.mds.repository.StagingAgentRepository;
-import com.vdi.batch.mds.repository.dao.BaseDAOService;
 import com.vdi.batch.mds.repository.dao.StagingAgentDAOService;
 import com.vdi.model.staging.StagingAgent;
 

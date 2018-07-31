@@ -18,8 +18,9 @@ import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.model.performance.PerformanceTeam;
 import com.vdi.reports.djasper.model.PerformanceReport;
+import com.vdi.reports.djasper.model.SummaryReport;
 import com.vdi.reports.djasper.service.ReportService;
-import com.vdi.reports.djasper.templates.TemplateBuilders;
+import com.vdi.reports.djasper.templates.TemplateBuildersReport;
 import com.vdi.reports.djasper.templates.TemplateStyles;
 import com.vdi.tools.TimeStatic;
 
@@ -56,7 +57,7 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 	private IncidentReportDAOService incident;
 
 	@Autowired
-	private TemplateBuilders templateBuilders;
+	private TemplateBuildersReport templateBuilders;
 
 	@Autowired
 	private TemplateStyles templateStyles;
@@ -65,7 +66,7 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 
 	private List<PerformanceReport> reportList;
 
-	private List<PerformanceOverall> performanceAllList;
+	private List<SummaryReport> summaryList;
 	private List<PerformanceTeam> performanceTeamList;
 	private List<PerformanceAgent> performanceAgentList;
 	private List<Incident> supportAgentPendingList;
@@ -76,12 +77,13 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 	private PerformanceReport report;
 	private int currentMonth;
 	private int currentWeek;
+	private int prevWeek;
 
 	public WeeklySaIncidentReportImpl() {
 
-		currentMonth = TimeStatic.currentMonth;
-		currentWeek = TimeStatic.currentWeekYear;
-
+		this.currentMonth = TimeStatic.currentMonth;
+		this.currentWeek = TimeStatic.currentWeekYear;
+		this.prevWeek = currentWeek-1;
 	}
 
 	@Override
@@ -90,7 +92,7 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 		float achievement = reportList.get(0).getAchievement();
 		
 		// add params
-		params.put("performanceAllList", reportList.get(0).getPerformanceAllList());
+		params.put("summaryReport", reportList.get(0).getSummaryReport());
 		params.put("performanceTeamList", reportList.get(0).getPerformanceTeamList());
 		params.put("performanceAgentList", reportList.get(0).getPerformanceAgentList());
 		params.put("supportAgentPendingList", reportList.get(0).getSupportAgentPendingList());
@@ -110,23 +112,24 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 		}
 		
 		// subreport all
-		DynamicReport subReportAll = templateBuilders.getSAAllSub();
-		subReportAll.getColumns().get(3).setStyle(styleAchievement);
+		DynamicReport subReportAll = templateBuilders.getSummarySub2();
+//		subReportAll.getColumns().get(1).setStyle(styleAchievement);
 		// subreport team
-		DynamicReport subReportTeam = templateBuilders.getSATeamSub();
-		subReportTeam.getColumns().get(4).setStyle(styleAchievement);
+		DynamicReport subReportTeam = templateBuilders.getTeamSub();
+//		subReportTeam.getColumns().get(4).setStyle(styleAchievement);
 		// subreport agent
-		DynamicReport subReportAgent = templateBuilders.getSAAgentSub();
-		subReportAgent.getColumns().get(7).setStyle(styleAchievement);
+		DynamicReport subReportAgent = templateBuilders.getAgentSub();
+//		subReportAgent.getColumns().get(7).setStyle(styleAchievement);
 		//subreport assigned/pending/missed
-		DynamicReport subReportMissed = templateBuilders.getSAMissedtSub();
-		DynamicReport subReportPending = templateBuilders.getSAPendingSub();
-		DynamicReport subReportAssigned = templateBuilders.getSAAssignedSub();
+		DynamicReport subReportMissed = templateBuilders.getMissedSub();
+		DynamicReport subReportPending = templateBuilders.getPendingSub();
+		DynamicReport subReportAssigned = templateBuilders.getAssignedSub();
 		//subreport all incident
-		DynamicReport subReportIncident = templateBuilders.getSAIncidentSub();
+		DynamicReport subReportIncident = templateBuilders.getIncidentListSub();
 		
-		DynamicReportBuilder drb = templateBuilders.getSAMaster();
-		drb.addConcatenatedReport(subReportAll, new ClassicLayoutManager(), "performanceAllList",
+		DynamicReportBuilder drb = templateBuilders.getMaster();
+		drb.setSubtitle("WEEK "+TimeStatic.currentWeekMonth+" "+TimeStatic.currentMonthStr.toUpperCase()+" "+TimeStatic.currentYear);
+		drb.addConcatenatedReport(subReportAll, new ClassicLayoutManager(), "summaryReport",
 				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
 			.addConcatenatedReport(subReportTeam, new ClassicLayoutManager(), "performanceTeamList",
 				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
@@ -170,27 +173,39 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 	}
 
 	public void setPerformanceReport() {
-
+		
 		report = new PerformanceReport();
-		performanceAllList = new ArrayList<PerformanceOverall>();
-		performanceAllList.add(all.getPerformance(currentWeek, currentMonth));
+//		performanceAllList = new ArrayList<PerformanceOverall>();
+//		performanceAllList.add(all.getPerformance(currentWeek, currentMonth));
+//		int totalTicket = all.getPerformance(currentWeek, currentMonth).getTotalTicket();
+//		int totalAchieved = all.getPerformance(currentWeek, currentMonth).getTotalAchieved();
+//		int totalMissed = all.getPerformance(currentWeek, currentMonth).getTotalMissed();
+//		float achievement = all.getPerformance(currentWeek, currentMonth).getAchievement();
+		
+		summaryList = new ArrayList<SummaryReport>();
+		PerformanceOverall perfAll = all.getPerformance(currentWeek, currentMonth);
+		Integer totalTicket = perfAll.getTotalTicket();
+		Integer totalAchieved = perfAll.getTotalAchieved();
+		Integer totalMissed = perfAll.getTotalMissed();
+		Float achievement = perfAll.getAchievement();		
+		summaryList.add(new SummaryReport("Total Ticket", totalTicket.toString()));
+		summaryList.add(new SummaryReport("Achieved", totalAchieved.toString()));
+		summaryList.add(new SummaryReport("Missed", totalMissed.toString()));
+		summaryList.add(new SummaryReport("Achievement", achievement.toString()));
+		
 		performanceTeamList = team.getPerformance(currentWeek, currentMonth);
 		performanceAgentList = agent.getPerformance(currentWeek, currentMonth);
-		int totalTicket = all.getPerformance(currentWeek, currentMonth).getTotalTicket();
-		int totalAchieved = all.getPerformance(currentWeek, currentMonth).getTotalAchieved();
-		int totalMissed = all.getPerformance(currentWeek, currentMonth).getTotalMissed();
-		float achievement = all.getPerformance(currentWeek, currentMonth).getAchievement();
 		
-		supportAgentPendingList = incident.getPendingIncidentByWeek(currentMonth, currentWeek-1);
-		supportAgentAssignList = incident.getAssignedIncidentByWeek(currentMonth, currentWeek-1);
-		supportAgentMissedList = incident.getMissedIncidentByWeek(currentMonth, currentWeek-1);
-		supportAgentIncidentList = incident.getAllIncidentByWeek(currentMonth, currentWeek-1);
+		supportAgentPendingList = incident.getPendingIncidentByWeek(currentMonth, prevWeek);
+		supportAgentAssignList = incident.getAssignedIncidentByWeek(currentMonth, prevWeek);
+		supportAgentMissedList = incident.getMissedIncidentByWeek(currentMonth, prevWeek);
+		supportAgentIncidentList = incident.getAllIncidentByWeek(currentMonth, prevWeek);
 
 		report.setTotalTicket(totalTicket);
 		report.setTotalAchieved(totalAchieved);
 		report.setTotalMissed(totalMissed);
 		report.setAchievement(achievement);
-		report.setPerformanceAllList(performanceAllList);
+		report.setSummaryReport(summaryList);
 		report.setPerformanceTeamList(performanceTeamList);
 		report.setPerformanceAgentList(performanceAgentList);
 		report.setSupportAgentPendingList(supportAgentPendingList);
@@ -198,8 +213,9 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 		report.setSupportAgentMissedList(supportAgentMissedList);
 		report.setSupportAgentIncidentList(supportAgentIncidentList);
 
-		System.out.println("assigned: "+supportAgentAssignList);
-
+		System.out.println("agent: "+supportAgentIncidentList.size());
+		System.out.println("all: "+summaryList); 
+		
 		List<PerformanceReport> list = new ArrayList<PerformanceReport>();
 		list.add(report);
 

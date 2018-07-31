@@ -56,7 +56,8 @@ public class Test {
 	    
 	    System.out.println(a==b);
 	    
-	    System.out.println(TimeStatic.currentWeekYear);
+//	    System.out.println(TimeStatic.currentWeekYear);
+	    System.out.println(getCurrentMonthString());
 		
 	}
 	
