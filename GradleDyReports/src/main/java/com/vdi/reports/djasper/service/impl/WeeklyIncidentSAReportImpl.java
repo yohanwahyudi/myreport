@@ -38,7 +38,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service("weeklySaIncidentReport")
-public class WeeklySaIncidentReportImpl implements ReportService {
+public class WeeklyIncidentSAReportImpl implements ReportService {
 
 	@Autowired
 	@Qualifier("weeklyPerfAllDAO")
@@ -79,7 +79,7 @@ public class WeeklySaIncidentReportImpl implements ReportService {
 	private int currentWeek;
 	private int prevWeek;
 
-	public WeeklySaIncidentReportImpl() {
+	public WeeklyIncidentSAReportImpl() {
 
 		this.currentMonth = TimeStatic.currentMonth;
 		this.currentWeek = TimeStatic.currentWeekYear;

@@ -36,7 +36,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service("monthlySaIncidentReport")
-public class MonthlySaIncidentReport implements ReportService {
+public class MonthlyIncidentSAReport implements ReportService {
 
 	@Autowired
 	@Qualifier("monthlyPerfAllDAO")
@@ -74,7 +74,7 @@ public class MonthlySaIncidentReport implements ReportService {
 	private int currentMonth;
 	private int prevMonth;
 
-	public MonthlySaIncidentReport() {
+	public MonthlyIncidentSAReport() {
 		this.currentMonth = TimeStatic.currentMonth;
 		this.prevMonth = currentMonth - 1;
 	}
