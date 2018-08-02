@@ -1,4 +1,4 @@
-package com.vdi.batch.mds.repository;
+package com.vdi.batch.mds.repository.dao;
 
 import com.vdi.batch.mds.repository.dao.BaseDAOService;
 

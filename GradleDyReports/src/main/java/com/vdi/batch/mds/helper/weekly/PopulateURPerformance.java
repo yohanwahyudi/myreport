@@ -20,15 +20,15 @@ import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.tools.TimeStatic;
 
-@Configuration("populateSDPerformanceWeekly")
-public class PopulateSDPerformance {
+@Configuration("populateURPerformanceWeekly")
+public class PopulateURPerformance {
 
 	@Autowired
-	@Qualifier("weeklySDPerfAllDAO")
+	@Qualifier("weeklyURPerfAllDAO")
 	private PerfAllDAOService allDAO;
 
 	@Autowired
-	@Qualifier("weeklySDPerfAgentDAO")
+	@Qualifier("weeklyURPerfAgentDAO")
 	private PerfAgentDAOService agentDAO;
 
 	private TempValueService tempValue;
@@ -39,10 +39,10 @@ public class PopulateSDPerformance {
 
 	private final String LAST_MONTH = "LAST_MONTH";
 
-	private final Logger logger = LogManager.getLogger(PopulateSDPerformance.class);
+	private final Logger logger = LogManager.getLogger(PopulateURPerformance.class);
 
 	@Autowired
-	public PopulateSDPerformance(TempValueService tempValueService) {
+	public PopulateURPerformance(TempValueService tempValueService) {
 
 		this.currentMonth = TimeStatic.currentMonth;
 		this.currentWeek = TimeStatic.currentWeekYear;
@@ -99,7 +99,7 @@ public class PopulateSDPerformance {
 			poUseThis.setMonth(currMonth.shortValue());
 			
 			poUseThis.setPeriod("weekly");
-			poUseThis.setCategory("sd");
+			poUseThis.setCategory("ur");
 		} else {
 			poExisting.setTotalTicket(ticketCount);
 			poExisting.setTotalAchieved(achievedCount);
@@ -150,7 +150,7 @@ public class PopulateSDPerformance {
 			perfAgent.setTotalTicket(totalTicket);
 			perfAgent.setMonth(currMonth.shortValue());
 			perfAgent.setPeriod("weekly");
-			perfAgent.setCategory("sd");
+			perfAgent.setCategory("ur");
 			perfAgent.setAchievement(achievement);
 
 			newPerfList.add(perfAgent);

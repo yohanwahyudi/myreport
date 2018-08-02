@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.vdi.batch.mds.repository.StagingUserRequestDAOService;
+import com.vdi.batch.mds.repository.dao.StagingUserRequestDAOService;
 import com.vdi.batch.mds.repository.StagingUserRequestRepository;
 import com.vdi.model.staging.StagingUserRequest;
 
