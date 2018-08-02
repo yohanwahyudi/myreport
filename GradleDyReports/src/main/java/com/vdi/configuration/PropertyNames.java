@@ -23,6 +23,7 @@ public final class PropertyNames {
 	public static final String MDS_EMAIL_DAILY_TO = "mds.daily.email.to";
 	public static final String MDS_HTTP_URL = "mds.http.url";
 	public static final String MDS_HTTP_SD_URL = "mds.http.sd.url";
+	public static final String MDS_HTTP_UR_URL = "mds.http.ur.url";
 	public static final String MDS_EMAIL_DAILY_SUBJECT = "mds.daily.email.subject";
 	public static final String MDS_DAILY_REPORT_PATH = "mds.daily.report.path";
 
@@ -38,6 +39,8 @@ public final class PropertyNames {
 	
 	public static final String MDS_CSV_AGENT_DELIMITERS = "mds.csv.agent.delimiters";
 	public static final String MDS_CSV_AGENT_FILE = "mds.csv.agent.file";
+	
+	public static final String MDS_SERVICEDESK_REPORT_PERSON = "mds.servicedesk.report.person";
 
 	//DB config
 	public static final String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";

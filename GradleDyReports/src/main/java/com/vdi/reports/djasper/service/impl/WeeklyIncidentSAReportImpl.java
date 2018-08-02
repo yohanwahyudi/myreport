@@ -21,14 +21,12 @@ import com.vdi.reports.djasper.model.PerformanceReport;
 import com.vdi.reports.djasper.model.SummaryReport;
 import com.vdi.reports.djasper.service.ReportService;
 import com.vdi.reports.djasper.templates.TemplateBuildersReport;
-import com.vdi.reports.djasper.templates.TemplateStyles;
 import com.vdi.tools.TimeStatic;
 
 import ar.com.fdvs.dj.core.DJConstants;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
-import ar.com.fdvs.dj.domain.Style;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -37,7 +35,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-@Service("weeklySaIncidentReport")
+@Service("weeklyIncidentSAReport")
 public class WeeklyIncidentSAReportImpl implements ReportService {
 
 	@Autowired
@@ -51,7 +49,7 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 	@Autowired
 	@Qualifier("weeklyPerfAgentDAO")
 	private PerfAgentDAOService agent;
-	
+
 	@Autowired
 	@Qualifier("incidentReportDAO")
 	private IncidentReportDAOService incident;
@@ -59,10 +57,7 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 	@Autowired
 	private TemplateBuildersReport templateBuilders;
 
-	@Autowired
-	private TemplateStyles templateStyles;
-
-	protected final static Map<String, Object> params = new HashMap<String, Object>();
+	protected final Map<String, Object> params = new HashMap<String, Object>();
 
 	private List<PerformanceReport> reportList;
 
@@ -75,22 +70,30 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 	private List<Incident> supportAgentIncidentList;
 
 	private PerformanceReport report;
+	private int currentYear;
+	private String currentMonthStr;
 	private int currentMonth;
 	private int currentWeek;
 	private int prevWeek;
 
 	public WeeklyIncidentSAReportImpl() {
 
+		this.currentYear = TimeStatic.currentYear;
+		this.currentMonthStr = TimeStatic.currentMonthStr;
 		this.currentMonth = TimeStatic.currentMonth;
 		this.currentWeek = TimeStatic.currentWeekYear;
-		this.prevWeek = currentWeek-1;
+		this.prevWeek = currentWeek - 1;
 	}
 
 	@Override
 	public DynamicReport buildReport() {
-		
-		float achievement = reportList.get(0).getAchievement();
-		
+
+		// get master
+		DynamicReportBuilder master = templateBuilders.getMaster();
+		master.setTitle("VDI SUPPORT AGENT PERFORMANCE BASED ON iTop");
+		master.setSubtitle("WEEK " + prevWeek + " - " + currentMonthStr.toUpperCase() + " "
+				+ currentYear);
+
 		// add params
 		params.put("summaryReport", reportList.get(0).getSummaryReport());
 		params.put("performanceTeamList", reportList.get(0).getPerformanceTeamList());
@@ -101,51 +104,30 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 		params.put("supportAgentIncidentList", reportList.get(0).getSupportAgentIncidentList());
 
 		// add subreport
-		Style styleAchievement = new Style();
-		Style missedTemplates = templateStyles.getStandardDetailRedTextStyle();
-		Style achievedTemplates = templateStyles.getStandardDetailGreenTextStyle();
-
-		if(achievement < 97) {
-			styleAchievement = missedTemplates;
-		} else {
-			styleAchievement = achievedTemplates;
-		}
-		
-		// subreport all
 		DynamicReport subReportAll = templateBuilders.getSummarySub2();
-//		subReportAll.getColumns().get(1).setStyle(styleAchievement);
-		// subreport team
 		DynamicReport subReportTeam = templateBuilders.getTeamSub();
-//		subReportTeam.getColumns().get(4).setStyle(styleAchievement);
-		// subreport agent
 		DynamicReport subReportAgent = templateBuilders.getAgentSub();
-//		subReportAgent.getColumns().get(7).setStyle(styleAchievement);
-		//subreport assigned/pending/missed
 		DynamicReport subReportMissed = templateBuilders.getMissedSub();
 		DynamicReport subReportPending = templateBuilders.getPendingSub();
 		DynamicReport subReportAssigned = templateBuilders.getAssignedSub();
-		//subreport all incident
 		DynamicReport subReportIncident = templateBuilders.getIncidentListSub();
-		
-		DynamicReportBuilder drb = templateBuilders.getMaster();
-		drb.setSubtitle("WEEK "+TimeStatic.currentWeekMonth+" "+TimeStatic.currentMonthStr.toUpperCase()+" "+TimeStatic.currentYear);
-		drb.addConcatenatedReport(subReportAll, new ClassicLayoutManager(), "summaryReport",
-				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
-			.addConcatenatedReport(subReportTeam, new ClassicLayoutManager(), "performanceTeamList",
-				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
-			.addConcatenatedReport(subReportAgent, new ClassicLayoutManager(), "performanceAgentList",
-				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true)
-			.addConcatenatedReport(subReportMissed, new ClassicLayoutManager(), "supportAgentMissedList",
-					DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true)
-			.addConcatenatedReport(subReportPending, new ClassicLayoutManager(), "supportAgentPendingList",
-					DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
-			.addConcatenatedReport(subReportAssigned, new ClassicLayoutManager(), "supportAgentAssignList",
-					DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
-			.addConcatenatedReport(subReportIncident, new ClassicLayoutManager(), "supportAgentIncidentList",
-					DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);
 
+		master.addConcatenatedReport(subReportAll, new ClassicLayoutManager(), "summaryReport",
+				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
+				.addConcatenatedReport(subReportTeam, new ClassicLayoutManager(), "performanceTeamList",
+						DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
+				.addConcatenatedReport(subReportAgent, new ClassicLayoutManager(), "performanceAgentList",
+						DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true)
+				.addConcatenatedReport(subReportMissed, new ClassicLayoutManager(), "supportAgentMissedList",
+						DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true)
+				.addConcatenatedReport(subReportPending, new ClassicLayoutManager(), "supportAgentPendingList",
+						DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
+				.addConcatenatedReport(subReportAssigned, new ClassicLayoutManager(), "supportAgentAssignList",
+						DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false)
+				.addConcatenatedReport(subReportIncident, new ClassicLayoutManager(), "supportAgentIncidentList",
+						DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);
 
-		return drb.build();
+		return master.build();
 	}
 
 	@Override
@@ -172,30 +154,24 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 		return reportList;
 	}
 
-	public void setPerformanceReport() {
-		
+	private void setPerformanceReport() {
+
 		report = new PerformanceReport();
-//		performanceAllList = new ArrayList<PerformanceOverall>();
-//		performanceAllList.add(all.getPerformance(currentWeek, currentMonth));
-//		int totalTicket = all.getPerformance(currentWeek, currentMonth).getTotalTicket();
-//		int totalAchieved = all.getPerformance(currentWeek, currentMonth).getTotalAchieved();
-//		int totalMissed = all.getPerformance(currentWeek, currentMonth).getTotalMissed();
-//		float achievement = all.getPerformance(currentWeek, currentMonth).getAchievement();
-		
+
 		summaryList = new ArrayList<SummaryReport>();
 		PerformanceOverall perfAll = all.getPerformance(currentWeek, currentMonth);
 		Integer totalTicket = perfAll.getTotalTicket();
 		Integer totalAchieved = perfAll.getTotalAchieved();
 		Integer totalMissed = perfAll.getTotalMissed();
-		Float achievement = perfAll.getAchievement();		
-		summaryList.add(new SummaryReport("Total Ticket", totalTicket.toString()));
-		summaryList.add(new SummaryReport("Achieved", totalAchieved.toString()));
-		summaryList.add(new SummaryReport("Missed", totalMissed.toString()));
+		Float achievement = perfAll.getAchievement();
+		summaryList.add(new SummaryReport("Ticket Achieved", totalAchieved.toString()));
+		summaryList.add(new SummaryReport("Ticket Missed", totalMissed.toString()));
+		summaryList.add(new SummaryReport("Ticket Total", totalTicket.toString()));
 		summaryList.add(new SummaryReport("Achievement", achievement.toString()));
-		
+
 		performanceTeamList = team.getPerformance(currentWeek, currentMonth);
 		performanceAgentList = agent.getPerformance(currentWeek, currentMonth);
-		
+
 		supportAgentPendingList = incident.getPendingIncidentByWeek(currentMonth, prevWeek);
 		supportAgentAssignList = incident.getAssignedIncidentByWeek(currentMonth, prevWeek);
 		supportAgentMissedList = incident.getMissedIncidentByWeek(currentMonth, prevWeek);
@@ -213,9 +189,6 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 		report.setSupportAgentMissedList(supportAgentMissedList);
 		report.setSupportAgentIncidentList(supportAgentIncidentList);
 
-		System.out.println("agent: "+supportAgentIncidentList.size());
-		System.out.println("all: "+summaryList); 
-		
 		List<PerformanceReport> list = new ArrayList<PerformanceReport>();
 		list.add(report);
 

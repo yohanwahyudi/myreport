@@ -31,15 +31,16 @@ public class ReportTest {
 //		System.out.println(tb.getSaAssignedSub().getColumns().get(2).getTitle());
 		
 		//weeklySaIncidentReport
-		ReportService rpt = ctx.getBean("weeklySaIncidentReport", ReportService.class);
-//		JasperViewer jv = new JasperViewer(rpt.getReport());
-//		jv.setVisible(true);
+//		ReportService rpt = ctx.getBean("weeklyIncidentSAReport", ReportService.class);		
+//		ReportService rpt = ctx.getBean("monthlyIncidentSAReport", ReportService.class);
+//		ReportService rpt = ctx.getBean("weeklyIncidentSDReport", ReportService.class);
+		ReportService rpt = ctx.getBean("monthlyIncidentSDReport", ReportService.class);
 		
-//		ReportService rpt = ctx.getBean("monthlySaIncidentReport", ReportService.class);
-		ReportExporter.exportReport(rpt.getReport(), System.getProperty("user.dir") + "/target/reports/" 
-				+ "reporttest" + ".pdf");
-//		JasperViewer jv = new JasperViewer(rpt.getReport());
-//		jv.setVisible(true);
+		
+//		ReportExporter.exportReport(rpt.getReport(), System.getProperty("user.dir") + "/target/reports/" 
+//				+ "reporttest" + ".pdf");
+		JasperViewer jv = new JasperViewer(rpt.getReport());
+		jv.setVisible(true);
 		
 		
 		

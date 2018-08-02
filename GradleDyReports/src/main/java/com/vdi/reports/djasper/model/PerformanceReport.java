@@ -3,10 +3,10 @@ package com.vdi.reports.djasper.model;
 import java.util.List;
 
 import com.vdi.model.Incident;
-import com.vdi.model.ServiceDesk;
 import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.model.performance.PerformanceTeam;
+import com.vdi.model.staging.StagingServiceDesk;
 
 public class PerformanceReport {
 	
@@ -25,7 +25,7 @@ public class PerformanceReport {
 	private List<Incident> supportAgentAssignList;
 	private List<Incident> supportAgentMissedList;
 	
-	private List<ServiceDesk> serviceDeskIncidentList;
+	private List<StagingServiceDesk> serviceDeskIncidentList;
 
 	public PerformanceReport() {
 		
@@ -107,11 +107,11 @@ public class PerformanceReport {
 		this.supportAgentMissedList = supportAgentMissedList;
 	}
 
-	public List<ServiceDesk> getServiceDeskIncidentList() {
+	public List<StagingServiceDesk> getServiceDeskIncidentList() {
 		return serviceDeskIncidentList;
 	}
 
-	public void setServiceDeskIncidentList(List<ServiceDesk> serviceDeskIncidentList) {
+	public void setServiceDeskIncidentList(List<StagingServiceDesk> serviceDeskIncidentList) {
 		this.serviceDeskIncidentList = serviceDeskIncidentList;
 	}
 

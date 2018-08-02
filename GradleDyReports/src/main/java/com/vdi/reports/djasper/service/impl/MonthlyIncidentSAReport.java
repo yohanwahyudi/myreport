@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-@Service("monthlySaIncidentReport")
+@Service("monthlyIncidentSAReport")
 public class MonthlyIncidentSAReport implements ReportService {
 
 	@Autowired
@@ -57,7 +57,7 @@ public class MonthlyIncidentSAReport implements ReportService {
 	@Autowired
 	private TemplateBuildersReport templateBuilders;
 
-	protected final static Map<String, Object> params = new HashMap<String, Object>();
+	protected final Map<String, Object> params = new HashMap<String, Object>();
 
 	private List<PerformanceReport> reportList;
 
@@ -71,10 +71,12 @@ public class MonthlyIncidentSAReport implements ReportService {
 	private List<Incident> supportAgentIncidentList;
 
 	private PerformanceReport report;
+	private String prevMonthStr;
 	private int currentMonth;
 	private int prevMonth;
 
 	public MonthlyIncidentSAReport() {
+		this.prevMonthStr = TimeStatic.prevMonthStr;
 		this.currentMonth = TimeStatic.currentMonth;
 		this.prevMonth = currentMonth - 1;
 	}
@@ -84,6 +86,8 @@ public class MonthlyIncidentSAReport implements ReportService {
 
 		//get master
 		DynamicReportBuilder master = templateBuilders.getMaster();
+		master.setTitle("VDI SUPPORT AGENT PERFORMANCE BASED ON iTop");
+		master.setSubtitle(prevMonthStr.toUpperCase()+" "+TimeStatic.currentYear);
 		
 		// add params
 		params.put("summaryReport", reportList.get(0).getSummaryReport());
@@ -94,7 +98,7 @@ public class MonthlyIncidentSAReport implements ReportService {
 		params.put("assignedReport", reportList.get(0).getSupportAgentAssignList());
 		params.put("incidentListReport", reportList.get(0).getSupportAgentIncidentList());
 		
-		// all subreport
+		// add subreport
 		DynamicReport subReportAll = templateBuilders.getSummarySub2();
 		DynamicReport subReportTeam = templateBuilders.getTeamSub();
 		DynamicReport subReportAgent = templateBuilders.getAgentSub();
@@ -139,7 +143,7 @@ public class MonthlyIncidentSAReport implements ReportService {
 		return new JRBeanCollectionDataSource(getPerformanceReport());
 	}
 
-	public void setPerformanceReport() {
+	private void setPerformanceReport() {
 		
 		report = new PerformanceReport();
 		
@@ -150,9 +154,9 @@ public class MonthlyIncidentSAReport implements ReportService {
 		Integer totalAchieved = perfAll.getTotalAchieved();
 		Integer totalMissed = perfAll.getTotalMissed();
 		Float achievement = perfAll.getAchievement();		
-		summaryList.add(new SummaryReport("Total Ticket", totalTicket.toString()));
-		summaryList.add(new SummaryReport("Achieved", totalAchieved.toString()));
-		summaryList.add(new SummaryReport("Missed", totalMissed.toString()));
+		summaryList.add(new SummaryReport("Ticket Achieved", totalAchieved.toString()));
+		summaryList.add(new SummaryReport("Ticket Missed", totalMissed.toString()));
+		summaryList.add(new SummaryReport("Ticket Total", totalTicket.toString()));
 		summaryList.add(new SummaryReport("Achievement", achievement.toString()));
 		
 		performanceTeamList = team.getPerformance();
@@ -173,8 +177,6 @@ public class MonthlyIncidentSAReport implements ReportService {
 		report.setSupportAgentPendingList(supportAgentPendingList);
 		report.setSupportAgentAssignList(supportAgentAssignedList);
 		report.setSupportAgentIncidentList(supportAgentIncidentList);
-		
-		System.out.println("agent: "+supportAgentIncidentList.size());
 
 		List<PerformanceReport> list = new ArrayList<PerformanceReport>();
 		list.add(report);

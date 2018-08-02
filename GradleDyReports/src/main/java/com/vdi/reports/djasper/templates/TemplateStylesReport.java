@@ -36,6 +36,7 @@ public class TemplateStylesReport {
 	private Style arialTitleAgentStyle;
 	private Style arialLeftAgentStyle;
 	private Style arialDetailAgentStyle;
+	private Style arialDetailGreenAgentStyle;
 	
 	//for incidentList
 	private Style arialHeaderIncidentListStyle;
@@ -68,6 +69,7 @@ public class TemplateStylesReport {
 		this.arialTitleAgentStyle = createArialTitleAgentStyle(font);
 		this.arialDetailAgentStyle = createArialDetailAgentStyle(font);
 		this.arialLeftAgentStyle = createArialLeftAgentStyle(font);
+		this.arialDetailGreenAgentStyle = createArialDetailGreenAgentStyle(font);
 		
 		//for incidentlist
 		this.arialHeaderIncidentListStyle = createArialHeaderIncidentStyle(font);
@@ -219,6 +221,25 @@ public class TemplateStylesReport {
 
 	}
 	
+	private Style createArialDetailGreenAgentStyle(TemplateFontsReport font) {
+
+		Color color = new Color(0, 122, 22);
+		
+		Font myFont = font.getArialFont();
+		myFont.setFontSize(9);
+		myFont.setBold(true);
+
+		Style style = new Style("detailAgentStyle");
+		style.setFont(myFont);
+		style.setTextColor(color);
+		style.setBorderBottom(Border.PEN_1_POINT());
+		style.setHorizontalAlign(HorizontalAlign.LEFT);
+		style.setVerticalAlign(VerticalAlign.MIDDLE);
+
+		return style;
+
+	}
+	
 	//for incident list subreport
 	private Style createArialHeaderIncidentStyle(TemplateFontsReport font) {
 
@@ -293,6 +314,10 @@ public class TemplateStylesReport {
 
 	public Style getArialDetailSummaryStyle() {
 		return arialDetailSummaryStyle;
+	}
+
+	public Style getArialDetailGreenAgentStyle() {
+		return arialDetailGreenAgentStyle;
 	}
 
 	public Style getArialDetailAgentStyle() {

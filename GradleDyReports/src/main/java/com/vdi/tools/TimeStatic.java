@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -17,6 +18,7 @@ public class TimeStatic {
 	public static final int currentYear;
 	
 	public static final String currentMonthStr;
+	public static final String prevMonthStr;
 
 	static {
 		currentWeekYear = getCurrentWeekYear();
@@ -25,6 +27,7 @@ public class TimeStatic {
 		currentYear = getCurrentYear();
 		
 		currentMonthStr = getCurrentMonthString();
+		prevMonthStr = getPrevMonthString();
 	}
 
 	private static int getCurrentWeekYear() {
@@ -56,6 +59,18 @@ public class TimeStatic {
 
 		LocalDate localDate = LocalDate.now();
 		Date utilDate = Date.from(localDate.atStartOfDay(ZoneId.of("GMT+7")).toInstant());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
+		
+		return sdf.format(utilDate);
+	}
+	
+	private static String getPrevMonthString() {
+		
+		LocalDate localDate = LocalDate.now();
+		LocalDate earlier = localDate.minusMonths(1);
+		
+		Date utilDate = Date.from(earlier.atStartOfDay(ZoneId.of("GMT+7")).toInstant());
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
 		

@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.vdi.batch.mds.repository.StagingRepository;
-import com.vdi.batch.mds.repository.dao.BaseDAOService;
 import com.vdi.batch.mds.repository.dao.StagingIncidentDAOService;
-import com.vdi.model.Incident;
 import com.vdi.model.staging.Staging;
 
 @Transactional

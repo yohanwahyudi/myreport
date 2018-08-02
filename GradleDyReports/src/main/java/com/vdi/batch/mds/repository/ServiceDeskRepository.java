@@ -6,10 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.vdi.model.ServiceDesk;
 import com.vdi.model.staging.StagingServiceDesk;
 
-public interface ServiceDeskRepository extends CrudRepository<ServiceDesk, Long>{
+public interface ServiceDeskRepository extends CrudRepository<StagingServiceDesk, Long>{
 
 	@Query(value="select " + 
 			"	* " + 
@@ -29,6 +28,7 @@ public interface ServiceDeskRepository extends CrudRepository<ServiceDesk, Long>
 			"and month(incident_startdate)= :month "+
 			"and scalar_previousvalue in ('escalated_tto','new') and scalar_newvalue = 'assigned' "+
 			"and scalar_user like 'EXT%' "+
+			"order by incident_ref "+
 			";", nativeQuery=true)
 	public List<StagingServiceDesk> getAllIncidentByMonth(@Param("month") int month);
 	
