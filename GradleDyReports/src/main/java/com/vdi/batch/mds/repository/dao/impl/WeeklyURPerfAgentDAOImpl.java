@@ -2,12 +2,17 @@ package com.vdi.batch.mds.repository.dao.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vdi.batch.mds.repository.WeeklyURPefAgentRepository;
 import com.vdi.batch.mds.repository.dao.PerfAgentDAOService;
 import com.vdi.model.performance.PerformanceAgent;
 
+@Transactional
+@Service("weeklyURPerfAgentDAO")
 public class WeeklyURPerfAgentDAOImpl implements PerfAgentDAOService{
 	
 	@Autowired

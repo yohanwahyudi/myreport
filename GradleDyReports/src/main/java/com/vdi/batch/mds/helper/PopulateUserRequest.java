@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 
-import com.vdi.batch.mds.repository.StagingUserRequestDAOService;
+import com.vdi.batch.mds.repository.dao.StagingUserRequestDAOService;
 import com.vdi.batch.mds.service.ItopMDSDataLoaderService;
 import com.vdi.model.staging.StagingUserRequest;
 
@@ -33,7 +33,7 @@ public class PopulateUserRequest {
 		}
 	}
 
-	public void populate() throws Throwable {
+	public void populate() {
 
 		// delete and reset sequence for staging table
 		urdao.deleteEntity();

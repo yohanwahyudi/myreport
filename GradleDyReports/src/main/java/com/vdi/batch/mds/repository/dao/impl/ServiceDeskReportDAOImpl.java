@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.vdi.batch.mds.repository.ServiceDeskRepository;
+import com.vdi.batch.mds.repository.StagingServiceDeskRepository;
 import com.vdi.batch.mds.repository.dao.ServiceDeskReportDAO;
 import com.vdi.model.staging.StagingServiceDesk;
 
@@ -16,7 +16,7 @@ import com.vdi.model.staging.StagingServiceDesk;
 public class ServiceDeskReportDAOImpl implements ServiceDeskReportDAO{
 
 	@Autowired
-	private ServiceDeskRepository repo;
+	private StagingServiceDeskRepository repo;
 	
 	@Override
 	public List<StagingServiceDesk> getAllIncidentByWeek(int month, int week) {

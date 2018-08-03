@@ -13,8 +13,8 @@ import javax.persistence.Table;
 public class StagingUserRequest {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator="seq5")
-	@SequenceGenerator(name="seq7", sequenceName="seq5", allocationSize=100)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator="seq7")
+	@SequenceGenerator(name="seq7", sequenceName="seq7", allocationSize=100)
 	@Column(name="id", updatable=false, nullable=false)
 	private Long id;	
 	private String scalar_objectid;

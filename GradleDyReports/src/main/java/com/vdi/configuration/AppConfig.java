@@ -73,6 +73,8 @@ public final class AppConfig {
 	@Value("#{'${mds.servicedesk.report.person}'.split(';')}")
 	private final String[] servicedeskPerson;
 	
+	private final String servicedeskOtherTeam;
+	
 	@Autowired
 	public AppConfig(Environment env) {
 		
@@ -106,6 +108,7 @@ public final class AppConfig {
 		this.statusCol = env.getRequiredProperty(PropertyNames.MDS_JSOUP_STATUS_COL, Integer.class);
 		
 		this.servicedeskPerson = env.getRequiredProperty(PropertyNames.MDS_SERVICEDESK_REPORT_PERSON, String[].class);
+		this.servicedeskOtherTeam = env.getRequiredProperty(PropertyNames.MDS_SERVICEDESK_REPORT_OTHERTEAM, String.class);
 	}
 	
 	@Bean
@@ -283,6 +286,10 @@ public final class AppConfig {
 
 	public String[] getServicedeskPerson() {
 		return servicedeskPerson;
+	}
+
+	public String getServicedeskOtherTeam() {
+		return servicedeskOtherTeam;
 	}
 
 }

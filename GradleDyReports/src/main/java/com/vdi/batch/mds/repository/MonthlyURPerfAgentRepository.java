@@ -74,7 +74,7 @@ public interface MonthlyURPerfAgentRepository extends CrudRepository<Performance
 			"from perf_agent " + 
 			"where "+
 			"year(created_dt)=year(curdate()) "+   
-			"AND month= :month "+
+			"AND month(created_dt)= :month "+
 			"AND period='monthly'  "+
 			"AND category='ur' "+
 			";", nativeQuery=true)

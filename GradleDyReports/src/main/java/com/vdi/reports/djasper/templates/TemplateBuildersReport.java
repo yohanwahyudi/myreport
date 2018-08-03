@@ -38,6 +38,8 @@ public class TemplateBuildersReport {
 	private DynamicReport serviceDeskPersonSub;
 	private DynamicReport serviceDeskAgentSub;
 	private DynamicReport serviceDeskIncidentSub;
+	private DynamicReport userRequestAgentSub;
+	private DynamicReport userRequestIncidentSub;
 
 	public TemplateBuildersReport() {
 	}
@@ -59,8 +61,11 @@ public class TemplateBuildersReport {
 		this.serviceDeskPersonSub = createServicedeskPersonSub(style);
 		this.serviceDeskAgentSub = createServicedeskAgentSub(style);
 		this.serviceDeskIncidentSub = createServicedeskIncidentSub(style);
+		this.userRequestAgentSub = createUserRequestAgentSub(style);
+		this.userRequestIncidentSub = createUserRequestIncidentSub(style);
 
 	}
+
 
 	private DynamicReportBuilder createMaster(TemplateStylesReport style) {
 
@@ -368,7 +373,7 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle())
 				.build();
 		AbstractColumn columnAchieved  = ColumnBuilder.getNew().setColumnProperty("totalAchieved", Integer.class.getName())
-				.setTitle("Ticket Achieved").setWidth(new Integer(50)).setStyle(style.getArialDetailAgentStyle())
+				.setTitle("Ticket Achieved").setWidth(new Integer(60)).setStyle(style.getArialDetailAgentStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle())
 				.build();
 		AbstractColumn columnAchievement  = ColumnBuilder.getNew().setColumnProperty("achievement", Float.class.getName())
@@ -386,6 +391,40 @@ public class TemplateBuildersReport {
 		
 		return drb.build();
 
+	}
+	
+	private DynamicReport createUserRequestAgentSub(TemplateStylesReport style) {
+		AbstractColumn columnAgent = ColumnBuilder.getNew().setColumnProperty("agentName", String.class.getName())
+				.setTitle("Agent").setWidth(new Integer(150)).setStyle(style.getArialDetailAgentStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalAchieved = ColumnBuilder.getNew()
+				.setColumnProperty("totalAchieved", Integer.class.getName()).setTitle("Achieved")
+				.setWidth(new Integer(50)).setStyle(style.getArialDetailAgentStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotalMissed = ColumnBuilder.getNew()
+				.setColumnProperty("totalMissed", Integer.class.getName()).setTitle("Missed").setWidth(new Integer(50))
+				.setStyle(style.getArialDetailAgentStyle()).setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnTotal = ColumnBuilder.getNew().setColumnProperty("totalTicket", Integer.class.getName())
+				.setTitle("Total").setWidth(new Integer(50)).setStyle(style.getArialDetailAgentStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		AbstractColumn columnAchievement = ColumnBuilder.getNew()
+				.setColumnProperty("achievement", Float.class.getName()).setTitle("Achievement")
+				.setWidth(new Integer(70)).setStyle(style.getArialDetailAgentStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+
+		int margin = 20;
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(20);
+		drb.setLeftMargin(margin).setRightMargin(margin).setTopMargin(20).setBottomMargin(margin);
+		drb.setTitle("VDI USER REQUEST AGENT PERFORMANCE");
+		drb.addColumn(columnAgent);
+		drb.addColumn(columnTotalAchieved);
+		drb.addColumn(columnTotalMissed);
+		drb.addColumn(columnTotal);
+		drb.addColumn(columnAchievement);
+		drb.setUseFullPageWidth(true);
+
+		return drb.build();
 	}
 	
 	private DynamicReport createServicedeskAgentSub(TemplateStylesReport style) {
@@ -459,6 +498,42 @@ public class TemplateBuildersReport {
 		return drb.build();
 
 	}
+	
+	private DynamicReport createUserRequestIncidentSub(TemplateStylesReport style) {
+
+		AbstractColumn columnRef = ColumnBuilder.getNew().setColumnProperty("scalar_urequestref", String.class.getName())
+				.setTitle("Ref").setWidth(new Integer(35)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnTitle = ColumnBuilder.getNew().setColumnProperty("urequest_title", String.class.getName())
+				.setTitle("Title").setWidth(new Integer(200)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnStatus = ColumnBuilder.getNew().setColumnProperty("urequest_status", String.class.getName())
+				.setTitle("Status").setWidth(new Integer(35)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnAgent = ColumnBuilder.getNew().setColumnProperty("urequest_agent", String.class.getName())
+				.setTitle("Agent").setWidth(new Integer(150)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnPriority = ColumnBuilder.getNew().setColumnProperty("urequest_priority", String.class.getName())
+				.setTitle("Priority").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnStartDt = ColumnBuilder.getNew().setColumnProperty("urequest_startdate", String.class.getName())
+				.setTitle("Start Date").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitle("USER REQUEST TICKET");
+		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(30);
+		drb.addColumn(columnRef);
+		drb.addColumn(columnTitle);
+		drb.addColumn(columnStatus);
+		drb.addColumn(columnAgent);
+		drb.addColumn(columnPriority);
+		drb.addColumn(columnStartDt);
+		drb.setUseFullPageWidth(true);
+
+		return drb.build();
+
+	}
 
 	public DynamicReportBuilder getMaster() {
 		return master;
@@ -506,6 +581,14 @@ public class TemplateBuildersReport {
 
 	public DynamicReport getServiceDeskIncidentSub() {
 		return serviceDeskIncidentSub;
+	}
+
+	public DynamicReport getUserRequestIncidentSub() {
+		return userRequestIncidentSub;
+	}
+
+	public DynamicReport getUserRequestAgentSub() {
+		return userRequestAgentSub;
 	}
 
 }

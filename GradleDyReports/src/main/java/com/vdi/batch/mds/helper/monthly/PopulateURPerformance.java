@@ -52,7 +52,7 @@ public class PopulateURPerformance {
 				.floatValue();
 
 		PerformanceOverall poUseThis = new PerformanceOverall();
-		PerformanceOverall poExisting = allDAO.getPerformance();
+		PerformanceOverall poExisting = allDAO.getPerformance(0, currentMonth);
 		if(poExisting==null) {
 			poUseThis.setTotalTicket(ticketCount);
 			poUseThis.setTotalAchieved(achievedCount);
@@ -107,7 +107,7 @@ public class PopulateURPerformance {
 		}
 
 		// compare with existing ticket
-		List<PerformanceAgent> existingList = agentDAO.getPerformance();
+		List<PerformanceAgent> existingList = agentDAO.getPerformance(0, currentMonth);
 		List<PerformanceAgent> useThisList = new ArrayList<PerformanceAgent>();
 		if (existingList.size() < 1) {
 			useThisList = newPerfList;

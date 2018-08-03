@@ -37,7 +37,7 @@ public interface MonthlyURPerfAllRepository extends CrudRepository<PerformanceOv
 	
 	@Query(value="select " + 
 			"	count(scalar_urequestref) " + 
-			"from staging_servicedesk " + 
+			"from staging_userrequest " + 
 			"where year(urequest_startdate)=year(curdate()) "+   
 			"and month(urequest_startdate)= :month "+
 			"and scalar_previousvalue in ('escalated_tto','new') and scalar_newvalue = 'assigned' "+
@@ -49,7 +49,7 @@ public interface MonthlyURPerfAllRepository extends CrudRepository<PerformanceOv
 	@Query(value="select * from perf_overall "+
 			"WHERE  " +
 				"year(created_dt)=year(curdate()) "+   
-				"AND month= :month "+
+				"AND month(created_dt)= :month "+
 				"AND period='monthly' "+
 				"AND category='ur';", nativeQuery=true)
 	public PerformanceOverall getPerformanceThisMonth(@Param("month") int month);

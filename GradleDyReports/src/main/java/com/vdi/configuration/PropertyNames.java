@@ -41,6 +41,7 @@ public final class PropertyNames {
 	public static final String MDS_CSV_AGENT_FILE = "mds.csv.agent.file";
 	
 	public static final String MDS_SERVICEDESK_REPORT_PERSON = "mds.servicedesk.report.person";
+	public static final String MDS_SERVICEDESK_REPORT_OTHERTEAM = "mds.servicedesk.report.otherteam";
 
 	//DB config
 	public static final String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";

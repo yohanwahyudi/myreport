@@ -7,6 +7,7 @@ import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.model.performance.PerformanceTeam;
 import com.vdi.model.staging.StagingServiceDesk;
+import com.vdi.model.staging.StagingUserRequest;
 
 public class PerformanceReport {
 	
@@ -19,6 +20,7 @@ public class PerformanceReport {
 	private List<SummaryReport> summaryReport;
 	private List<PerformanceTeam> performanceTeamList;
 	private List<PerformanceAgent> performanceAgentList;
+	private List<PerformanceAgent> performanceURAgentList;
 	
 	private List<Incident> supportAgentIncidentList;
 	private List<Incident> supportAgentPendingList;
@@ -26,6 +28,7 @@ public class PerformanceReport {
 	private List<Incident> supportAgentMissedList;
 	
 	private List<StagingServiceDesk> serviceDeskIncidentList;
+	private List<StagingUserRequest> userRequestIncidentList;
 
 	public PerformanceReport() {
 		
@@ -154,6 +157,24 @@ public class PerformanceReport {
 	public void setAchievement(float achievement) {
 		this.achievement = achievement;
 	}
+
+	public List<StagingUserRequest> getUserRequestIncidentList() {
+		return userRequestIncidentList;
+	}
+
+	public void setUserRequestIncidentList(List<StagingUserRequest> userRequestIncidentList) {
+		this.userRequestIncidentList = userRequestIncidentList;
+	}
+
+	public List<PerformanceAgent> getPerformanceURAgentList() {
+		return performanceURAgentList;
+	}
+
+	public void setPerformanceURAgentList(List<PerformanceAgent> performanceURAgentList) {
+		this.performanceURAgentList = performanceURAgentList;
+	}
+
+	
 	
 	
 	

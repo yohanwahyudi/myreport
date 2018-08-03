@@ -161,35 +161,35 @@ public class UserRequestDataLoaderImpl implements ItopMDSDataLoaderService {
 
 		StagingUserRequest ur = new StagingUserRequest();
 		ur.setScalar_objectid(row.get(0));
-		ur.setScalar_urequestid(row.get(0));
-		ur.setScalar_date(row.get(0));
-		ur.setScalar_datetime(row.get(0));
-		ur.setScalar_user(row.get(0));
-		ur.setScalar_objectclass(row.get(0));
-		ur.setScalar_objectid2(row.get(0));
-		ur.setScalar_attribute(row.get(0));
-		ur.setScalar_previousvalue(row.get(0));
-		ur.setScalar_newvalue(row.get(0));
-		ur.setScalar_type(row.get(0));
-		ur.setScalar_urequestref(row.get(0));
-		ur.setUrequest_title(row.get(0));
-		ur.setUrequest_startdate(row.get(0));
-		ur.setUrequest_starttime(row.get(0));
-		ur.setUrequest_enddate(row.get(0));
-		ur.setUrequest_endtime(row.get(0));
-		ur.setUrequest_assignmentdate(row.get(0));
-		ur.setUrequest_assignmenttime(row.get(0));
-		ur.setUrequest_lastupdate(row.get(0));
-		ur.setUrequest_lastupdatetime(row.get(1));
-		ur.setUrequest_closedate(row.get(2));
-		ur.setUrequest_closedatetime(row.get(3));
-		ur.setUrequest_caller(row.get(4));
-		ur.setUrequest_agentname(row.get(5));
-		ur.setUrequest_agent(row.get(6));
-		ur.setUrequest_teamname(row.get(7));
-		ur.setUrequest_team(row.get(8));
+		ur.setScalar_urequestid(row.get(1));
+		ur.setScalar_date(row.get(2));
+		ur.setScalar_datetime(row.get(3));
+		ur.setScalar_user(row.get(4));
+		ur.setScalar_objectclass(row.get(5));
+		ur.setScalar_objectid2(row.get(6));
+		ur.setScalar_attribute(row.get(7));
+		ur.setScalar_previousvalue(row.get(8));
+		ur.setScalar_newvalue(row.get(9));
+		ur.setScalar_type(row.get(10));
+		ur.setScalar_urequestref(row.get(11));
+		ur.setUrequest_title(row.get(12) );
+		ur.setUrequest_startdate(row.get(13));
+		ur.setUrequest_starttime(row.get(14));
+		ur.setUrequest_enddate(row.get(15));
+		ur.setUrequest_endtime(row.get(16));
+		ur.setUrequest_assignmentdate(row.get(17));
+		ur.setUrequest_assignmenttime(row.get(18));
+		ur.setUrequest_lastupdate(row.get(19));
+		ur.setUrequest_lastupdatetime(row.get(20));
+		ur.setUrequest_closedate(row.get(21));
+		ur.setUrequest_closedatetime(row.get(22));
+		ur.setUrequest_caller(row.get(23));
+		ur.setUrequest_agentname(row.get(24));
+		ur.setUrequest_agent(row.get(25));
+		ur.setUrequest_teamname(row.get(26));
+		ur.setUrequest_team(row.get(27));
 
-		String description = row.get(9);
+		String description = row.get(28);
 		description = description.replaceAll(HTML_REGEX_CLEAR_TAG, "");
 		description = description.replaceAll(HTML_ENTITY_CLEAR, " ");
 		description = description.replaceAll(UNACCENT_CLEAR, "");
@@ -198,14 +198,14 @@ public class UserRequestDataLoaderImpl implements ItopMDSDataLoaderService {
 		}
 		ur.setUrequest_description(description);
 
-		ur.setUrequest_status(row.get(10));
-		ur.setUrequest_priority(row.get(11));
-		ur.setUrequest_origin(row.get(12));
-		ur.setUrequest_lastpendingdate(row.get(13));
-		ur.setUrequest_lastpendingtime(row.get(14));
-		ur.setUrequest_cumulatedpending(row.get(15));
+		ur.setUrequest_status(row.get(29));
+		ur.setUrequest_priority(row.get(30));
+		ur.setUrequest_origin(row.get(31));
+		ur.setUrequest_lastpendingdate(row.get(32));
+		ur.setUrequest_lastpendingtime(row.get(33));
+		ur.setUrequest_cumulatedpending(row.get(34));
 
-		String pendingReason = row.get(16);
+		String pendingReason = row.get(35);
 		pendingReason = pendingReason.replaceAll(HTML_REGEX_CLEAR_TAG, "");
 		pendingReason = pendingReason.replaceAll(HTML_ENTITY_CLEAR, " ");
 		pendingReason = pendingReason.replaceAll(UNACCENT_CLEAR, "");
@@ -214,19 +214,19 @@ public class UserRequestDataLoaderImpl implements ItopMDSDataLoaderService {
 		}
 		ur.setUrequest_pendingreason(pendingReason);
 
-		ur.setUrequest_refproblem(row.get(17));
-		ur.setUrequest_refchange(row.get(18));
-		ur.setUrequest_organization(row.get(19));
-		ur.setUrequest_organizationname(row.get(20));
-		ur.setUrequest_slattopassed(row.get(21));
-		ur.setUrequest_slattoover(row.get(22));
-		ur.setUrequest_ttodeadline(row.get(23));
-		ur.setUrequest_slattrpassed(row.get(24));
-		ur.setUrequest_slattrover(row.get(25));
-		ur.setUrequest_ttrdeadline(row.get(26));
-		ur.setUrequest_resolutiondelay(row.get(27));
+		ur.setUrequest_refproblem(row.get(36));
+		ur.setUrequest_refchange(row.get(37));
+		ur.setUrequest_organization(row.get(38));	
+		ur.setUrequest_organizationname(row.get(39));
+		ur.setUrequest_slattopassed(row.get(40));
+		ur.setUrequest_slattoover(row.get(41));
+		ur.setUrequest_ttodeadline(row.get(42));
+		ur.setUrequest_slattrpassed(row.get(43));
+		ur.setUrequest_slattrover(row.get(44));
+		ur.setUrequest_ttrdeadline(row.get(45));
+		ur.setUrequest_resolutiondelay(row.get(46));
 
-		String solution = row.get(28);
+		String solution = row.get(47);
 		solution = solution.replaceAll(HTML_REGEX_CLEAR_TAG, "");
 		solution = solution.replaceAll(HTML_ENTITY_CLEAR, " ");
 		solution = solution.replaceAll(UNACCENT_CLEAR, "");
@@ -235,14 +235,14 @@ public class UserRequestDataLoaderImpl implements ItopMDSDataLoaderService {
 		}
 		ur.setUrequest_solution(solution);
 
-		ur.setUrequest_tto(row.get(29));
-		ur.setUrequest_ttr(row.get(30));
-		ur.setPerson_fullname(row.get(31));
-		ur.setPerson_organizationname(row.get(32));
-		ur.setPerson_organization(row.get(33));
-		ur.setUrequest_usersatisfaction(row.get(34));
+		ur.setUrequest_tto(row.get(48));
+		ur.setUrequest_ttr(row.get(49));
+		ur.setPerson_fullname(row.get(50));
+		ur.setPerson_organizationname(row.get(51));
+		ur.setPerson_organization(row.get(52));
+		ur.setUrequest_usersatisfaction(row.get(53));
 
-		String userComment = row.get(35);
+		String userComment = row.get(54);
 		userComment = userComment.replaceAll(HTML_REGEX_CLEAR_TAG, "");
 		userComment = userComment.replaceAll(HTML_ENTITY_CLEAR, " ");
 		userComment = userComment.replaceAll(UNACCENT_CLEAR, "");
@@ -251,7 +251,7 @@ public class UserRequestDataLoaderImpl implements ItopMDSDataLoaderService {
 		}
 		ur.setUrequest_usercomment(userComment);
 
-		ur.setUrequest_servicename(row.get(36));
+		ur.setUrequest_servicename(row.get(55));
 
 		return ur;
 	}

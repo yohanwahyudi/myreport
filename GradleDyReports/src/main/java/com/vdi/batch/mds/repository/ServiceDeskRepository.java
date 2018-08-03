@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.vdi.model.ServiceDesk;
 import com.vdi.model.staging.StagingServiceDesk;
 
-public interface ServiceDeskRepository extends CrudRepository<StagingServiceDesk, Long>{
+public interface ServiceDeskRepository extends CrudRepository<ServiceDesk, Long>{
 
 	@Query(value="select " + 
 			"	* " + 

@@ -39,7 +39,7 @@ public interface WeeklyURPerfAllRepository extends CrudRepository<PerformanceOve
 	
 	@Query(value="select " + 
 			"	count(scalar_urequestref) " + 
-			"from staging_servicedesk " + 
+			"from staging_userrequest " + 
 			"where year(urequest_startdate)=year(curdate()) "+   
 			"and month(urequest_startdate)= :month "+
 			"and week(urequest_startdate,3)= :week "+
