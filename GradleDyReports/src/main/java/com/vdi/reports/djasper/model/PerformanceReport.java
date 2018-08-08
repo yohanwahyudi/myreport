@@ -21,6 +21,7 @@ public class PerformanceReport {
 	private List<PerformanceTeam> performanceTeamList;
 	private List<PerformanceAgent> performanceAgentList;
 	private List<PerformanceAgent> performanceURAgentList;
+	private List<PerformanceAgent> performanceOnJobSDAgent;
 	
 	private List<Incident> supportAgentIncidentList;
 	private List<Incident> supportAgentPendingList;
@@ -29,6 +30,8 @@ public class PerformanceReport {
 	
 	private List<StagingServiceDesk> serviceDeskIncidentList;
 	private List<StagingUserRequest> userRequestIncidentList;
+	
+	private List<PerformanceReport> performanceActiveAgentList;
 
 	public PerformanceReport() {
 		
@@ -172,6 +175,22 @@ public class PerformanceReport {
 
 	public void setPerformanceURAgentList(List<PerformanceAgent> performanceURAgentList) {
 		this.performanceURAgentList = performanceURAgentList;
+	}
+
+	public List<PerformanceReport> getPerformanceActiveAgentList() {
+		return performanceActiveAgentList;
+	}
+
+	public void setPerformanceActiveAgentList(List<PerformanceReport> performanceActiveAgentList) {
+		this.performanceActiveAgentList = performanceActiveAgentList;
+	}
+
+	public List<PerformanceAgent> getPerformanceOnJobSDAgent() {
+		return performanceOnJobSDAgent;
+	}
+
+	public void setPerformanceOnJobSDAgent(List<PerformanceAgent> performanceOnJobSDAgent) {
+		this.performanceOnJobSDAgent = performanceOnJobSDAgent;
 	}
 
 	

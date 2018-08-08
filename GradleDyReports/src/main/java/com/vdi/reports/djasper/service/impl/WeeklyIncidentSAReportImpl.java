@@ -75,6 +75,7 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 	private int currentMonth;
 	private int currentWeek;
 	private int prevWeek;
+	private int prevWeekMonth;
 
 	public WeeklyIncidentSAReportImpl() {
 
@@ -83,6 +84,7 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 		this.currentMonth = TimeStatic.currentMonth;
 		this.currentWeek = TimeStatic.currentWeekYear;
 		this.prevWeek = currentWeek - 1;
+		this.prevWeekMonth = TimeStatic.currentWeekMonth - 1;
 	}
 
 	@Override
@@ -91,7 +93,7 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 		// get master
 		DynamicReportBuilder master = templateBuilders.getMaster();
 		master.setTitle("VDI SUPPORT AGENT PERFORMANCE BASED ON iTop");
-		master.setSubtitle("WEEK " + prevWeek + " - " + currentMonthStr.toUpperCase() + " "
+		master.setSubtitle("WEEK " + prevWeekMonth + " - " + currentMonthStr.toUpperCase() + " "
 				+ currentYear);
 
 		// add params

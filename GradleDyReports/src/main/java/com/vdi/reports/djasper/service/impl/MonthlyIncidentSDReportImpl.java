@@ -117,17 +117,17 @@ public class MonthlyIncidentSDReportImpl implements ReportService {
 		combinedReport = getCombinedReport().get(0);
 		
 		params.put("summaryReport", combinedReport.getSummaryReport());
-		params.put("performanceAgentList", perfAgentList.get(0).getPerformanceAgentList());
 		params.put("servicedeskIncidentList", combinedReport.getServiceDeskIncidentList());
-		params.put("performanceURAgentList", combinedReport.getPerformanceURAgentList());
 		params.put("userrequestIncidentList", combinedReport.getUserRequestIncidentList());
+//		params.put("performanceAgentList", perfAgentList.get(0).getPerformanceAgentList());
+//		params.put("performanceURAgentList", combinedReport.getPerformanceURAgentList());
 
 		// add subreports
 		DynamicReport subReportAll = templateBuilders.getSummarySub2();
 		DynamicReport subReportPerson = templateBuilders.getServiceDeskPersonSub();
-		subReportPerson.getColumns().get(4).setStyle(templateStyles.getArialDetailGreenAgentStyle());
-		DynamicReport subReportAgent = templateBuilders.getServiceDeskAgentSub();
-		DynamicReport subReportURAgent = templateBuilders.getUserRequestAgentSub();
+					  subReportPerson.getColumns().get(4).setStyle(templateStyles.getArialDetailGreenAgentStyle());
+//		DynamicReport subReportAgent = templateBuilders.getServiceDeskAgentSub();
+//		DynamicReport subReportURAgent = templateBuilders.getUserRequestAgentSub();
 		DynamicReport subReportIncident = templateBuilders.getServiceDeskIncidentSub();
 		DynamicReport subReportURIncident = templateBuilders.getUserRequestIncidentSub();
 
@@ -213,13 +213,13 @@ public class MonthlyIncidentSDReportImpl implements ReportService {
 		List<PerformanceReport> list = new ArrayList<PerformanceReport>();
 		list.add(report);
 		
-		List<PerformanceReport> listPerfAgent = new ArrayList<PerformanceReport>();
-		PerformanceReport incidentAgentPerf = new PerformanceReport();
-		incidentAgentPerf.setPerformanceAgentList(performanceAgentList);
-		listPerfAgent.add(incidentAgentPerf);
+//		List<PerformanceReport> listPerfAgent = new ArrayList<PerformanceReport>();
+//		PerformanceReport incidentAgentPerf = new PerformanceReport();
+//		incidentAgentPerf.setPerformanceAgentList(performanceAgentList);
+//		listPerfAgent.add(incidentAgentPerf);
 
 		this.reportList = list;
-		this.perfAgentList = listPerfAgent;
+//		this.perfAgentList = listPerfAgent;
 	}
 
 	private void setURPerformanceReport() {
@@ -268,7 +268,8 @@ public class MonthlyIncidentSDReportImpl implements ReportService {
 	@Override
 	public List<PerformanceReport> getPerformanceReport() {
 
-		return reportList;
+//		return reportList;
+		return getCombinedReport();
 	}
 
 	private List<PerformanceReport> getServiceDeskPersons() {
