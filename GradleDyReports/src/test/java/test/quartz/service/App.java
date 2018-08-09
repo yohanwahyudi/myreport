@@ -6,7 +6,7 @@ public class App {
 	private static ClassPathXmlApplicationContext classPathXmlApplicationContext;
 
 	public static void main(String[] args) throws Exception {
-		classPathXmlApplicationContext = new ClassPathXmlApplicationContext("Spring-Quartz.xml");
+		classPathXmlApplicationContext = new ClassPathXmlApplicationContext("test/Spring-Quartz-Test.xml");
 
 	}
 }

@@ -121,8 +121,8 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 		params.put("summaryReport", combinedReport.getSummaryReport());
 		params.put("servicedeskIncidentList", combinedReport.getServiceDeskIncidentList());
 		params.put("userrequestIncidentList", combinedReport.getUserRequestIncidentList());
-		// params.put("performanceAgentList",
-		// reportList.get(0).getPerformanceAgentList());
+//		params.put("performanceAgentList", combinedReport.getPerformanceAgentList());
+//		params.put("performanceURAgentList", combinedReport.getPerformanceURAgentList());
 
 		// add subreports
 		DynamicReport subReportAll = templateBuilders.getSummarySub2();
@@ -146,11 +146,11 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 			master.addConcatenatedReport(subReportPerson, new ClassicLayoutManager(), "personSub" + i,
 					DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, false);
 		}
-
-		// master.addConcatenatedReport(subReportAgent, new ClassicLayoutManager(),
-		// "performanceAgentList",
-		// DJConstants.DATA_SOURCE_ORIGIN_PARAMETER,
-		// DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);
+//
+//		master.addConcatenatedReport(subReportAgent, new ClassicLayoutManager(), "performanceAgentList",
+//				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);
+//		master.addConcatenatedReport(subReportAgent, new ClassicLayoutManager(), "performanceURAgentList",
+//				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);
 		master.addConcatenatedReport(subReportIncident, new ClassicLayoutManager(), "servicedeskIncidentList",
 				DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, DJConstants.DATA_SOURCE_TYPE_COLLECTION, true);
 		master.addConcatenatedReport(subReportURIncident, new ClassicLayoutManager(), "userrequestIncidentList",
@@ -173,6 +173,7 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 	public JRDataSource getDataSource() {
 
 		setPerformanceReport();
+		setCombinedReport();
 
 		return new JRBeanCollectionDataSource(getPerformanceReport());
 	}
@@ -247,7 +248,7 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 	public List<PerformanceReport> getPerformanceReport() {
 
 		// return reportSDList;
-		return getCombinedReport();
+		return this.combinedReportList;
 	}
 
 	public List<PerformanceReport> getServiceDeskPersons() {
@@ -348,7 +349,7 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 		return totalSummary;
 	}
 
-	private List<PerformanceReport> getCombinedReport() {
+	private void setCombinedReport() {
 
 		List<PerformanceReport> combinedList = new ArrayList<PerformanceReport>();
 		List<PerformanceReport> activeServiceDeskAndDCU = new ArrayList<PerformanceReport>();
@@ -369,7 +370,7 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 
 		combinedList.add(combined);
 
-		return combinedList;
+		this.combinedReportList = combinedList;
 	}
 	
 	private List<PerformanceReport> getActiveServiceDeskAndDCU() {

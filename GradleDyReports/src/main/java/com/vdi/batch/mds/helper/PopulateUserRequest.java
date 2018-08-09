@@ -1,6 +1,7 @@
 package com.vdi.batch.mds.helper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,21 @@ public class PopulateUserRequest {
 	public void addToStaging() {
 		stagingList = new ArrayList<StagingUserRequest>();
 		stagingList = load.getStagingAllByURL();
+		
+//		stagingList = castList(StagingUserRequest.class, load.getStagingAllByURL());
 
 		if (stagingList != null && stagingList.size() > 0) {
 			urdao.addAll(stagingList);
 		}
+	}
+	
+	public <T> List<T> castList(Class<? extends T> clazz, Collection<?> c){
+		List<T> r = new ArrayList<T>(c.size());
+		for(Object o : c) {
+			r.add(clazz.cast(o));
+		}
+		
+		return r;
 	}
 
 	public void populate() {

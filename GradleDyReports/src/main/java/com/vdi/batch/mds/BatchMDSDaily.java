@@ -1,6 +1,5 @@
 package com.vdi.batch.mds;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;

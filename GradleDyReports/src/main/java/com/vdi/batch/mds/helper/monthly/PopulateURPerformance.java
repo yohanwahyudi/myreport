@@ -29,12 +29,12 @@ public class PopulateURPerformance {
 	private PerfAgentDAOService agentDAO;
 
 	private int currentMonth;
-	private int currentWeek;
+//	private int currentWeek;
 	private int prevMonth;
 	
 	public PopulateURPerformance() {
 		this.currentMonth = TimeStatic.currentMonth;
-		this.currentWeek = TimeStatic.currentWeekYear;
+//		this.currentWeek = TimeStatic.currentWeekYear;
 		this.prevMonth = currentMonth-1;
 	}
 	

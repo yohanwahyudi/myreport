@@ -376,13 +376,6 @@ public class MonthlyIncidentSDReportImpl implements ReportService {
 		combined.setPerformanceURAgentList(urReportList.get(0).getPerformanceAgentList());
 		combined.setUserRequestIncidentList(urReportList.get(0).getUserRequestIncidentList());
 		
-		logger.debug("sdIncidentsize: "+reportList.get(0).getServiceDeskIncidentList().size());
-		logger.debug("urIncidentsize: "+urReportList.get(0).getUserRequestIncidentList().size());
-		
-		for(PerformanceAgent a : reportList.get(0).getPerformanceAgentList()) {
-			logger.debug("-- "+a.getAgentName()+":"+a.getTotalTicket());
-		}
-		
 		combinedList.add(combined);
 		
 		return combinedList;

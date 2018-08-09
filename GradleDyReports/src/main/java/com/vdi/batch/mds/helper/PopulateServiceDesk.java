@@ -1,12 +1,8 @@
 package com.vdi.batch.mds.helper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import com.vdi.batch.mds.repository.dao.StagingServiceDeskDAOService;
 import com.vdi.batch.mds.service.ItopMDSDataLoaderService;
 import com.vdi.batch.mds.service.MailService;
-import com.vdi.configuration.AppConfig;
 import com.vdi.model.staging.StagingServiceDesk;
 
 @Configuration
