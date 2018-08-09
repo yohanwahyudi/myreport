@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import com.vdi.batch.mds.repository.dao.PerfAgentDAOService;
 import com.vdi.batch.mds.repository.dao.PerfAllDAOService;
 import com.vdi.batch.mds.repository.dao.PerfTeamDAOService;
+import com.vdi.batch.mds.repository.dao.TempValueService;
 import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.model.performance.PerformanceTeam;
@@ -33,11 +34,21 @@ public class PopulatePerformance {
 	@Qualifier("monthlyPerfAgentDAO")
 	private PerfAgentDAOService agentDAO;
 
+	private Integer lastSavedMonth;
 	
+	private final String LAST_MONTH = "LAST_MONTH";
+	
+	@Autowired
+	public PopulatePerformance(TempValueService tempValueService) {
+		lastSavedMonth = Integer.parseInt(tempValueService.getTempValueByName(LAST_MONTH).getValue());
+	}
+	
+	@Autowired
 	public void populatePerformance() {
 		allDAO.insertPerformance(getPerformanceOverall());
 		teamDAO.insertPerformance(getPerformanceTeamList());
-		agentDAO.insertPerformance(getPerformanceAgentList());
+		agentDAO.insertPerformance(getPerformanceAgentList());		
+		
 	}
 
 	@SuppressWarnings("unused")
@@ -58,6 +69,7 @@ public class PopulatePerformance {
 			poUseThis.setAchievement(achievement);
 			poUseThis.setPeriod("monthly");
 			poUseThis.setCategory("sa");
+			poUseThis.setMonth(lastSavedMonth.shortValue());
 		} else {
 			poExisting.setTotalTicket(ticketCount);
 			poExisting.setTotalAchieved(achievedCount);
@@ -96,6 +108,7 @@ public class PopulatePerformance {
 			perfTeam.setTotalMissed(missedCount);
 			perfTeam.setPeriod("monthly");
 			perfTeam.setCategory("sa");
+			perfTeam.setMonth(lastSavedMonth.shortValue());
 			perfTeam.setAchievement(achievement);
 
 			newPerfList.add(perfTeam);
@@ -168,6 +181,7 @@ public class PopulatePerformance {
 			perfAgent.setTotalTicket(totalTicket);
 			perfAgent.setPeriod(period);
 			perfAgent.setCategory("sa");
+			perfAgent.setMonth(lastSavedMonth.shortValue());
 			perfAgent.setAchievement(achievement);
 
 			newPerfList.add(perfAgent);

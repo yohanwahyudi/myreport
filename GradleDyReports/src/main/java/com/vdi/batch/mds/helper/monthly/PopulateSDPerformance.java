@@ -13,12 +13,13 @@ import org.springframework.context.annotation.Configuration;
 
 import com.vdi.batch.mds.repository.dao.PerfAgentDAOService;
 import com.vdi.batch.mds.repository.dao.PerfAllDAOService;
+import com.vdi.batch.mds.repository.dao.TempValueService;
 import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 
 @Configuration("populateSDPerformanceMonthly")
 public class PopulateSDPerformance {
-	
+
 	@Autowired
 	@Qualifier("monthlySDPerfAllDAO")
 	private PerfAllDAOService allDAO;
@@ -27,10 +28,22 @@ public class PopulateSDPerformance {
 	@Qualifier("monthlySDPerfAgentDAO")
 	private PerfAgentDAOService agentDAO;
 
+	private Integer lastSavedMonth;
+
+	private final String LAST_MONTH = "LAST_MONTH";
+	
+	@Autowired
+	public PopulateSDPerformance(TempValueService tempValueService) {
+	
+		lastSavedMonth = Integer.parseInt(tempValueService.getTempValueByName(LAST_MONTH).getValue());
+		
+	}
+
 	
 	public void populatePerformance() {
 		allDAO.insertPerformance(getPerformanceOverall());
-		agentDAO.insertPerformance(getPerformanceAgentList());
+		agentDAO.insertPerformance(getPerformanceAgentList());		
+		
 	}
 
 	public PerformanceOverall getPerformanceOverall() {
@@ -43,13 +56,14 @@ public class PopulateSDPerformance {
 
 		PerformanceOverall poUseThis = new PerformanceOverall();
 		PerformanceOverall poExisting = allDAO.getPerformance();
-		if(poExisting==null) {
+		if (poExisting == null) {
 			poUseThis.setTotalTicket(ticketCount);
 			poUseThis.setTotalAchieved(achievedCount);
 			poUseThis.setTotalMissed(missedCount);
 			poUseThis.setAchievement(achievement);
 			poUseThis.setPeriod("monthly");
 			poUseThis.setCategory("sd");
+			poUseThis.setMonth(lastSavedMonth.shortValue());
 		} else {
 			poExisting.setTotalTicket(ticketCount);
 			poExisting.setTotalAchieved(achievedCount);
@@ -58,7 +72,7 @@ public class PopulateSDPerformance {
 
 			poUseThis = poExisting;
 		}
-		
+
 		return poUseThis;
 
 	}
@@ -90,6 +104,7 @@ public class PopulateSDPerformance {
 			perfAgent.setTotalTicket(totalTicket);
 			perfAgent.setPeriod("monthly");
 			perfAgent.setCategory("sd");
+			perfAgent.setMonth(lastSavedMonth.shortValue());
 			perfAgent.setAchievement(achievement);
 
 			newPerfList.add(perfAgent);
@@ -112,7 +127,7 @@ public class PopulateSDPerformance {
 				PerformanceAgent existing = existingMap.get(entry.getKey());
 				PerformanceAgent updated = newPerfMap.get(entry.getKey());
 
-				if(existing!=null) {
+				if (existing != null) {
 					existing.setDivision(updated.getDivision());
 					existing.setAgentName(updated.getAgentName());
 					existing.setTotalAssigned(updated.getTotalAssigned());
@@ -124,7 +139,7 @@ public class PopulateSDPerformance {
 				} else {
 					existing = updated;
 				}
-				
+
 				useThisList.add(existing);
 			}
 		}
@@ -135,11 +150,11 @@ public class PopulateSDPerformance {
 	public BigDecimal getAchievementTicket(BigDecimal ticketAchieved, BigDecimal ticketTotal) {
 
 		BigDecimal achievement = new BigDecimal(0);
-		
+
 		achievement = ticketAchieved.divide(ticketTotal, 4, BigDecimal.ROUND_HALF_UP);
 		achievement = achievement.multiply(new BigDecimal(100));
 
 		return achievement;
 	}
-	
+
 }
