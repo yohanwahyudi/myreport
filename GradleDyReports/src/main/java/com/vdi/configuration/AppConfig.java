@@ -28,7 +28,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Component
 //@ComponentScan(basePackages = "com.vdi")
-@ComponentScan({"com.vdi","com.vdi.batch.mds.service","com.vdi.batch.mds.tools","com.vdi.batch.mds.repository.dao","com.vdi.batch.mds.repository.dao.impl","report"})
+@ComponentScan({"com.vdi","com.vdi.batch.mds.service","com.vdi.batch.mds.tools","com.vdi.batch.mds.repository.dao","com.vdi.batch.mds.repository.dao.impl"})
 @EnableJpaRepositories(basePackages = { "com.vdi.batch.mds.repository"})
 @EnableTransactionManagement
 @PropertySources({
