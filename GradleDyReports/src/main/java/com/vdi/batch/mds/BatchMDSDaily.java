@@ -19,7 +19,7 @@ import com.vdi.batch.mds.service.JsoupParseService;
 import com.vdi.batch.mds.service.MailService;
 import com.vdi.configuration.AppContext;
 import com.vdi.model.Incident;
-import com.vdi.reports.dyreports.templates.service.ReportGeneratorService;
+//import com.vdi.reports.dyreports.templates.service.ReportGeneratorService;
 
 @Component
 @ComponentScan({ "com.vdi.batch.mds.service", "com.vdi.configuration" })
@@ -58,9 +58,9 @@ public class BatchMDSDaily extends QuartzJobBean {
 				String suffix = sdf.format(new java.util.Date());
 				String filename = prefix + suffix + ".pdf";
 
-				ReportGeneratorService reportService = annotationCtx.getBean("reportGeneratorService",
-						ReportGeneratorService.class);
-				reportService.buildDailyReport(allDailyList, filename);
+//				ReportGeneratorService reportService = annotationCtx.getBean("reportGeneratorService",
+//						ReportGeneratorService.class);
+//				reportService.buildDailyReport(allDailyList, filename);
 
 				Map<String, Object> mapObject = new HashMap<String, Object>();
 				mapObject.put("deadline", deadlineList);

@@ -169,7 +169,7 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 		summaryList.add(new SummaryReport("Ticket Achieved", totalAchieved.toString()));
 		summaryList.add(new SummaryReport("Ticket Missed", totalMissed.toString()));
 		summaryList.add(new SummaryReport("Ticket Total", totalTicket.toString()));
-		summaryList.add(new SummaryReport("Achievement", achievement.toString()));
+		summaryList.add(new SummaryReport("Achievement", achievement.toString()+"%"));
 
 		performanceTeamList = team.getPerformance(currentWeek, currentMonth);
 		performanceAgentList = agent.getPerformance(currentWeek, currentMonth);

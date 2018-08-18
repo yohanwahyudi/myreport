@@ -35,7 +35,7 @@ public class PopulateSDPerformance {
 
 	private int currentMonth;
 	private int lastSavedMonth;
-	private int currentWeek;
+	private int currentWeekYear;
 
 	private final String LAST_MONTH = "LAST_MONTH";
 
@@ -45,7 +45,8 @@ public class PopulateSDPerformance {
 	public PopulateSDPerformance(TempValueService tempValueService) {
 
 		this.currentMonth = TimeStatic.currentMonth;
-		this.currentWeek = TimeStatic.currentWeekYear;
+		this.currentWeekYear = TimeStatic.currentWeekYear; 
+				
 		this.tempValue = tempValueService;
 
 		this.lastSavedMonth = Integer.parseInt(tempValue.getTempValueByName(LAST_MONTH).getValue());
@@ -53,16 +54,16 @@ public class PopulateSDPerformance {
 
 	public void populatePerformance() {
 
-		int prevWeek = currentWeek - 1;
+		int prevWeekYear = currentWeekYear - 1;
 
-		allDAO.insertPerformance(getPerformanceOverall(prevWeek, lastSavedMonth));
-		agentDAO.insertPerformance(getPerformanceAgentList(prevWeek, lastSavedMonth));
+		allDAO.insertPerformance(getPerformanceOverall(prevWeekYear, lastSavedMonth));
+		agentDAO.insertPerformance(getPerformanceAgentList(prevWeekYear, lastSavedMonth));
 
 		if (overlapMonth(lastSavedMonth)) {
 			logger.debug("overlap month");
 
-			allDAO.insertPerformance(getPerformanceOverall(prevWeek, currentMonth));
-			agentDAO.insertPerformance(getPerformanceAgentList(prevWeek, currentMonth));
+			allDAO.insertPerformance(getPerformanceOverall(prevWeekYear, currentMonth));
+			agentDAO.insertPerformance(getPerformanceAgentList(prevWeekYear, currentMonth));
 
 //			tempValue.updateTempValue(String.valueOf(currentMonth), LAST_MONTH);
 		}
@@ -73,8 +74,6 @@ public class PopulateSDPerformance {
 	public PerformanceOverall getPerformanceOverall(int week, int month) {
 
 		logger.debug("week: " + week + " month: " + month);
-
-		int currentWeek = week+1;
 		
 		int ticketCount = allDAO.getTicketCount(week, month);
 		int achievedCount = allDAO.getAchievedTicketCount(week, month);
@@ -88,7 +87,7 @@ public class PopulateSDPerformance {
 		achievement = (getAchievementTicket(new BigDecimal(achievedCount), new BigDecimal(ticketCount))).floatValue();
 
 		PerformanceOverall poUseThis = new PerformanceOverall();
-		PerformanceOverall poExisting = allDAO.getPerformance(currentWeek, month);
+		PerformanceOverall poExisting = allDAO.getPerformance(currentWeekYear, month);
 		if (poExisting == null) {
 			poUseThis.setTotalTicket(ticketCount);
 			poUseThis.setTotalAchieved(achievedCount);
@@ -115,11 +114,9 @@ public class PopulateSDPerformance {
 
 	public List<PerformanceAgent> getPerformanceAgentList(int week, int month) {
 
-		logger.debug("here getPerformanceAgent");
+		logger.debug("getPerformanceAgent");
 		logger.debug("week: " + week);
 		logger.debug("month: " + month);
-
-		int currentWeek = week+1;
 		
 		// get new ticket
 		List<Object[]> newObjList = new ArrayList<Object[]>();
@@ -129,9 +126,6 @@ public class PopulateSDPerformance {
 		List<PerformanceAgent> newPerfList = new ArrayList<PerformanceAgent>();
 
 		for (Object[] object : newObjList) {
-
-			logger.debug(object[0] + " " + object[0].getClass());
-			logger.debug(object[1]);
 
 			String division = (String) object[0];
 			String agentName = (String) object[1];
@@ -158,7 +152,7 @@ public class PopulateSDPerformance {
 		}
 
 		// compare with existing ticket
-		List<PerformanceAgent> existingList = agentDAO.getPerformance(currentWeek, month);
+		List<PerformanceAgent> existingList = agentDAO.getPerformance(currentWeekYear, month);
 		List<PerformanceAgent> useThisList = new ArrayList<PerformanceAgent>();
 		if (existingList.size() < 1) {
 			useThisList = newPerfList;

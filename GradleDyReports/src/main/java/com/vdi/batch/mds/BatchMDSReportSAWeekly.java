@@ -32,7 +32,7 @@ public class BatchMDSReportSAWeekly extends QuartzJobBean{
 		PopulatePerformance weekly = ctx.getBean("populatePerformanceWeekly", PopulatePerformance.class);
 		weekly.populatePerformance();
 		
-		String fileName = "VDI_SupportAgent_Week"+TimeStatic.currentWeekMonth+"_"+TimeStatic.currentMonthStr+".pdf";
+		String fileName = "VDI_SupportAgent_Week"+(TimeStatic.currentWeekMonth-1)+"_"+TimeStatic.currentMonthStr+".pdf";
 		ReportService rpt = ctx.getBean("weeklyIncidentSAReport", ReportService.class);
 		try {
 			ReportExporter.exportReport(rpt.getReport(), System.getProperty("user.dir") + "/target/reports/" 

@@ -344,7 +344,7 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 		totalSummary.add(new SummaryReport("Ticket Achieved", totalAchieved.toString()));
 		totalSummary.add(new SummaryReport("Ticket Missed", totalMissed.toString()));
 		totalSummary.add(new SummaryReport("Ticket Total", totalTicket.toString()));
-		totalSummary.add(new SummaryReport("Achievement", achievementFloat.toString()));
+		totalSummary.add(new SummaryReport("Achievement", achievementFloat.toString()+"%"));
 
 		return totalSummary;
 	}
