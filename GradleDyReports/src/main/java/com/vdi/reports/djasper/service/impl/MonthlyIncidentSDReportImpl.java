@@ -364,7 +364,7 @@ public class MonthlyIncidentSDReportImpl implements ReportService {
 		return totalSummary;
 	}
 	
-	private List<PerformanceReport> getCombinedReport(){
+	public List<PerformanceReport> getCombinedReport(){
 		
 		List<PerformanceReport> combinedList = new ArrayList<PerformanceReport>();
 		

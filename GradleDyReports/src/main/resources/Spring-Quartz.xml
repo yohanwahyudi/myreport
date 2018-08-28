@@ -35,7 +35,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateIncidentJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateIncidentJob" />
-		<property name="cronExpression" value="0 0 9 * * ? *" />
+		<property name="cronExpression" value="0 55 9 * * ? *" />
 	</bean>
 	
 	<bean name="BatchMDSPopulateServiceDesk" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -43,7 +43,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateServiceDeskJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateServiceDesk" />
-		<property name="cronExpression" value="0 0 9 * * ? *" />
+		<property name="cronExpression" value="0 55 9 * * ? *" />
 	</bean>
 	
 	<bean name="BatchMDSPopulateUserRequest" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -51,7 +51,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateUserRequestJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateUserRequest" />
-		<property name="cronExpression" value="0 0 9 * * ? *" />
+		<property name="cronExpression" value="0 57 9 * * ? *" />
 	</bean>	
 	<!-- End populate data -->
 	
@@ -64,7 +64,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSWeeklySAPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSWeeklySAPerformance" />
-		<property name="cronExpression" value="0 0 10 ? * MON" />
+		<property name="cronExpression" value="0 49 13 ? * MON" />
 	</bean>	
 	
 	<bean name="BatchMDSWeeklySDPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -72,7 +72,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSWeeklySDPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSWeeklySDPerformance" />
-		<property name="cronExpression" value="0 0 10 ? * MON" />
+		<property name="cronExpression" value="0 49 13 ? * MON" />
 	</bean>	
 	
 	
@@ -118,7 +118,6 @@
 				
 				<ref bean="cronTriggerBatchMDSWeeklySAPerformance" />
 				<ref bean="cronTriggerBatchMDSWeeklySDPerformance" />
-			
 				<ref bean="cronTriggerBatchMDSMonthlySAPerformance" />
 				<ref bean="cronTriggerBatchMDSMonthlySDPerformance" />
 				 

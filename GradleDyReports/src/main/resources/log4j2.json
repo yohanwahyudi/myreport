@@ -227,6 +227,25 @@
 				]
 			},
 			"logger": {
+				"name": "org.hibernate.engine.jdbc.batch.internal.AbstractBatchImpl",
+				"level": "error",
+				"additivity": "false",
+				"appender-ref": [
+					{
+						"ref": "RollingFile-Appender",
+						"level": "error"
+					},
+					{
+						"ref": "Console-Appender",
+						"level": "error"
+					},
+					{
+						"ref": "File-Appender",
+						"level": "error"
+					}
+				]
+			},
+			"logger": {
 				"name": "org.springframework.orm",
 				"level": "error",
 				"additivity": "false",
