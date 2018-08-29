@@ -123,10 +123,11 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setSubtitle("Achievement (Target 98%)");
 		drb.addColumn(columnName);
 		drb.addColumn(columnValue);
 		// drb.setUseFullPageWidth(true);
-
+		
 		return drb.build();
 	}
 
@@ -533,6 +534,19 @@ public class TemplateBuildersReport {
 
 		return drb.build();
 
+	}
+	
+	private DynamicReport createNoteSub(TemplateStylesReport style) {
+		
+		AbstractColumn columnNote = ColumnBuilder.getNew().setColumnProperty("notes", String.class.getName())
+				.setTitle("Notes: ").setWidth(new Integer(100)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.addColumn(columnNote);
+		
+		return drb.build();
+		
 	}
 
 	public DynamicReportBuilder getMaster() {
