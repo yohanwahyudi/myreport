@@ -380,4 +380,12 @@ public class TemplateStylesReport {
 		return arialHeaderIncidentListStyle;
 	}
 
+	public Style getNoteHeaderStyle() {
+		return noteHeaderStyle;
+	}
+
+	public Style getNoteDetailStyle() {
+		return noteDetailStyle;
+	}
+
 }
