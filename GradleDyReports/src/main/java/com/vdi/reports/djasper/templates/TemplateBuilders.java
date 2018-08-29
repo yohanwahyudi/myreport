@@ -26,6 +26,7 @@ import ar.com.fdvs.dj.domain.entities.columns.PropertyColumn;
 
 @Configuration
 public class TemplateBuilders {
+	//test versioning
 
 	private DynamicReportBuilder sAMaster;
 	private DynamicReportBuilder master;
