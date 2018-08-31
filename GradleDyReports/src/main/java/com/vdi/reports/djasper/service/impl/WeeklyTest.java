@@ -281,6 +281,12 @@ public class WeeklyTest implements ReportService {
 		return reportList;
 	}
 
+	@Override
+	public JasperPrint getReport(String period) throws JRException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

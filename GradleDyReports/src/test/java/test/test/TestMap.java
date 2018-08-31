@@ -1,20 +1,27 @@
 package test.test;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class TestMap {
 	
 	public static void main(String args[]) {
-		Map<String, String> map1 = new HashMap<String,String>();
+		Map<String, Integer> map1 = new HashMap<String, Integer>();
 		
-		map1.put("a", "str1");
+		map1.put("a", 1);
+		map1.put("b", 2);
+		map1.put("c", 5);
 		
 		System.out.println(map1.get("a"));
+		System.out.println(map1.get("d"));
 		
-		map1.put("a", "str2");
-		System.out.println(map1.get("a"));
-		
+		Iterator<Map.Entry<String, Integer>> iterator = map1.entrySet().iterator();
+		while(iterator.hasNext()) {
+			Map.Entry<String, Integer> entry = iterator.next();
+			
+			System.out.println(entry.getKey()+":"+entry.getValue());
+		}
 	}
 
 }

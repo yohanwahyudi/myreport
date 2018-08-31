@@ -55,6 +55,7 @@ public final class PropertyNames {
 	public static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
 	public static final String[] PROPERTY_NAME_ENTITY_PACKAGE = { "com.vdi.model" };
 	public static final String PROPERTY_NAME_HIBERNATE_ID_NEW_GENERATOR_MAPPINGS = "hibernate.id.new_generator_mappings";	
+	
 	//db tweak
 	public static final String PROPERTY_NAME_HIBERNATE_JDBC_BATCH_SIZE="hibernate.jdbc.batch_size";
 	public static final String PROPERTY_NAME_HIBERNATE_JDBC_BATCH_VERSIONED_DATA="hibernate.jdbc.batch_versioned_data";
@@ -63,4 +64,8 @@ public final class PropertyNames {
 	public static final String PROPERTY_NAME_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE="hibernate.cache.use_second_level_cache";
 	public static final String PROPERTY_NAME_HIBERNATE_CONNECTION_AUTOCOMMIT="hibernate.connection.autocommit";
 	
+	//constant
+	public static final String CONSTANT_REPORT_PERIOD_WEEKLY="weekly";
+	public static final String CONSTANT_REPORT_PERIOD_MONTHLY="monthly";
+
 }

@@ -478,6 +478,12 @@ public class MonthlyIncidentSDReportImpl implements ReportService {
 		return perfSDAgent;
 	}
 
+	@Override
+	public JasperPrint getReport(String period) throws JRException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
 

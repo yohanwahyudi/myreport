@@ -488,5 +488,11 @@ public class WeeklyIncidentSDReportImpl implements ReportService {
 
 	}
 
+	@Override
+	public JasperPrint getReport(String period) throws JRException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

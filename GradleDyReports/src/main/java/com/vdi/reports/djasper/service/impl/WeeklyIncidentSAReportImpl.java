@@ -197,4 +197,10 @@ public class WeeklyIncidentSAReportImpl implements ReportService {
 		this.reportList = list;
 	}
 
+	@Override
+	public JasperPrint getReport(String period) throws JRException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

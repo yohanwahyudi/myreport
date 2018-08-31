@@ -31,6 +31,7 @@ public class TemplateStylesReport {
 	// for summary style
 	private Style arialHeaderSummaryStyle;
 	private Style arialDetailSummaryStyle;
+	private Style arialHeaderSimpleStyle;
 
 	// for agent
 	private Style arialTitleAgentStyle;
@@ -68,6 +69,7 @@ public class TemplateStylesReport {
 		// for summary
 		this.arialHeaderSummaryStyle = createArialHeaderSummaryStyle(font);
 		this.arialDetailSummaryStyle = createArialDetailSummaryStyle(font);
+		this.arialHeaderSimpleStyle = createArialHeaderSimpleStyle(font);
 
 		// for agent
 		this.arialTitleAgentStyle = createArialTitleAgentStyle(font);
@@ -159,7 +161,7 @@ public class TemplateStylesReport {
 	// style for Summary Reports
 	private Style createArialHeaderSummaryStyle(TemplateFontsReport font) {
 
-		Style headerStyle = new Style("headerSummaryStyle");
+		Style headerStyle = new Style("arialHeaderSummaryStyle");
 		headerStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
 		headerStyle.setBorderTop(Border.PEN_1_POINT());
 		headerStyle.setBorderBottom(Border.PEN_1_POINT());
@@ -174,7 +176,7 @@ public class TemplateStylesReport {
 
 	private Style createArialDetailSummaryStyle(TemplateFontsReport font) {
 
-		Style headerStyle = new Style("detailSummaryStyle");
+		Style headerStyle = new Style("arialDetailSummaryStyle");
 		headerStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
 		headerStyle.setBorderBottom(Border.PEN_1_POINT());
 		// headerStyle.setBackgroundColor(Color.gray);
@@ -185,6 +187,20 @@ public class TemplateStylesReport {
 
 		return headerStyle;
 
+	}
+	
+	private Style createArialHeaderSimpleStyle(TemplateFontsReport font) {
+		
+		Style headerStyle = new Style("arialHeaderSimpleStyle");
+		headerStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
+		headerStyle.setBorderTop(Border.NO_BORDER());
+		headerStyle.setBorderBottom(Border.NO_BORDER());
+		headerStyle.setHorizontalAlign(HorizontalAlign.LEFT);
+		headerStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+		headerStyle.setTransparency(Transparency.OPAQUE);
+
+		return headerStyle;
+		
 	}
 
 	//for agent sub report
@@ -386,6 +402,10 @@ public class TemplateStylesReport {
 
 	public Style getNoteDetailStyle() {
 		return noteDetailStyle;
+	}
+
+	public Style getArialHeaderSimpleStyle() {
+		return arialHeaderSimpleStyle;
 	}
 
 }

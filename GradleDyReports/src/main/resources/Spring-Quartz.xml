@@ -35,7 +35,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateIncidentJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateIncidentJob" />
-		<property name="cronExpression" value="0 55 9 * * ? *" />
+		<property name="cronExpression" value="0 34 15 * * ? *" />
 	</bean>
 	
 	<bean name="BatchMDSPopulateServiceDesk" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -43,7 +43,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateServiceDeskJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateServiceDesk" />
-		<property name="cronExpression" value="0 55 9 * * ? *" />
+		<property name="cronExpression" value="0 35 15 * * ? *" />
 	</bean>
 	
 	<bean name="BatchMDSPopulateUserRequest" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -51,7 +51,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateUserRequestJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateUserRequest" />
-		<property name="cronExpression" value="0 57 9 * * ? *" />
+		<property name="cronExpression" value="0 37 15 * * ? *" />
 	</bean>	
 	<!-- End populate data -->
 	
@@ -64,7 +64,8 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSWeeklySAPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSWeeklySAPerformance" />
-		<property name="cronExpression" value="0 49 13 ? * MON" />
+		<!-- <property name="cronExpression" value="0 49 13 ? * MON" /> -->
+		<property name="cronExpression" value="0 7 1 * * ? *" />
 	</bean>	
 	
 	<bean name="BatchMDSWeeklySDPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -72,7 +73,8 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSWeeklySDPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSWeeklySDPerformance" />
-		<property name="cronExpression" value="0 49 13 ? * MON" />
+		<!-- <property name="cronExpression" value="0 49 13 ? * MON" /> -->
+		<property name="cronExpression" value="0 8 1 * * ? *" />
 	</bean>	
 	
 	
@@ -83,7 +85,8 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSMonthlySAPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSMonthlySAPerformance" />
-		<property name="cronExpression" value="0 0 10 1 * ?" />
+		<!-- <property name="cronExpression" value="0 0 10 1 * ?" /> -->
+		<property name="cronExpression" value="0 33 17 * * ? *" />
 	</bean>	
 	
 	<bean name="BatchMDSMonthlySDPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -91,7 +94,8 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSMonthlySDPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSMonthlySDPerformance" />
-		<property name="cronExpression" value="0 0 10 1 * ?" />
+		<!-- <property name="cronExpression" value="0 0 10 1 * ?" /> -->
+		<property name="cronExpression" value="0 34 17 * * ? *" />
 	</bean>	
 	<!-- End calculate performance -->
 	
@@ -115,15 +119,15 @@
 				<ref bean="cronTriggerBatchMDSWeekendJob" />
 				
 				<ref bean="cronTriggerBatchUpdateTempMonthJob" />
+								 
+				<ref bean="cronTriggerBatchMDSPopulateIncidentJob" />
+				<ref bean="cronTriggerBatchMDSPopulateServiceDeskJob" />
+				<ref bean="cronTriggerBatchMDSPopulateUserRequestJob" />
 				
 				<ref bean="cronTriggerBatchMDSWeeklySAPerformance" />
 				<ref bean="cronTriggerBatchMDSWeeklySDPerformance" />
 				<ref bean="cronTriggerBatchMDSMonthlySAPerformance" />
 				<ref bean="cronTriggerBatchMDSMonthlySDPerformance" />
-				 
-				<ref bean="cronTriggerBatchMDSPopulateIncidentJob" />
-				<ref bean="cronTriggerBatchMDSPopulateServiceDeskJob" />
-				<ref bean="cronTriggerBatchMDSPopulateUserRequestJob" />
 				
 				<!-- 
 				<ref bean="cronTriggerBatchMDSReportSAWeeklyJob" />

@@ -44,6 +44,18 @@ public class PerformanceAgent {
 
 	@Version
 	private int version;
+	
+	public PerformanceAgent() {
+		
+	}
+	
+	public PerformanceAgent(String agent, int totalAchieved, int totalMissed, int totalTicket, float achievement) {
+		this.agentName = agent;
+		this.totalAchieved = totalAchieved;
+		this.totalMissed = totalMissed;
+		this.totalTicket = totalTicket;
+		this.achievement = achievement;
+	}
 
 	public int getTeamId() {
 		return teamId;

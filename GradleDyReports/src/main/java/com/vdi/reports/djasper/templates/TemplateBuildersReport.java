@@ -24,6 +24,10 @@ public class TemplateBuildersReport {
 
 	private DynamicReportBuilder master;
 
+	//summary report
+	private DynamicReport summaryOverallSub;
+	private DynamicReport summarySDSub;
+	
 	// for support agent report
 	private DynamicReport summarySub;
 	private DynamicReport summarySub2;
@@ -49,6 +53,9 @@ public class TemplateBuildersReport {
 
 		this.master = createMaster(style);
 
+		this.summaryOverallSub = createSummaryOverallSub(style);
+		this.summarySDSub = createSummarySDSub(style);
+		
 		this.summarySub = createSummarySub(style);
 		this.summarySub2 = createSummarySub2(style);
 		this.teamSub = createTeamSub(style);
@@ -123,9 +130,61 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setSubtitle("Achievement (Target 98%)");
 		drb.addColumn(columnName);
 		drb.addColumn(columnValue);
+		// drb.setUseFullPageWidth(true);
+
+		return drb.build();
+	}
+	
+	private DynamicReport createSummaryOverallSub(TemplateStylesReport style) {
+
+		AbstractColumn columnName = ColumnBuilder.getNew().setColumnProperty("name", String.class.getName())
+				.setTitle("").setWidth(new Integer(150)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+
+		AbstractColumn columnServiceDesk = ColumnBuilder.getNew().setColumnProperty("value1", String.class.getName())
+				.setTitle("Service Desk").setWidth(new Integer(75)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		
+		AbstractColumn columnSupportAgent = ColumnBuilder.getNew().setColumnProperty("value2", String.class.getName())
+				.setTitle("Support Agent").setWidth(new Integer(75)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitleStyle(style.getArialHeaderSimpleStyle()).setTitle("OVERALL ACHIEVEMENT (TARGET: 98%)");
+		drb.addColumn(columnName);
+		drb.addColumn(columnServiceDesk);
+		drb.addColumn(columnSupportAgent);
+		// drb.setUseFullPageWidth(true);
+		
+		return drb.build();
+	}
+	
+	private DynamicReport createSummarySDSub(TemplateStylesReport style) {
+
+		AbstractColumn columnName = ColumnBuilder.getNew().setColumnProperty("name", String.class.getName())
+				.setTitle("").setWidth(new Integer(150)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+
+		AbstractColumn columnIncident = ColumnBuilder.getNew().setColumnProperty("value1", String.class.getName())
+				.setTitle("Incident").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		
+		AbstractColumn columnUserRequest = ColumnBuilder.getNew().setColumnProperty("value2", String.class.getName())
+				.setTitle("User Request").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+		
+		AbstractColumn columnTotal = ColumnBuilder.getNew().setColumnProperty("value3", String.class.getName())
+				.setTitle("Total").setWidth(new Integer(50)).setStyle(style.getArialDetailSummaryStyle())
+				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
+
+		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitleStyle(style.getArialHeaderSimpleStyle()).setTitle("SERVICE DESK ACHIEVEMENT (TARGET: 98%)");
+		drb.addColumn(columnName);
+		drb.addColumn(columnIncident);
+		drb.addColumn(columnUserRequest);
+		drb.addColumn(columnTotal);
 		// drb.setUseFullPageWidth(true);
 		
 		return drb.build();
@@ -154,6 +213,7 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitleStyle(style.getArialHeaderSimpleStyle()).setTitle("SUPPORT AGENT TEAM ACHIEVEMENT (INCIDENT)");
 		drb.addColumn(columnTeamName);
 		drb.addColumn(columnTotalAchieved);
 		drb.addColumn(columnTotalMissed);
@@ -207,9 +267,9 @@ public class TemplateBuildersReport {
 
 		int margin = 20;
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(20);
-		drb.setLeftMargin(margin).setRightMargin(margin).setTopMargin(20).setBottomMargin(margin);
-		drb.setTitle("VDI SUPPORT AGENT PERFORMANCE");
+		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(0);
+		drb.setLeftMargin(margin).setRightMargin(margin).setTopMargin(0).setBottomMargin(margin);
+		drb.setTitle("VDI SUPPORT AGENT PERFORMANCE (INCIDENT)");
 		drb.addColumn(columnTeamName);
 		drb.addColumn(columnAgent);
 		drb.addColumn(columnTotalAssigned);
@@ -383,6 +443,7 @@ public class TemplateBuildersReport {
 				.build();
 		
 		DynamicReportBuilder drb = new DynamicReportBuilder();
+		drb.setTitleStyle(style.getArialHeaderSimpleStyle()).setTitle("VDI Service Desk Agent Performance");
 		drb.addColumn(columnAgent);
 		drb.addColumn(columnAchieved);
 		drb.addColumn(columnMissed);
@@ -451,8 +512,8 @@ public class TemplateBuildersReport {
 		int margin = 20;
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(20);
-		drb.setLeftMargin(margin).setRightMargin(margin).setTopMargin(20).setBottomMargin(margin);
-		drb.setTitle("VDI SERVICE DESK AGENT PERFORMANCE");
+		drb.setLeftMargin(margin).setRightMargin(margin).setTopMargin(20).setBottomMargin(5);
+		drb.setTitle("VDI SERVICE DESK AGENT PERFORMANCE (INCIDENT AND USER REQUEST)");
 		drb.addColumn(columnAgent);
 		drb.addColumn(columnTotalAchieved);
 		drb.addColumn(columnTotalMissed);
@@ -603,6 +664,14 @@ public class TemplateBuildersReport {
 
 	public DynamicReport getUserRequestAgentSub() {
 		return userRequestAgentSub;
+	}
+
+	public DynamicReport getSummaryOverallSub() {
+		return summaryOverallSub;
+	}
+
+	public DynamicReport getSummarySDSub() {
+		return summarySDSub;
 	}
 
 }

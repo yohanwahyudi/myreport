@@ -14,6 +14,7 @@ public interface ReportService {
 
 	public DynamicReport buildReport();
 	public JasperPrint getReport() throws JRException, Exception;
+	public JasperPrint getReport(String period) throws JRException, Exception;
 	public JRDataSource getDataSource();
 	public List<PerformanceReport> getPerformanceReport();
 	

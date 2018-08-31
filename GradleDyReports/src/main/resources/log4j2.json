@@ -291,6 +291,21 @@
 				]
 			},
 			"logger": {
+				"name": "org.hibernate.engine.internal",
+				"level": "error",
+				"additivity": "false",
+				"appender-ref": [
+					{
+						"ref": "RollingFile-Appender",
+						"level": "error"
+					},
+					{
+						"ref": "Console-Appender",
+						"level": "error"
+					}
+				]
+			},
+			"logger": {
 				"name": "org.hibernate.internal.util",
 				"level": "error",
 				"additivity": "false",
