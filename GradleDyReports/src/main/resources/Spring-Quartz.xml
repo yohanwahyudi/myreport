@@ -24,7 +24,7 @@
                 class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSWeekendJob" />
 		<!--<<property name="cronExpression" value="0 0 12/18 * * ? *" />-->
-		<property name="cronExpression" value="0 0 10,12,18 ? * SAT-SUN" />
+		<property name="cronExpression" value="0 0 12,18 ? * SAT-SUN" />
 	</bean>
 	
 	
@@ -59,44 +59,25 @@
 	
 	<!-- Cron for calculate performance -->
 	<!-- Cron for calculate performance weekly-->
-	<bean name="BatchMDSWeeklySAPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="jobClass" value="com.vdi.batch.mds.BatchMDSReportSAWeekly" />
+	<bean name="BatchItopMDSWeeklyPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.vdi.batch.mds.BatchItopMDSWeeklyReport" />
 	</bean>
-	<bean id="cronTriggerBatchMDSWeeklySAPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="BatchMDSWeeklySAPerformance" />
+	<bean id="cronTriggerBatchItopMDSWeeklyPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="BatchItopMDSWeeklyPerformance" />
 		<!-- <property name="cronExpression" value="0 49 13 ? * MON" /> -->
 		<property name="cronExpression" value="0 7 1 * * ? *" />
 	</bean>	
 	
-	<bean name="BatchMDSWeeklySDPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="jobClass" value="com.vdi.batch.mds.BatchMDSReportSDWeekly" />
-	</bean>
-	<bean id="cronTriggerBatchMDSWeeklySDPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="BatchMDSWeeklySDPerformance" />
-		<!-- <property name="cronExpression" value="0 49 13 ? * MON" /> -->
-		<property name="cronExpression" value="0 8 1 * * ? *" />
-	</bean>	
-	
-	
-	
 	<!-- Cron for calculate performance monthly--> 
-	<bean name="BatchMDSMonthlySAPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="jobClass" value="com.vdi.batch.mds.BatchMDSReportSAMonthly" />
+	<bean name="BatchItopMDSMonthlyPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.vdi.batch.mds.BatchItopMDSMonthlyReport" />
 	</bean>
-	<bean id="cronTriggerBatchMDSMonthlySAPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="BatchMDSMonthlySAPerformance" />
+	<bean id="cronTriggerBatchItopMDSMonthlyPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="BatchItopMDSMonthlyPerformance" />
 		<!-- <property name="cronExpression" value="0 0 10 1 * ?" /> -->
 		<property name="cronExpression" value="0 18 11 * * ? *" />
 	</bean>	
 	
-	<bean name="BatchMDSMonthlySDPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="jobClass" value="com.vdi.batch.mds.BatchMDSReportSDMonthly" />
-	</bean>
-	<bean id="cronTriggerBatchMDSMonthlySDPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="BatchMDSMonthlySDPerformance" />
-		<!-- <property name="cronExpression" value="0 0 10 1 * ?" /> -->
-		<property name="cronExpression" value="0 18 11 * * ? *" />
-	</bean>	
 	<!-- End calculate performance -->
 	
 	
@@ -124,17 +105,9 @@
 				<ref bean="cronTriggerBatchMDSPopulateServiceDeskJob" />
 				<ref bean="cronTriggerBatchMDSPopulateUserRequestJob" />
 				
-				<ref bean="cronTriggerBatchMDSWeeklySAPerformance" />
-				<ref bean="cronTriggerBatchMDSWeeklySDPerformance" />
-				<ref bean="cronTriggerBatchMDSMonthlySAPerformance" />
-				<ref bean="cronTriggerBatchMDSMonthlySDPerformance" />
-				
-				<!-- 
-				<ref bean="cronTriggerBatchMDSReportSAWeeklyJob" />
-				<ref bean="cronTriggerBatchMDSReportSDWeeklyJob" />
-				<ref bean="cronTriggerBatchMDSReportSAMonthlyJob" />
-				<ref bean="cronTriggerBatchMDSReportSDMonthlyJob" />
-				-->
+				<ref bean="cronTriggerBatchItopMDSWeeklyPerformance" />
+				<ref bean="cronTriggerBatchItopMDSMonthlyPerformance" />
+	
 			</list>
 		</property>
 	</bean>
