@@ -20,7 +20,7 @@ public interface IncidentRepository extends CrudRepository<Incident, Long>{
 			"and week(start_date,3)= :week "+
 			"and agent_fullname like 'EXT%' "+
 			"and status in ('closed','resolved') "+
-			"order by ref asc"+
+			"order by ttr_passed desc"+
 			";", nativeQuery=true)
 	public List<Incident> getAllIncidentByWeek(@Param("month") int month, @Param("week") int week);
 	
@@ -77,7 +77,7 @@ public interface IncidentRepository extends CrudRepository<Incident, Long>{
 			"and month(start_date)= :month "+
 			"and agent_fullname like 'EXT%' "+
 			"and status in ('closed','resolved') "+
-			"order by ref asc"+
+			"order by ttr_passed desc"+
 			";", nativeQuery=true)
 	public List<Incident> getAllIncidentByMonth(@Param("month") int month);
 	

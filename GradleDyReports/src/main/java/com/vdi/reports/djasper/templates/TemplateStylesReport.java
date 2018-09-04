@@ -38,12 +38,15 @@ public class TemplateStylesReport {
 	private Style arialLeftAgentStyle;
 	private Style arialDetailAgentStyle;
 	private Style arialDetailGreenAgentStyle;
-	
-	//for incidentList
+
+	// for incidentList
 	private Style arialHeaderIncidentListStyle;
 	private Style arialDetailIncidentListStyle;
+
+	//for summary sub
+	private Style summaryArialTitleStyle;
 	
-	//for note
+	// for note
 	private Style noteHeaderStyle;
 	private Style noteDetailStyle;
 
@@ -76,15 +79,18 @@ public class TemplateStylesReport {
 		this.arialDetailAgentStyle = createArialDetailAgentStyle(font);
 		this.arialLeftAgentStyle = createArialLeftAgentStyle(font);
 		this.arialDetailGreenAgentStyle = createArialDetailGreenAgentStyle(font);
-		
-		//for incidentlist
+
+		// for incidentlist
 		this.arialHeaderIncidentListStyle = createArialHeaderIncidentStyle(font);
 		this.arialDetailIncidentListStyle = createArialDetailIncidentStyle(font);
+
+		//for summary sub
+		this.summaryArialTitleStyle = createSummaryArialTitleStyle(font);
 		
-		//for note
+		// for note
 		this.noteHeaderStyle = createHeaderNoteStyle(font);
 		this.noteDetailStyle = createDetailNoteStyle(font);
-		
+
 	}
 
 	private Style createDejavuSansTitleStyle(TemplateFontsReport font) {
@@ -161,8 +167,12 @@ public class TemplateStylesReport {
 	// style for Summary Reports
 	private Style createArialHeaderSummaryStyle(TemplateFontsReport font) {
 
+		Font myFont = font.getArialFont();
+		myFont.setFontSize(7);
+		myFont.setBold(false);
+		
 		Style headerStyle = new Style("arialHeaderSummaryStyle");
-		headerStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
+		headerStyle.setFont(myFont);
 		headerStyle.setBorderTop(Border.PEN_1_POINT());
 		headerStyle.setBorderBottom(Border.PEN_1_POINT());
 		headerStyle.setBackgroundColor(Color.gray);
@@ -188,9 +198,9 @@ public class TemplateStylesReport {
 		return headerStyle;
 
 	}
-	
+
 	private Style createArialHeaderSimpleStyle(TemplateFontsReport font) {
-		
+
 		Style headerStyle = new Style("arialHeaderSimpleStyle");
 		headerStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
 		headerStyle.setBorderTop(Border.NO_BORDER());
@@ -200,10 +210,10 @@ public class TemplateStylesReport {
 		headerStyle.setTransparency(Transparency.OPAQUE);
 
 		return headerStyle;
-		
+
 	}
 
-	//for agent sub report
+	// for agent sub report
 	private Style createArialTitleAgentStyle(TemplateFontsReport font) {
 		Font myfont = font.getArialBoldFont();
 		myfont.setFontSize(14);
@@ -214,7 +224,7 @@ public class TemplateStylesReport {
 
 		return style;
 	}
-	
+
 	private Style createArialLeftAgentStyle(TemplateFontsReport font) {
 
 		Font myFont = font.getArialFont();
@@ -233,8 +243,8 @@ public class TemplateStylesReport {
 	private Style createArialDetailAgentStyle(TemplateFontsReport font) {
 
 		Font myFont = font.getArialFont();
-		myFont.setFontSize(9);
-		myFont.setBold(true);
+		myFont.setFontSize(7);
+		myFont.setBold(false);
 
 		Style style = new Style("detailAgentStyle");
 		style.setFont(myFont);
@@ -245,11 +255,11 @@ public class TemplateStylesReport {
 		return style;
 
 	}
-	
+
 	private Style createArialDetailGreenAgentStyle(TemplateFontsReport font) {
 
 		Color color = new Color(0, 122, 22);
-		
+
 		Font myFont = font.getArialFont();
 		myFont.setFontSize(9);
 		myFont.setBold(true);
@@ -264,14 +274,14 @@ public class TemplateStylesReport {
 		return style;
 
 	}
-	
-	//for incident list subreport
+
+	// for incident list subreport
 	private Style createArialHeaderIncidentStyle(TemplateFontsReport font) {
 
 		Font myFont = font.getArialFont();
 		myFont.setFontSize(7);
 		myFont.setBold(true);
-		
+
 		Style headerStyle = new Style("headerIncidentListStyle");
 		headerStyle.setFont(myFont);
 		headerStyle.setBorderTop(Border.PEN_1_POINT());
@@ -284,7 +294,7 @@ public class TemplateStylesReport {
 
 		return headerStyle;
 	}
-	
+
 	private Style createArialDetailIncidentStyle(TemplateFontsReport font) {
 
 		Font myFont = font.getArialFont();
@@ -300,18 +310,18 @@ public class TemplateStylesReport {
 		return style;
 
 	}
-	
+
 	private Style createHeaderNoteStyle(TemplateFontsReport font) {
 
 		Font myFont = font.getArialFont();
 		myFont.setFontSize(8);
 		myFont.setBold(true);
-		
+
 		Style headerStyle = new Style("headerNotetStyle");
 		headerStyle.setFont(myFont);
 		headerStyle.setBorderTop(Border.NO_BORDER());
 		headerStyle.setBorderBottom(Border.NO_BORDER());
-//		headerStyle.setBackgroundColor(Color.gray);
+		// headerStyle.setBackgroundColor(Color.gray);
 		headerStyle.setTextColor(Color.black);
 		headerStyle.setHorizontalAlign(HorizontalAlign.LEFT);
 		headerStyle.setVerticalAlign(VerticalAlign.MIDDLE);
@@ -320,7 +330,7 @@ public class TemplateStylesReport {
 		return headerStyle;
 
 	}
-	
+
 	private Style createDetailNoteStyle(TemplateFontsReport font) {
 
 		Font myFont = font.getArialFont();
@@ -334,6 +344,18 @@ public class TemplateStylesReport {
 
 		return style;
 
+	}
+
+	// summary sub report
+	private Style createSummaryArialTitleStyle(TemplateFontsReport font) {
+		Font myfont = font.getArialBoldFont();
+		myfont.setFontSize(10);
+
+		Style style = new Style("summaryArialTitleStyle");
+		style.setFont(myfont);
+		style.setHorizontalAlign(HorizontalAlign.LEFT);
+
+		return style;
 	}
 
 	public Style getDejavuSansTitleStyle() {
@@ -406,6 +428,10 @@ public class TemplateStylesReport {
 
 	public Style getArialHeaderSimpleStyle() {
 		return arialHeaderSimpleStyle;
+	}
+
+	public Style getSummaryArialTitleStyle() {
+		return summaryArialTitleStyle;
 	}
 
 }

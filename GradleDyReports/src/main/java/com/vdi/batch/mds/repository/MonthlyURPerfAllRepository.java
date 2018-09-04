@@ -20,6 +20,8 @@ public interface MonthlyURPerfAllRepository extends CrudRepository<PerformanceOv
 			"where year(urequest_startdate)=year(curdate()) "+   
 			"and month(urequest_startdate)= :month "+
 			"and scalar_previousvalue in ('escalated_tto','new') and scalar_newvalue = 'assigned' "+
+			"and ((urequest_starttime>='08:30:00' and urequest_starttime<='12:00:00') "+
+			"or (urequest_starttime>='13:00:00' and urequest_starttime<='17:30:00')) "+
 			"and scalar_user like 'EXT%' "+
 			";", nativeQuery=true)
 	public int getTicketCount(@Param("month") int month);
@@ -30,6 +32,8 @@ public interface MonthlyURPerfAllRepository extends CrudRepository<PerformanceOv
 			"where year(urequest_startdate)=year(curdate()) "+   
 			"and month(urequest_startdate)= :month "+
 			"and scalar_previousvalue in ('escalated_tto','new') and scalar_newvalue = 'assigned' "+
+			"and ((urequest_starttime>='08:30:00' and urequest_starttime<='12:00:00') "+
+			"or (urequest_starttime>='13:00:00' and urequest_starttime<='17:30:00')) "+
 			"and urequest_slattopassed='no'  "+
 			"and scalar_user like 'EXT%' "+
 			";", nativeQuery=true)
@@ -41,6 +45,8 @@ public interface MonthlyURPerfAllRepository extends CrudRepository<PerformanceOv
 			"where year(urequest_startdate)=year(curdate()) "+   
 			"and month(urequest_startdate)= :month "+
 			"and scalar_previousvalue in ('escalated_tto','new') and scalar_newvalue = 'assigned' "+
+			"and ((urequest_starttime>='08:30:00' and urequest_starttime<='12:00:00') "+
+			"or (urequest_starttime>='13:00:00' and urequest_starttime<='17:30:00')) "+
 			"and urequest_slattopassed='yes'  "+
 			"and scalar_user like 'EXT%' "+
 			";", nativeQuery=true)

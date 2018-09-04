@@ -19,6 +19,7 @@ public interface ServiceDeskRepository extends CrudRepository<ServiceDesk, Long>
 			"and week(incident_startdate,3)= :week "+
 			"and scalar_previousvalue in ('escalated_tto','new') and scalar_newvalue = 'assigned' "+
 			"and scalar_user like 'EXT%' "+
+			"order by incident_ref "+
 			";", nativeQuery=true)
 	public List<StagingServiceDesk> getAllIncidentByWeek(@Param("month") int month, @Param("week") int week);
 	

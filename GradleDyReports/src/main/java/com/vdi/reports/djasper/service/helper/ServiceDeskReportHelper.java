@@ -172,8 +172,8 @@ public class ServiceDeskReportHelper {
 				urAchievedTicket.toString(), totalAchieved.toString()));
 		serviceDeskAchievementList.add(new SummaryReport("Ticket Missed", sdMissedTicket.toString(),
 				urMissedTicket.toString(), totalMissed.toString()));
-		serviceDeskAchievementList.add(new SummaryReport("Achievement", sdAchievement.toString(),
-				urAchievement.toString(), achievement.toString()));
+		serviceDeskAchievementList.add(new SummaryReport("Achievement", sdAchievement.toString()+"%",
+				urAchievement.toString()+"%", achievement.toString()+"%"));
 
 		return serviceDeskAchievementList;
 	}
@@ -392,12 +392,6 @@ public class ServiceDeskReportHelper {
 		for(String person : personArray) {
 			
 			if(mapSdPersons.get(person) != null) {
-			
-				logger.debug("person: "+person);
-				logger.debug("mapsdperson: "+mapSdPersons);
-				logger.debug("achieved: "+mapSdPersons.get(person).getTotalAchieved());
-				logger.debug("mapurperson: "+mapUrPersons);
-				logger.debug("achieved: "+mapUrPersons.get(person).getTotalAchieved());
 				
 				int achieved = mapSdPersons.get(person).getTotalAchieved() + mapUrPersons.get(person).getTotalAchieved();
 				int missed = mapSdPersons.get(person).getTotalMissed() + mapUrPersons.get(person).getTotalMissed();
@@ -447,6 +441,8 @@ public class ServiceDeskReportHelper {
 		Integer totalAchievedUR = perfURAll.getTotalAchieved();
 		Integer totalMissedUR = perfURAll.getTotalMissed();
 		Float achievementUR = perfURAll.getAchievement();
+		
+		logger.debug("urWeekly total ticket: "+totalTicketUR);
 
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		map.put("totalTicket", totalTicketUR);
@@ -483,14 +479,9 @@ public class ServiceDeskReportHelper {
 		map.put("totalMissed", totalMissed);
 		map.put("achievement", achievement);
 		
-		logger.debug("map sd: "+map);
 
 		List<PerformanceAgent> performanceAgentSDList = agentMonthlyPerformance.getPerformance();
 		List<StagingServiceDesk> serviceDeskIncidentList = sdReport.getAllIncidentByMonth(prevMonth);
-
-		for(PerformanceAgent a : performanceAgentSDList) {
-			logger.debug("sdlist debug "+a.getAgentName());
-		}
 		
 		MasterReport reportSD = new MasterReport();
 		reportSD.setPerformanceServiceDeskAgentList(performanceAgentSDList);

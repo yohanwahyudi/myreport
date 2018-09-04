@@ -35,7 +35,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateIncidentJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateIncidentJob" />
-		<property name="cronExpression" value="0 34 15 * * ? *" />
+		<property name="cronExpression" value="0 53 10 * * ? *" />
 	</bean>
 	
 	<bean name="BatchMDSPopulateServiceDesk" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -43,7 +43,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateServiceDeskJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateServiceDesk" />
-		<property name="cronExpression" value="0 35 15 * * ? *" />
+		<property name="cronExpression" value="0 54 10 * * ? *" />
 	</bean>
 	
 	<bean name="BatchMDSPopulateUserRequest" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -51,7 +51,7 @@
 	</bean>
 	<bean id="cronTriggerBatchMDSPopulateUserRequestJob" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSPopulateUserRequest" />
-		<property name="cronExpression" value="0 37 15 * * ? *" />
+		<property name="cronExpression" value="0 55 10 * * ? *" />
 	</bean>	
 	<!-- End populate data -->
 	
@@ -86,7 +86,7 @@
 	<bean id="cronTriggerBatchMDSMonthlySAPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSMonthlySAPerformance" />
 		<!-- <property name="cronExpression" value="0 0 10 1 * ?" /> -->
-		<property name="cronExpression" value="0 33 17 * * ? *" />
+		<property name="cronExpression" value="0 18 11 * * ? *" />
 	</bean>	
 	
 	<bean name="BatchMDSMonthlySDPerformance" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -95,7 +95,7 @@
 	<bean id="cronTriggerBatchMDSMonthlySDPerformance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="BatchMDSMonthlySDPerformance" />
 		<!-- <property name="cronExpression" value="0 0 10 1 * ?" /> -->
-		<property name="cronExpression" value="0 34 17 * * ? *" />
+		<property name="cronExpression" value="0 18 11 * * ? *" />
 	</bean>	
 	<!-- End calculate performance -->
 	

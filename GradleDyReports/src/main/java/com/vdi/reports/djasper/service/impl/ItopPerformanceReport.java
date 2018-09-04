@@ -45,9 +45,10 @@ public class ItopPerformanceReport implements ReportService {
 
 	@Autowired
 	private TemplateBuildersReport templateBuilders;
-
+	
 	private int currentYear;
 	private String currentMonthStr;
+	private String prevMonthStr;
 	private int prevWeekMonth;
 
 	private MasterReport weeklyReport;
@@ -64,11 +65,12 @@ public class ItopPerformanceReport implements ReportService {
 	public DynamicReport buildReport(String period) {
 		
 		currentYear = TimeStatic.currentYear;
-		currentMonthStr = TimeStatic.currentMonthStr;
+		currentMonthStr = TimeStatic.prevMonthStr;
+		prevMonthStr = TimeStatic.prevMonthStr;
 		prevWeekMonth = TimeStatic.currentWeekMonth - 1;
 		
 		DynamicReportBuilder master = templateBuilders.getMaster();
-		master.setTitle("VDI SERVICE DESK PERFORMANCE BASED ON iTop");
+		master.setTitle("VDI PERFORMANCE BASED ON iTop");
 		
 		MasterReport masterReport = new MasterReport();
 
@@ -76,7 +78,7 @@ public class ItopPerformanceReport implements ReportService {
 			master.setSubtitle("WEEK " + prevWeekMonth + " - " + currentMonthStr.toUpperCase() + " " + currentYear);
 			masterReport = weeklyReport;
 		} else {
-			master.setSubtitle(currentMonthStr.toUpperCase() + " " + currentYear);
+			master.setSubtitle(prevMonthStr.toUpperCase() + " " + currentYear);
 			masterReport = monthlyReport;
 		} 
 
@@ -91,6 +93,11 @@ public class ItopPerformanceReport implements ReportService {
 		params.put("sdIncidentList", masterReport.getServiceDeskIncidentList());
 		params.put("urTicketList", masterReport.getUserRequestTicketList());
 		params.put("saIncidentList", masterReport.getSupportAgentIncidentList());
+		
+		logger.debug("listsd: "+masterReport.getServiceDeskIncidentList().size());
+//		for(StagingServiceDesk sd:masterReport.getServiceDeskIncidentList()) {
+//			logger.debug(sd.getIncident_slattrpassed());
+//		}
 		
 		DynamicReport overallAchievementSub = templateBuilders.getSummaryOverallSub();
 		DynamicReport sdAchievementSub = templateBuilders.getSummarySDSub();
@@ -164,7 +171,7 @@ public class ItopPerformanceReport implements ReportService {
 			String value2 = saOverallReport.get(i).getValue();
 			combineOverallReport.add(new SummaryReport(name, value1, value2));
 		}
-		weeklyReport.setOverallAchievementList(combineOverallReport);
+//		weeklyReport.setOverallAchievementList(combineOverallReport);
 
 		//set value
 		MasterReport weeklyReport = new MasterReport();

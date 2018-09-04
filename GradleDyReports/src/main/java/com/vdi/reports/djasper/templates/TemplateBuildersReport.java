@@ -152,7 +152,7 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialHeaderSimpleStyle()).setTitle("OVERALL ACHIEVEMENT (TARGET: 98%)");
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitle("OVERALL ACHIEVEMENT (TARGET: 98%)");
 		drb.addColumn(columnName);
 		drb.addColumn(columnServiceDesk);
 		drb.addColumn(columnSupportAgent);
@@ -180,7 +180,7 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialHeaderSimpleStyle()).setTitle("SERVICE DESK ACHIEVEMENT (TARGET: 98%)");
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitle("SERVICE DESK ACHIEVEMENT (TARGET: 98%)");
 		drb.addColumn(columnName);
 		drb.addColumn(columnIncident);
 		drb.addColumn(columnUserRequest);
@@ -208,12 +208,12 @@ public class TemplateBuildersReport {
 				.setWidth(new Integer(52)).setStyle(style.getArialDetailSummaryStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 		AbstractColumn columnAchievement = ColumnBuilder.getNew()
-				.setColumnProperty("achievement", Float.class.getName()).setTitle("Achievement")
+				.setColumnProperty("achievement", Float.class.getName()).setTitle("Achievement (%)")
 				.setWidth(new Integer(80)).setStyle(style.getArialDetailSummaryStyle())
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialHeaderSimpleStyle()).setTitle("SUPPORT AGENT TEAM ACHIEVEMENT (INCIDENT)");
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitle("SUPPORT AGENT TEAM ACHIEVEMENT FOR INCIDENT (TARGET: 98%)");
 		drb.addColumn(columnTeamName);
 		drb.addColumn(columnTotalAchieved);
 		drb.addColumn(columnTotalMissed);
@@ -267,7 +267,7 @@ public class TemplateBuildersReport {
 
 		int margin = 20;
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(0);
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitleHeight(0);
 		drb.setLeftMargin(margin).setRightMargin(margin).setTopMargin(0).setBottomMargin(margin);
 		drb.setTitle("VDI SUPPORT AGENT PERFORMANCE (INCIDENT)");
 		drb.addColumn(columnTeamName);
@@ -306,7 +306,7 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(20);
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitleHeight(20);
 		drb.setTitle("MISSED TICKET");
 		drb.addColumn(columnRef);
 		drb.addColumn(columnTitle);
@@ -339,7 +339,7 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(20);
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitleHeight(20);
 		drb.setTitle("PENDING TICKET");
 		drb.addColumn(columnRef);
 		drb.addColumn(columnTitle);
@@ -367,7 +367,7 @@ public class TemplateBuildersReport {
 				.setHeaderStyle(style.getArialHeaderSummaryStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(20);
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitleHeight(20);
 		drb.setTitle("ASSIGNED TICKET");
 		drb.addColumn(columnRef);
 		drb.addColumn(columnTitle);
@@ -402,9 +402,15 @@ public class TemplateBuildersReport {
 				.setColumnProperty("resolution_date", String.class.getName()).setTitle("Resolution Date")
 				.setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
 				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnDeadline = ColumnBuilder.getNew().setColumnProperty("ttr_deadline", String.class.getName())
+				.setTitle("Deadline").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnMissed = ColumnBuilder.getNew().setColumnProperty("ttr_passed", String.class.getName())
+				.setTitle("Missed").setWidth(new Integer(30)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitle("INCIDENT TICKET");
+		drb.setTitle("VDI SUPPORT AGENT INCIDENT TICKET");
 		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(30);
 		drb.addColumn(columnRef);
 		drb.addColumn(columnTitle);
@@ -412,7 +418,9 @@ public class TemplateBuildersReport {
 		drb.addColumn(columnAgent);
 		drb.addColumn(columnPriority);
 		drb.addColumn(columnStartDt);
-		drb.addColumn(columnResolutionDt);
+//		drb.addColumn(columnResolutionDt);
+		drb.addColumn(columnDeadline);
+		drb.addColumn(columnMissed);
 		drb.setUseFullPageWidth(true);
 
 		return drb.build();
@@ -511,7 +519,7 @@ public class TemplateBuildersReport {
 
 		int margin = 20;
 		DynamicReportBuilder drb = new DynamicReportBuilder();
-		drb.setTitleStyle(style.getArialTitleAgentStyle()).setTitleHeight(20);
+		drb.setTitleStyle(style.getSummaryArialTitleStyle()).setTitleHeight(20);
 		drb.setLeftMargin(margin).setRightMargin(margin).setTopMargin(20).setBottomMargin(5);
 		drb.setTitle("VDI SERVICE DESK AGENT PERFORMANCE (INCIDENT AND USER REQUEST)");
 		drb.addColumn(columnAgent);
@@ -545,6 +553,13 @@ public class TemplateBuildersReport {
 		AbstractColumn columnStartDt = ColumnBuilder.getNew().setColumnProperty("incident_startdate", String.class.getName())
 				.setTitle("Start Date").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
 				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn ttrDeadline = ColumnBuilder.getNew().setColumnProperty("incident_ttoDeadline", String.class.getName())
+				.setTitle("Deadline").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn ttoOver = ColumnBuilder.getNew().setColumnProperty("incident_slattopassed", String.class.getName())
+				.setTitle("Missed").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		drb.setTitle("SERVICE DESK INCIDENT TICKET");
@@ -555,6 +570,8 @@ public class TemplateBuildersReport {
 		drb.addColumn(columnAgent);
 		drb.addColumn(columnPriority);
 		drb.addColumn(columnStartDt);
+//		drb.addColumn(ttrDeadline);
+		drb.addColumn(ttoOver);
 		drb.setUseFullPageWidth(true);
 
 		return drb.build();
@@ -581,6 +598,10 @@ public class TemplateBuildersReport {
 		AbstractColumn columnStartDt = ColumnBuilder.getNew().setColumnProperty("urequest_startdate", String.class.getName())
 				.setTitle("Start Date").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
 				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		AbstractColumn columnMissed = ColumnBuilder.getNew().setColumnProperty("urequest_slattopassed", String.class.getName())
+				.setTitle("Missed").setWidth(new Integer(50)).setStyle(style.getArialDetailIncidentListStyle())
+				.setHeaderStyle(style.getArialHeaderIncidentListStyle()).build();
+		
 
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		drb.setTitle("USER REQUEST TICKET");
@@ -591,6 +612,7 @@ public class TemplateBuildersReport {
 		drb.addColumn(columnAgent);
 		drb.addColumn(columnPriority);
 		drb.addColumn(columnStartDt);
+		drb.addColumn(columnMissed);
 		drb.setUseFullPageWidth(true);
 
 		return drb.build();
