@@ -22,6 +22,7 @@ import net.sf.jasperreports.engine.JRException;
 
 public class BatchItopMDSMonthlyReport extends QuartzJobBean{
 
+	private final String period = PropertyNames.CONSTANT_REPORT_PERIOD_MONTHLY;
 	private final Logger logger = LogManager.getLogger(BatchItopMDSMonthlyReport.class);
 	private AnnotationConfigApplicationContext ctx;
 	
@@ -43,7 +44,7 @@ ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		String fileName = "VDI_ITOP_Performance_"+TimeStatic.prevMonthStr+"_"+TimeStatic.currentYear+".pdf";
 		ReportService rpt = ctx.getBean("itopPerformanceReport", ReportService.class);
 		try {
-			ReportExporter.exportReport(rpt.getReport(PropertyNames.CONSTANT_REPORT_PERIOD_MONTHLY), 
+			ReportExporter.exportReport(rpt.getReport(period), 
 					System.getProperty("user.dir") + "/target/reports/" 
 					+ fileName);
 		} catch (FileNotFoundException e) {

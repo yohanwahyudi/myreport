@@ -17,6 +17,7 @@ import com.vdi.model.Incident;
 import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.model.performance.PerformanceTeam;
+import com.vdi.reports.djasper.model.MasterReport;
 import com.vdi.reports.djasper.model.PerformanceReport;
 import com.vdi.reports.djasper.model.SummaryReport;
 import com.vdi.reports.djasper.service.ReportService;
@@ -191,6 +192,12 @@ public class MonthlyIncidentSAReport implements ReportService {
 
 	@Override
 	public JasperPrint getReport(String period) throws JRException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MasterReport> getPerformanceReport(String period) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

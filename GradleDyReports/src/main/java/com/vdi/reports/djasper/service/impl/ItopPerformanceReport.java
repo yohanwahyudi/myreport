@@ -65,7 +65,7 @@ public class ItopPerformanceReport implements ReportService {
 	public DynamicReport buildReport(String period) {
 		
 		currentYear = TimeStatic.currentYear;
-		currentMonthStr = TimeStatic.prevMonthStr;
+		currentMonthStr = TimeStatic.currentMonthStr;
 		prevMonthStr = TimeStatic.prevMonthStr;
 		prevWeekMonth = TimeStatic.currentWeekMonth - 1;
 		
@@ -94,7 +94,7 @@ public class ItopPerformanceReport implements ReportService {
 		params.put("urTicketList", masterReport.getUserRequestTicketList());
 		params.put("saIncidentList", masterReport.getSupportAgentIncidentList());
 		
-		logger.debug("listsd: "+masterReport.getServiceDeskIncidentList().size());
+//		logger.debug("listsd: "+masterReport.getServiceDeskIncidentList().size());
 //		for(StagingServiceDesk sd:masterReport.getServiceDeskIncidentList()) {
 //			logger.debug(sd.getIncident_slattrpassed());
 //		}
@@ -212,12 +212,12 @@ public class ItopPerformanceReport implements ReportService {
 			String value1 = sdOverallReport.get(i).getValue();
 			String value2 = saOverallReport.get(i).getValue();
 			
-			logger.debug("name: "+name+" value1: "+value1+" value2: "+value2);
+//			logger.debug("name: "+name+" value1: "+value1+" value2: "+value2);
 			
 			combineOverallReport.add(new SummaryReport(name, value1, value2));
 		}
 
-		logger.debug("combine: "+combineOverallReport);
+//		logger.debug("combine: "+combineOverallReport);
 		
 		// set value
 		MasterReport monthlyReport = new MasterReport();

@@ -15,7 +15,10 @@ import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailParseException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -34,7 +37,12 @@ public class MailServiceImpl implements MailService{
 	private final Logger logger = LogManager.getLogger(MailServiceImpl.class);
 	
 	@Autowired
+	@Qualifier("mailSender")
 	JavaMailSender mailSender;
+	
+	@Autowired
+	@Qualifier("mailSenderDev")
+	JavaMailSender mailSenderDev;
 	
 	@Autowired
 	Configuration freemarkerConfiguration;
@@ -69,7 +77,6 @@ public class MailServiceImpl implements MailService{
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
@@ -150,6 +157,36 @@ public class MailServiceImpl implements MailService{
 			e.printStackTrace();
 		}	
 		
+	}
+	
+	public void sendEmail(Map<String, Object> mapObject, String template, FileSystemResource file) {
+
+		MimeMessage message = mailSenderDev.createMimeMessage();
+
+		String[] toEmailArr = appConfig.getMdsReportEmailTo();
+		try {
+
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setFrom(new InternetAddress(appConfig.getMailFrom(), "SLA Manager"));
+			helper.setTo(toEmailArr);
+			helper.setSubject(appConfig.getMailMdsDailySubject());
+			helper.addAttachment(file.getFilename(), file);
+//			helper.setText("test");
+			String text = getTemplateContentMdsDaily(mapObject, template);
+			
+			logger.debug("debug attachment: "+file.getFilename());
+			logger.debug("text: " +text);
+			
+			helper.setText(text, true);
+			
+		} catch (MessagingException e) {
+			throw new MailParseException(e);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		mailSenderDev.send(message);
+
 	}
 	
 	public String getTemplateContentMdsDaily(Map<String, Object> object, String template) {

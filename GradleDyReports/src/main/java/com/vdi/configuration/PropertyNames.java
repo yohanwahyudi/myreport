@@ -37,6 +37,8 @@ public final class PropertyNames {
 	public static final String MAIL_TO = "mail.to";
 	public static final String MAIL_SLA_MGR = "mail.sla.manager";
 	
+	public static final String MDS_REPORT_EMAIL_TO = "mds.report.email.to";
+	
 	public static final String MDS_CSV_AGENT_DELIMITERS = "mds.csv.agent.delimiters";
 	public static final String MDS_CSV_AGENT_FILE = "mds.csv.agent.file";
 	

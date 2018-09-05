@@ -1,48 +1,61 @@
 package com.vdi.batch.mds;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import com.vdi.batch.mds.helper.weekly.PopulatePerformance;
 import com.vdi.batch.mds.helper.weekly.PopulateSDPerformance;
 import com.vdi.batch.mds.helper.weekly.PopulateURPerformance;
+import com.vdi.batch.mds.service.MailService;
 import com.vdi.configuration.AppConfig;
 import com.vdi.configuration.PropertyNames;
+import com.vdi.model.Incident;
+import com.vdi.model.Period;
+import com.vdi.model.performance.PerformanceTeam;
 import com.vdi.reports.ReportExporter;
+import com.vdi.reports.djasper.model.MasterReport;
+import com.vdi.reports.djasper.model.SummaryReport;
 import com.vdi.reports.djasper.service.ReportService;
 import com.vdi.tools.TimeStatic;
 
 import net.sf.jasperreports.engine.JRException;
 
-public class BatchItopMDSWeeklyReport extends QuartzJobBean{
+public class BatchItopMDSWeeklyReport {
 
-	private final Logger logger = LogManager.getLogger(BatchItopMDSWeeklyReport.class);
-	private AnnotationConfigApplicationContext ctx;
+	private static final String period = PropertyNames.CONSTANT_REPORT_PERIOD_WEEKLY;
+	private static final Logger logger = LogManager.getLogger(BatchItopMDSWeeklyReport.class);
+	private static AnnotationConfigApplicationContext ctx;
 	
-	@Override
-	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+//	@Override
+//	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+	public static void main (String args[]) {
 		logger.debug("Batch itop mds weekly report started.......");
 		
 		ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		
 		//populate performance
 		PopulatePerformance weekly = ctx.getBean("populatePerformanceWeekly", PopulatePerformance.class);
-		weekly.populatePerformance();		
+//		weekly.populatePerformance();		
 		PopulateSDPerformance weeklySD = ctx.getBean("populateSDPerformanceWeekly", PopulateSDPerformance.class);
-		weeklySD.populatePerformance();		
+//		weeklySD.populatePerformance();		
 		PopulateURPerformance weeklyUR = ctx.getBean("populateURPerformanceWeekly", PopulateURPerformance.class);
-		weeklyUR.populatePerformance();
+//		weeklyUR.populatePerformance();
 		
 		String fileName = "VDI_ITOP_Performance_Week"+(TimeStatic.currentWeekMonth-1)+"_"+TimeStatic.currentMonthStr+".pdf";
 		ReportService rpt = ctx.getBean("itopPerformanceReport", ReportService.class);
 		try {
-			ReportExporter.exportReport(rpt.getReport(PropertyNames.CONSTANT_REPORT_PERIOD_WEEKLY), 
+			ReportExporter.exportReport(rpt.getReport(period), 
 					System.getProperty("user.dir") + "/target/reports/" 
 					+ fileName);
 		} catch (FileNotFoundException e) {
@@ -53,11 +66,57 @@ public class BatchItopMDSWeeklyReport extends QuartzJobBean{
 			e.printStackTrace();
 		}
 		
+		//send mail
+		try {
+			
+			Map<String, Object> mapObject = getMapObject(rpt.getPerformanceReport(period));
+			
+			File file = new File(System.getProperty("user.dir")+File.separator+"target"+File.separator+"reports"+File.separator+fileName);
+			FileSystemResource fileResource = new FileSystemResource(file);
+			
+			MailService mailService = ctx.getBean("mailService", MailService.class);
+			mailService.sendEmail(mapObject, "fm_mailItopReportMDS.txt", fileResource);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		logger.debug("Batch itop mds weekly report finished......");
 		
 		
 	}
 	
+	private static Map<String, Object> getMapObject(List<MasterReport> masterReport){
+		MasterReport report = masterReport.get(0);
+		
+		List<SummaryReport> overallList= report.getOverallAchievementList();
+		List<SummaryReport> sdAchievementList = report.getServiceDeskAchievementList();
+		List<PerformanceTeam> performanceTeamList = report.getPerformanceTeamList();
+		List<Incident> missed = report.getSupportAgentMissedList();
+		List<Incident> pending = report.getSupportAgentPendingList();
+		List<Incident> assigned = report.getSupportAgentAssignList();
+		
+		Integer currentYearInt = TimeStatic.currentYear;
+		
+		Period periodObj = new Period();
+		periodObj.setPrevWeekMonth(TimeStatic.currentWeekMonth-1);
+		periodObj.setCurrMonthStr(TimeStatic.currentMonthStr);
+		periodObj.setCurrYearStr(currentYearInt.toString());
+		
+		SummaryReport sla = overallList.get(3);
+		
+		Map<String, Object> mapObject = new HashMap<String, Object>();
+		mapObject.put("period", periodObj);
+		mapObject.put("sla", sla);
+		mapObject.put("overall", overallList);
+		mapObject.put("sdAchievement", sdAchievementList);
+		mapObject.put("perfTeam", performanceTeamList);
+		mapObject.put("missed", missed);
+		mapObject.put("pending", pending);
+		mapObject.put("assigned", assigned);
+	
+		return mapObject;
+	}
 	
 
 }
