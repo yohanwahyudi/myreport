@@ -13,7 +13,7 @@ public interface StagingRepository extends CrudRepository<Staging, Long>{
 	
 	@Query(value="SELECT staging.* "
 			+ "FROM staging_incident as staging "
-			+ "LEFT OUTER JOIN test.incident as incident "
+			+ "LEFT OUTER JOIN incident as incident "
 			+ "on staging.ref=incident.ref where incident.ref is null", nativeQuery=true)
 	public List<Staging> getDataForInsert();
 	
@@ -39,7 +39,7 @@ public interface StagingRepository extends CrudRepository<Staging, Long>{
 			"incident.ttr=staging.ttr, incident.ttr_passed=staging.ttr_passed, incident.ttr_deadline=staging.ttr_deadline", nativeQuery=true)
 	public void updateIncidentTable();
 	
-	@Query(value="insert into test.incident " + 
+	@Query(value="insert into incident " + 
 			"select " + 
 			"	staging.* " + 
 			"from staging_incident as staging " + 

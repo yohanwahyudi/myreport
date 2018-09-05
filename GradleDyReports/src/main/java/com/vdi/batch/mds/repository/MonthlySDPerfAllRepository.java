@@ -39,7 +39,7 @@ public interface MonthlySDPerfAllRepository extends CrudRepository<PerformanceOv
 			"and year(incident_startdate)=year(curdate()) and scalar_user like 'EXT%';", nativeQuery=true)
 	public int getMissedTicketCount();
 	
-	@Query(value="select * from test.perf_overall WHERE  month(created_dt)=month(curdate()) and "+
+	@Query(value="select * from perf_overall WHERE  month(created_dt)=month(curdate()) and "+
 			"year(created_dt)=year(curdate()) AND period='monthly' AND category='sd';", nativeQuery=true)
 	public PerformanceOverall getPerformanceThisWeek();
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.vdi.batch.mds.helper.PopulateServiceDesk;
 import com.vdi.configuration.AppConfig;
 
-@Component
+//@Component
 public class BatchMDSPopulateServiceDesk extends QuartzJobBean{
 
 	private Logger logger = LogManager.getLogger(BatchMDSPopulateServiceDesk.class);

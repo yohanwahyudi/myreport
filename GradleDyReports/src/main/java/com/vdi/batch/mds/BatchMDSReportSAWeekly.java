@@ -18,7 +18,7 @@ import com.vdi.tools.TimeStatic;
 
 import net.sf.jasperreports.engine.JRException;
 
-@Component
+//@Component
 public class BatchMDSReportSAWeekly extends QuartzJobBean{
 
 	private Logger logger = LogManager.getLogger(BatchMDSReportSAWeekly.class);

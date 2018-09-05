@@ -12,7 +12,7 @@ import com.vdi.batch.mds.repository.dao.TempValueService;
 import com.vdi.configuration.AppConfig;
 import com.vdi.tools.TimeStatic;
 
-@Component
+//@Component
 public class BatchUpdateTempMonth extends QuartzJobBean{
 
 	private Logger logger = LogManager.getLogger(BatchUpdateTempMonth.class);

@@ -43,7 +43,7 @@ public class PopulatePerformance {
 		lastSavedMonth = Integer.parseInt(tempValueService.getTempValueByName(LAST_MONTH).getValue());
 	}
 	
-	@Autowired
+//	@Autowired
 	public void populatePerformance() {
 		allDAO.insertPerformance(getPerformanceOverall());
 		teamDAO.insertPerformance(getPerformanceTeamList());

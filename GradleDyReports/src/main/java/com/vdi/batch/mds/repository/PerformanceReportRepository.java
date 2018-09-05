@@ -4,16 +4,13 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.vdi.model.Incident;
 import com.vdi.model.ServiceDesk;
 import com.vdi.model.performance.PerformanceAgent;
 import com.vdi.model.performance.PerformanceOverall;
 import com.vdi.model.performance.PerformanceTeam;
-import com.vdi.reports.djasper.model.PerformanceReport;
 
 //@Repository
 public interface PerformanceReportRepository {
@@ -36,12 +33,12 @@ public interface PerformanceReportRepository {
 	
 	@Query(value="SELECT ref, title, status, CONCAT(start_date,' ',start_time) AS date, agent_fullname AS agent, priority, person_org_name AS organization, " + 
 			"resolution_date AS resolutionDate, user_satisfaction AS userSatisfaction, IF(ttr_passed='no','achieved','missed') as ttrPassed " + 
-			"FROM test.incident WHERE start_date >= :dtFrom AND start_date <= :dateTo;", nativeQuery=true)
+			"FROM incident WHERE start_date >= :dtFrom AND start_date <= :dateTo;", nativeQuery=true)
 	public List<Incident> getSupportAgentIncidentList(@Param("dtFrom") Date dtFrom, @Param("dtTo")Date dtTo);	
 	
 	@Query(value="SELECT ref, title, status, CONCAT(start_date,' ',start_time) AS date, agent_fullname AS agent, priority, person_org_name AS organization, " + 
 			"resolution_date AS resolutionDate, user_satisfaction AS userSatisfaction, IF(ttr_passed='no','achieved','missed') as ttrPassed " + 
-			"FROM test.incident WHERE start_date >= :dtFrom AND start_date <= :dateTo "+
+			"FROM incident WHERE start_date >= :dtFrom AND start_date <= :dateTo "+
 			"AND status = :status;", nativeQuery=true)
 	public List<Incident> getSupportAgentIncidentByStatusList(@Param("dtFrom") Date dtFrom, @Param("dtTo") Date dtTo, @Param("status") String status);
 	

@@ -32,7 +32,7 @@ public interface MonthlyPerfAgentRepository extends CrudRepository<PerformanceAg
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS achieved_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status IN ( 'closed', 'resolved' ) " + 
 			"                         AND ttr_passed = 'no' " + 
@@ -45,7 +45,7 @@ public interface MonthlyPerfAgentRepository extends CrudRepository<PerformanceAg
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS missed_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status IN ( 'closed', 'resolved' ) " + 
 			"                         AND ttr_passed = 'yes' " + 
@@ -58,7 +58,7 @@ public interface MonthlyPerfAgentRepository extends CrudRepository<PerformanceAg
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS pending_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status = 'pending' " + 
 			"                         AND month(start_date)=month(curdate())-1 AND year(start_date)=year(curdate()) " + 
@@ -70,7 +70,7 @@ public interface MonthlyPerfAgentRepository extends CrudRepository<PerformanceAg
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS assigned_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status = 'assigned' " + 
 			"                         AND month(start_date)=month(curdate())-1 AND year(start_date)=year(curdate()) " + 
@@ -80,7 +80,7 @@ public interface MonthlyPerfAgentRepository extends CrudRepository<PerformanceAg
 			"              ON one.agent_fullname = five.agent_fullname; ", nativeQuery=true)
 	public List<Object[]> getAgentTicket();
 	
-	@Query(value="SELECT * FROM test.perf_agent WHERE month(created_dt)=month(curdate()) AND year(created_dt)=year(curdate()) AND period='monthly' AND category='sa';", nativeQuery=true)
+	@Query(value="SELECT * FROM perf_agent WHERE month(created_dt)=month(curdate()) AND year(created_dt)=year(curdate()) AND period='monthly' AND category='sa';", nativeQuery=true)
 	public List<PerformanceAgent> getPerformanceThisWeek();
 	
 }

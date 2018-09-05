@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.vdi.model.performance.PerformanceAgent;
 
@@ -52,7 +51,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS missed_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"        		   WHERE   " + 
 			"							year(start_date)=year(curdate()) "+   
@@ -68,7 +67,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS pending_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"        		   WHERE   " + 
 			"							year(start_date)=year(curdate()) "+   
@@ -83,7 +82,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS assigned_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"        		   WHERE   " + 
 			"							year(start_date)=year(curdate()) "+   
@@ -130,7 +129,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS missed_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status IN ( 'closed', 'resolved' ) " + 
 			"                         AND ttr_passed = 'yes' " + 
@@ -143,7 +142,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS pending_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status = 'pending' " + 
 			"                         AND Yearweek(start_date, 3) = Yearweek(Curdate(), 3) " + 
@@ -155,7 +154,7 @@ public interface WeeklyPerfAgentRepository extends CrudRepository<PerformanceAge
 			"                         incident.agent_fullname, " + 
 			"                         Count(incident.ref) AS assigned_ticket " + 
 			"                  FROM   incident incident " + 
-			"                         JOIN test.agent " + 
+			"                         JOIN agent " + 
 			"                           ON incident.agent_fullname = agent.NAME " + 
 			"                  WHERE  status = 'assigned' " + 
 			"                         AND Yearweek(start_date, 3) = Yearweek(Curdate(), 3) " + 
