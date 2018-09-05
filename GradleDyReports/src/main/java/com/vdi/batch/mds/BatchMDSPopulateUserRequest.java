@@ -5,13 +5,13 @@ import org.apache.logging.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import com.vdi.batch.mds.helper.PopulateUserRequest;
 import com.vdi.configuration.AppConfig;
 
-@Configuration
+@Component
 public class BatchMDSPopulateUserRequest extends QuartzJobBean{
 
 	private final Logger logger = LogManager.getLogger(BatchMDSPopulateUserRequest.class);

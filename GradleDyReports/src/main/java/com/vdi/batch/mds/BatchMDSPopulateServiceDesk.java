@@ -5,13 +5,13 @@ import org.apache.logging.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import com.vdi.batch.mds.helper.PopulateServiceDesk;
 import com.vdi.configuration.AppConfig;
 
-@Configuration
+@Component
 public class BatchMDSPopulateServiceDesk extends QuartzJobBean{
 
 	private Logger logger = LogManager.getLogger(BatchMDSPopulateServiceDesk.class);

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.vdi.batch.mds.repository.dao.StagingAgentDAOService;
 import com.vdi.batch.mds.repository.dao.SupportAgentDAOService;
@@ -14,7 +14,7 @@ import com.vdi.model.Agent;
 import com.vdi.model.staging.StagingAgent;
 import com.vdi.tools.ParseCSVService;
 
-@Configuration
+@Component
 public class PopulateSupportAgent {
 
 	@Autowired

@@ -6,13 +6,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.vdi.batch.mds.repository.dao.StagingUserRequestDAOService;
 import com.vdi.batch.mds.service.ItopMDSDataLoaderService;
 import com.vdi.model.staging.StagingUserRequest;
 
-@Configuration
+@Component
 public class PopulateUserRequest {
 
 	@Autowired

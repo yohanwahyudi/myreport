@@ -31,26 +31,29 @@ import com.vdi.tools.TimeStatic;
 
 import net.sf.jasperreports.engine.JRException;
 
-public class BatchItopMDSWeeklyReport {
+public class BatchItopMDSWeeklyReport extends QuartzJobBean{
 
-	private static final String period = PropertyNames.CONSTANT_REPORT_PERIOD_WEEKLY;
-	private static final Logger logger = LogManager.getLogger(BatchItopMDSWeeklyReport.class);
-	private static AnnotationConfigApplicationContext ctx;
+	private final String period = PropertyNames.CONSTANT_REPORT_PERIOD_WEEKLY;
+	private final Logger logger = LogManager.getLogger(BatchItopMDSWeeklyReport.class);
+	private AnnotationConfigApplicationContext ctx;
 	
-//	@Override
-//	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-	public static void main (String args[]) {
+	private Integer currentYearInt = TimeStatic.currentYear;
+	private Integer prevWeekMonth = TimeStatic.currentWeekMonth-1;
+	private String currentMonthStr = TimeStatic.currentMonthStr;
+	
+	@Override
+	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		logger.debug("Batch itop mds weekly report started.......");
 		
 		ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		
 		//populate performance
 		PopulatePerformance weekly = ctx.getBean("populatePerformanceWeekly", PopulatePerformance.class);
-//		weekly.populatePerformance();		
+		weekly.populatePerformance();		
 		PopulateSDPerformance weeklySD = ctx.getBean("populateSDPerformanceWeekly", PopulateSDPerformance.class);
-//		weeklySD.populatePerformance();		
+		weeklySD.populatePerformance();		
 		PopulateURPerformance weeklyUR = ctx.getBean("populateURPerformanceWeekly", PopulateURPerformance.class);
-//		weeklyUR.populatePerformance();
+		weeklyUR.populatePerformance();
 		
 		String fileName = "VDI_ITOP_Performance_Week"+(TimeStatic.currentWeekMonth-1)+"_"+TimeStatic.currentMonthStr+".pdf";
 		ReportService rpt = ctx.getBean("itopPerformanceReport", ReportService.class);
@@ -74,8 +77,11 @@ public class BatchItopMDSWeeklyReport {
 			File file = new File(System.getProperty("user.dir")+File.separator+"target"+File.separator+"reports"+File.separator+fileName);
 			FileSystemResource fileResource = new FileSystemResource(file);
 			
+			String subject = "Performance VDI For MDS Based on ITOP ";
+			String subjectPeriod = "Week "+prevWeekMonth+" "+currentMonthStr+" "+currentYearInt;
+			
 			MailService mailService = ctx.getBean("mailService", MailService.class);
-			mailService.sendEmail(mapObject, "fm_mailItopReportMDS.txt", fileResource);
+			mailService.sendEmail(mapObject, "fm_mailItopReportMDS.txt", fileResource, subject+subjectPeriod);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,7 +92,7 @@ public class BatchItopMDSWeeklyReport {
 		
 	}
 	
-	private static Map<String, Object> getMapObject(List<MasterReport> masterReport){
+	private Map<String, Object> getMapObject(List<MasterReport> masterReport){
 		MasterReport report = masterReport.get(0);
 		
 		List<SummaryReport> overallList= report.getOverallAchievementList();
@@ -96,11 +102,9 @@ public class BatchItopMDSWeeklyReport {
 		List<Incident> pending = report.getSupportAgentPendingList();
 		List<Incident> assigned = report.getSupportAgentAssignList();
 		
-		Integer currentYearInt = TimeStatic.currentYear;
-		
 		Period periodObj = new Period();
-		periodObj.setPrevWeekMonth(TimeStatic.currentWeekMonth-1);
-		periodObj.setCurrMonthStr(TimeStatic.currentMonthStr);
+		periodObj.setPrevWeekMonth(prevWeekMonth);
+		periodObj.setCurrMonthStr(currentMonthStr);
 		periodObj.setCurrYearStr(currentYearInt.toString());
 		
 		SummaryReport sla = overallList.get(3);

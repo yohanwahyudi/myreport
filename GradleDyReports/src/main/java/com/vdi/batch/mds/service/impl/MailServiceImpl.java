@@ -159,9 +159,10 @@ public class MailServiceImpl implements MailService{
 		
 	}
 	
-	public void sendEmail(Map<String, Object> mapObject, String template, FileSystemResource file) {
+	@Override
+	public void sendEmail(Map<String, Object> mapObject, String template, FileSystemResource file, String subject) {
 
-		MimeMessage message = mailSenderDev.createMimeMessage();
+		MimeMessage message = mailSender.createMimeMessage();
 
 		String[] toEmailArr = appConfig.getMdsReportEmailTo();
 		try {
@@ -169,9 +170,8 @@ public class MailServiceImpl implements MailService{
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setFrom(new InternetAddress(appConfig.getMailFrom(), "SLA Manager"));
 			helper.setTo(toEmailArr);
-			helper.setSubject(appConfig.getMailMdsDailySubject());
+			helper.setSubject(subject);
 			helper.addAttachment(file.getFilename(), file);
-//			helper.setText("test");
 			String text = getTemplateContentMdsDaily(mapObject, template);
 			
 			logger.debug("debug attachment: "+file.getFilename());
@@ -185,7 +185,7 @@ public class MailServiceImpl implements MailService{
 			e.printStackTrace();
 		}
 		
-		mailSenderDev.send(message);
+		mailSender.send(message);
 
 	}
 	

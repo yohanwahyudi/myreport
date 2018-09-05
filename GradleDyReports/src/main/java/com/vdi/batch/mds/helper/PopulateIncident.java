@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.vdi.batch.mds.repository.dao.IncidentDAOService;
 import com.vdi.batch.mds.repository.dao.StagingIncidentDAOService;
@@ -18,7 +18,7 @@ import com.vdi.batch.mds.service.MailService;
 import com.vdi.configuration.AppConfig;
 import com.vdi.model.staging.Staging;
 
-@Configuration
+@Component
 public class PopulateIncident {
 	
 	private static Logger logger = LogManager.getLogger(PopulateIncident.class);

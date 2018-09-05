@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import com.vdi.batch.mds.helper.weekly.PopulateSDPerformance;
 import com.vdi.batch.mds.helper.weekly.PopulateURPerformance;
@@ -19,7 +19,7 @@ import com.vdi.tools.TimeStatic;
 
 import net.sf.jasperreports.engine.JRException;
 
-@Configuration
+@Component
 public class BatchMDSReportSDWeekly extends QuartzJobBean {
 
 	private Logger logger = LogManager.getLogger(BatchMDSReportSDWeekly.class);
