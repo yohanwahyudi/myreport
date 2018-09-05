@@ -3,14 +3,14 @@ package com.vdi.batch.mds.repository.dao.impl;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.vdi.batch.mds.repository.MonthlySDPerfAllRepository;
 import com.vdi.batch.mds.repository.dao.PerfAllDAOService;
 import com.vdi.model.performance.PerformanceOverall;
 
 @Transactional
-@Service("monthlySDPerfAllDAO")
+@Repository("monthlySDPerfAllDAO")//change from service
 public class MonthlySDPerfAllDAOImpl implements PerfAllDAOService{
 	
 	@Autowired

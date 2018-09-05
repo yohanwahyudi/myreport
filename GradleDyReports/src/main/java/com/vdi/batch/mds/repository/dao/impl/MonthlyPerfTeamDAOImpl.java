@@ -5,14 +5,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.vdi.batch.mds.repository.MonthlyPerfTeamRepository;
 import com.vdi.batch.mds.repository.dao.PerfTeamDAOService;
 import com.vdi.model.performance.PerformanceTeam;
 
 @Transactional
-@Service("monthlyPerfTeamDAO")
+@Repository("monthlyPerfTeamDAO")//change from service
 public class MonthlyPerfTeamDAOImpl implements PerfTeamDAOService{
 	
 	@Autowired
